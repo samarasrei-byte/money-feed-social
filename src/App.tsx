@@ -13,6 +13,10 @@ import Landing from "./pages/Landing";
 import Auth from "./pages/Auth";
 import Feed from "./pages/Feed";
 import Profile from "./pages/Profile";
+import Communities from "./pages/Communities";
+import Ranking from "./pages/Ranking";
+import Affiliate from "./pages/Affiliate";
+import Install from "./pages/Install";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,13 +32,15 @@ const App = () => (
             {/* Public routes */}
             <Route path="/" element={<Landing />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/install" element={<Install />} />
             
             {/* App routes with layout */}
             <Route element={<AppLayout />}>
               <Route path="/feed" element={<Feed />} />
               <Route path="/profile" element={<Profile />} />
-              <Route path="/communities" element={<Feed />} />
-              <Route path="/ranking" element={<Feed />} />
+              <Route path="/communities" element={<Communities />} />
+              <Route path="/ranking" element={<Ranking />} />
+              <Route path="/affiliate" element={<Affiliate />} />
               <Route path="/create" element={<Feed />} />
             </Route>
 

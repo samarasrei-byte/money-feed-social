@@ -10,10 +10,11 @@ import {
   Shield, 
   Zap,
   Star,
-  Check
+  Check,
+  Download
 } from "lucide-react";
+import { InstallPrompt } from "@/components/pwa/InstallPrompt";
 import { APP_NAME, APP_TAGLINE } from "@/lib/constants";
-
 const features = [
   {
     icon: Users,
@@ -111,9 +112,17 @@ export default function Landing() {
                 {APP_NAME}
               </span>
             </div>
-            <Button asChild variant="secondary">
-              <Link to="/auth">Entrar</Link>
-            </Button>
+            <div className="flex items-center gap-3">
+              <Button asChild variant="ghost" size="sm" className="text-white/80 hover:text-white hover:bg-white/10">
+                <Link to="/install">
+                  <Download className="h-4 w-4 mr-2" />
+                  Instalar App
+                </Link>
+              </Button>
+              <Button asChild variant="secondary">
+                <Link to="/auth">Entrar</Link>
+              </Button>
+            </div>
           </nav>
 
           {/* Hero Content */}

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Bell, Search, Menu } from "lucide-react";
+import { Bell, Search, Link2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -10,6 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { InstallPrompt } from "@/components/pwa/InstallPrompt";
 import { APP_NAME } from "@/lib/constants";
 
 export function Header() {
@@ -48,10 +49,24 @@ export function Header() {
 
         {/* Actions */}
         <div className="flex items-center gap-2">
+          {/* Install App - Desktop */}
+          <div className="hidden md:block">
+            <InstallPrompt variant="compact" />
+          </div>
+
           {/* Search - Mobile */}
           <Button variant="ghost" size="icon" className="md:hidden">
             <Search className="h-5 w-5" />
           </Button>
+
+          {/* Affiliate Link - Quick Access */}
+          {user && (
+            <Button variant="ghost" size="icon" asChild>
+              <Link to="/affiliate">
+                <Link2 className="h-5 w-5" />
+              </Link>
+            </Button>
+          )}
 
           {/* Notifications */}
           <Button variant="ghost" size="icon" className="relative">
@@ -86,10 +101,10 @@ export function Header() {
                   <Link to="/profile">Meu Perfil</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link to="/settings">Configurações</Link>
+                  <Link to="/affiliate">Painel Afiliados</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link to="/dashboard">Dashboard</Link>
+                  <Link to="/install">Instalar App</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={signOut} className="text-destructive">
