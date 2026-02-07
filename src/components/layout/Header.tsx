@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Bell, Search, Link2 } from "lucide-react";
+import { Bell, Search, Link2, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -14,7 +14,7 @@ import { InstallPrompt } from "@/components/pwa/InstallPrompt";
 import { APP_NAME } from "@/lib/constants";
 
 export function Header() {
-  const { user, profile, signOut } = useAuth();
+  const { user, profile, userRole, signOut } = useAuth();
 
   const initials = profile?.display_name
     ?.split(" ")
@@ -103,6 +103,14 @@ export function Header() {
                 <DropdownMenuItem asChild>
                   <Link to="/affiliate">Painel Afiliados</Link>
                 </DropdownMenuItem>
+                {userRole?.role === "admin" && (
+                  <DropdownMenuItem asChild>
+                    <Link to="/admin" className="flex items-center gap-2">
+                      <Shield className="h-4 w-4" />
+                      Painel Admin
+                    </Link>
+                  </DropdownMenuItem>
+                )}
                 <DropdownMenuItem asChild>
                   <Link to="/install">Instalar App</Link>
                 </DropdownMenuItem>
