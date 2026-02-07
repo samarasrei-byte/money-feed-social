@@ -17,6 +17,7 @@ import Communities from "./pages/Communities";
 import Ranking from "./pages/Ranking";
 import Affiliate from "./pages/Affiliate";
 import Install from "./pages/Install";
+import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -41,6 +42,7 @@ const App = () => (
               <Route path="/communities" element={<Communities />} />
               <Route path="/ranking" element={<Ranking />} />
               <Route path="/affiliate" element={<Affiliate />} />
+              <Route path="/admin" element={<Admin />} />
               <Route path="/create" element={<Feed />} />
             </Route>
 
