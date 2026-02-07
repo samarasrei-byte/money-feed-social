@@ -32,6 +32,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
+import { validateMediaUrl, validateAffiliateUrl } from "@/lib/urlValidation";
 
 interface CreatePostSheetProps {
   onPostCreated?: () => void;
@@ -49,6 +50,32 @@ export function CreatePostSheet({ onPostCreated }: CreatePostSheetProps) {
 
   const handleSubmit = async () => {
     if (!content.trim() || !user) return;
+
+    // Validate media URL if provided
+    if (mediaUrl) {
+      const mediaValidation = validateMediaUrl(mediaUrl);
+      if (!mediaValidation.isValid) {
+        toast({
+          variant: "destructive",
+          title: "URL de mídia inválida",
+          description: mediaValidation.error,
+        });
+        return;
+      }
+    }
+
+    // Validate affiliate URL if provided
+    if (affiliateUrl) {
+      const affiliateValidation = validateAffiliateUrl(affiliateUrl);
+      if (!affiliateValidation.isValid) {
+        toast({
+          variant: "destructive",
+          title: "Link de afiliado inválido",
+          description: affiliateValidation.error,
+        });
+        return;
+      }
+    }
 
     setIsPosting(true);
     try {
