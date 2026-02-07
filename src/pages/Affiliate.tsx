@@ -42,6 +42,7 @@ import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { validateAffiliateUrl } from "@/lib/urlValidation";
 
 interface AffiliateLink {
   id: string;
@@ -150,6 +151,17 @@ export default function Affiliate() {
 
   const handleCreateLink = async () => {
     if (!newLink.name.trim() || !newLink.destinationUrl.trim() || !user) return;
+
+    // Validate destination URL
+    const urlValidation = validateAffiliateUrl(newLink.destinationUrl);
+    if (!urlValidation.isValid) {
+      toast({
+        variant: "destructive",
+        title: "URL inválida",
+        description: urlValidation.error,
+      });
+      return;
+    }
 
     setIsCreating(true);
     try {
