@@ -3,6 +3,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { InstagramPost, PostData } from "@/components/feed/InstagramPost";
 import { CreatePostDialog } from "@/components/feed/CreatePostDialog";
+import { CommentsSheet } from "@/components/feed/CommentsSheet";
 import { Loader2, RefreshCw } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
@@ -13,6 +14,7 @@ export default function Feed() {
   const [posts, setPosts] = useState<PostData[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [commentsPostId, setCommentsPostId] = useState<string | null>(null);
 
   const fetchPosts = useCallback(async (showRefresh = false) => {
     if (showRefresh) setRefreshing(true);
@@ -161,8 +163,18 @@ export default function Feed() {
     }
   };
 
-  const handleComment = () => {
-    toast({ title: "Em breve", description: "Comentários em desenvolvimento" });
+  const handleComment = (postId: string) => {
+    setCommentsPostId(postId);
+  };
+
+  const handleCommentAdded = (postId: string) => {
+    setPosts((prev) =>
+      prev.map((post) =>
+        post.id === postId
+          ? { ...post, commentsCount: post.commentsCount + 1 }
+          : post
+      )
+    );
   };
 
   const handleFollow = () => {
@@ -212,7 +224,7 @@ export default function Feed() {
               key={post.id}
               post={post}
               onLike={() => handleLike(post.id, !!post.isLiked)}
-              onComment={handleComment}
+              onComment={() => handleComment(post.id)}
               onShare={() => handleShare(post)}
               onSave={() => handleSave(post.id)}
               onFollow={handleFollow}
@@ -228,6 +240,12 @@ export default function Feed() {
           <CreatePostDialog onPostCreated={() => fetchPosts()} />
         </div>
       )}
+      <CommentsSheet
+        postId={commentsPostId}
+        open={!!commentsPostId}
+        onOpenChange={(open) => !open && setCommentsPostId(null)}
+        onCommentAdded={handleCommentAdded}
+      />
     </div>
   );
 }
