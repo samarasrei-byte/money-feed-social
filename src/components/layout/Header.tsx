@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Bell, Search, Link2, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
+import { useNotifications } from "@/hooks/useNotifications";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -10,17 +12,30 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { InstallPrompt } from "@/components/pwa/InstallPrompt";
 import { APP_NAME } from "@/lib/constants";
+import { formatDistanceToNow } from "date-fns";
+import { ptBR } from "date-fns/locale";
 
 export function Header() {
   const { user, profile, userRole, signOut } = useAuth();
+  const { notifications, unreadCount, markAllRead } = useNotifications();
 
   const initials = profile?.display_name
     ?.split(" ")
     .map((n) => n[0])
     .join("")
     .toUpperCase() || user?.email?.[0].toUpperCase() || "U";
+
+  const notifText = (type: string, actor?: string) => {
+    switch (type) {
+      case "like": return `${actor || "Alguém"} curtiu seu post`;
+      case "comment": return `${actor || "Alguém"} comentou no seu post`;
+      case "follow": return `${actor || "Alguém"} começou a te seguir`;
+      default: return `${actor || "Alguém"} interagiu com você`;
+    }
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full glass border-b safe-area-inset-top">
@@ -49,17 +64,14 @@ export function Header() {
 
         {/* Actions */}
         <div className="flex items-center gap-2">
-          {/* Install App - Desktop */}
           <div className="hidden md:block">
             <InstallPrompt variant="compact" />
           </div>
 
-          {/* Search - Mobile */}
           <Button variant="ghost" size="icon" className="md:hidden">
             <Search className="h-5 w-5" />
           </Button>
 
-          {/* Affiliate Link - Quick Access */}
           {user && (
             <Button variant="ghost" size="icon" asChild>
               <Link to="/affiliate">
@@ -69,12 +81,50 @@ export function Header() {
           )}
 
           {/* Notifications */}
-          <Button variant="ghost" size="icon" className="relative">
-            <Bell className="h-5 w-5" />
-            <span className="absolute -top-0.5 -right-0.5 h-4 w-4 bg-accent text-accent-foreground text-[10px] font-bold rounded-full flex items-center justify-center">
-              3
-            </span>
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon" className="relative" onClick={markAllRead}>
+                <Bell className="h-5 w-5" />
+                {unreadCount > 0 && (
+                  <span className="absolute -top-0.5 -right-0.5 h-4 w-4 bg-accent text-accent-foreground text-[10px] font-bold rounded-full flex items-center justify-center">
+                    {unreadCount > 9 ? "9+" : unreadCount}
+                  </span>
+                )}
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-80">
+              <div className="px-3 py-2 border-b border-border">
+                <p className="text-sm font-semibold">Notificações</p>
+              </div>
+              <ScrollArea className="max-h-80">
+                {notifications.length === 0 ? (
+                  <div className="px-3 py-6 text-center text-sm text-muted-foreground">
+                    Nenhuma notificação
+                  </div>
+                ) : (
+                  notifications.slice(0, 20).map((n) => (
+                    <DropdownMenuItem key={n.id} className="flex items-start gap-3 px-3 py-2.5 cursor-pointer">
+                      <Avatar className="h-8 w-8 shrink-0 mt-0.5">
+                        <AvatarImage src={n.actor?.avatarUrl} />
+                        <AvatarFallback className="text-xs bg-primary text-primary-foreground">
+                          {(n.actor?.displayName || "U").slice(0, 2).toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm leading-tight">
+                          {notifText(n.type, n.actor?.displayName)}
+                        </p>
+                        <p className="text-xs text-muted-foreground mt-0.5">
+                          {formatDistanceToNow(new Date(n.createdAt), { addSuffix: true, locale: ptBR })}
+                        </p>
+                      </div>
+                      {!n.read && <div className="h-2 w-2 rounded-full bg-primary shrink-0 mt-1.5" />}
+                    </DropdownMenuItem>
+                  ))
+                )}
+              </ScrollArea>
+            </DropdownMenuContent>
+          </DropdownMenu>
 
           {/* User Menu */}
           {user ? (
@@ -91,33 +141,20 @@ export function Header() {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56">
                 <div className="px-2 py-1.5">
-                  <p className="text-sm font-medium">
-                    {profile?.display_name || "Usuário"}
-                  </p>
+                  <p className="text-sm font-medium">{profile?.display_name || "Usuário"}</p>
                   <p className="text-xs text-muted-foreground">{user.email}</p>
                 </div>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link to="/profile">Meu Perfil</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link to="/affiliate">Painel Afiliados</Link>
-                </DropdownMenuItem>
+                <DropdownMenuItem asChild><Link to="/profile">Meu Perfil</Link></DropdownMenuItem>
+                <DropdownMenuItem asChild><Link to="/affiliate">Painel Afiliados</Link></DropdownMenuItem>
                 {userRole?.role === "admin" && (
                   <DropdownMenuItem asChild>
-                    <Link to="/admin" className="flex items-center gap-2">
-                      <Shield className="h-4 w-4" />
-                      Painel Admin
-                    </Link>
+                    <Link to="/admin" className="flex items-center gap-2"><Shield className="h-4 w-4" />Painel Admin</Link>
                   </DropdownMenuItem>
                 )}
-                <DropdownMenuItem asChild>
-                  <Link to="/install">Instalar App</Link>
-                </DropdownMenuItem>
+                <DropdownMenuItem asChild><Link to="/install">Instalar App</Link></DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={signOut} className="text-destructive">
-                  Sair
-                </DropdownMenuItem>
+                <DropdownMenuItem onClick={signOut} className="text-destructive">Sair</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
