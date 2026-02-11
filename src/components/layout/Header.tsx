@@ -41,11 +41,8 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full glass border-b safe-area-inset-top">
       <div className="container flex h-14 items-center justify-between px-4">
         {/* Logo */}
-        <Link to="/feed" className="flex items-center gap-2.5">
-          <img src={logoImg} alt="OnlyShop" className="h-8 w-8 rounded-lg object-cover" />
-          <span className="font-display font-bold text-lg hidden sm:block">
-            {APP_NAME}
-          </span>
+        <Link to="/feed" className="flex items-center">
+          <img src={logoImg} alt="OnlyShop" className="h-10 w-10 rounded-xl object-cover" />
         </Link>
 
         {/* Search - Desktop */}
