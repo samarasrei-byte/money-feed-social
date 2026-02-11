@@ -14,6 +14,7 @@ import Auth from "./pages/Auth";
 import Feed from "./pages/Feed";
 import Profile from "./pages/Profile";
 import Communities from "./pages/Communities";
+import CommunityDetail from "./pages/CommunityDetail";
 import Ranking from "./pages/Ranking";
 import Affiliate from "./pages/Affiliate";
 import Install from "./pages/Install";
@@ -40,6 +41,7 @@ const App = () => (
               <Route path="/feed" element={<Feed />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/communities" element={<Communities />} />
+              <Route path="/communities/:id" element={<CommunityDetail />} />
               <Route path="/ranking" element={<Ranking />} />
               <Route path="/affiliate" element={<Affiliate />} />
               <Route path="/admin" element={<Admin />} />
