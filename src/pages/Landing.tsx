@@ -112,11 +112,8 @@ export default function Landing() {
 
         {/* Nav */}
         <nav className="relative z-20 container flex items-center justify-between px-4 py-5">
-          <div className="flex items-center gap-3">
-            <img src={logoImg} alt="OnlyShop" className="h-10 w-10 rounded-xl object-cover" />
-            <span className="font-display font-bold text-xl text-white">
-              {APP_NAME}
-            </span>
+          <div className="flex items-center">
+            <img src={logoImg} alt="OnlyShop" className="h-12 w-12 rounded-xl object-cover" />
           </div>
           <div className="flex items-center gap-3">
             <Button asChild variant="ghost" size="sm" className="text-white/70 hover:text-white hover:bg-white/10">
