@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Bell, Search, Link2, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -17,6 +16,7 @@ import { InstallPrompt } from "@/components/pwa/InstallPrompt";
 import { APP_NAME } from "@/lib/constants";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import logoImg from "@/assets/color-palette-ref.png";
 
 export function Header() {
   const { user, profile, userRole, signOut } = useAuth();
@@ -41,10 +41,8 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full glass border-b safe-area-inset-top">
       <div className="container flex h-14 items-center justify-between px-4">
         {/* Logo */}
-        <Link to="/feed" className="flex items-center gap-2">
-          <div className="bg-gradient-primary p-1.5 rounded-lg">
-            <span className="text-lg font-bold text-primary-foreground">O</span>
-          </div>
+        <Link to="/feed" className="flex items-center gap-2.5">
+          <img src={logoImg} alt="OnlyShop" className="h-8 w-8 rounded-lg object-cover" />
           <span className="font-display font-bold text-lg hidden sm:block">
             {APP_NAME}
           </span>
@@ -57,23 +55,23 @@ export function Header() {
             <input
               type="text"
               placeholder="Buscar..."
-              className="w-full h-10 pl-10 pr-4 rounded-full bg-muted/50 border-0 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="w-full h-10 pl-10 pr-4 rounded-xl bg-muted/50 border-0 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
             />
           </div>
         </div>
 
         {/* Actions */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
           <div className="hidden md:block">
             <InstallPrompt variant="compact" />
           </div>
 
-          <Button variant="ghost" size="icon" className="md:hidden">
+          <Button variant="ghost" size="icon" className="md:hidden rounded-xl">
             <Search className="h-5 w-5" />
           </Button>
 
           {user && (
-            <Button variant="ghost" size="icon" asChild>
+            <Button variant="ghost" size="icon" asChild className="rounded-xl">
               <Link to="/affiliate">
                 <Link2 className="h-5 w-5" />
               </Link>
@@ -83,16 +81,16 @@ export function Header() {
           {/* Notifications */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="relative" onClick={markAllRead}>
+              <Button variant="ghost" size="icon" className="relative rounded-xl" onClick={markAllRead}>
                 <Bell className="h-5 w-5" />
                 {unreadCount > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 h-4 w-4 bg-accent text-accent-foreground text-[10px] font-bold rounded-full flex items-center justify-center">
+                  <span className="absolute -top-0.5 -right-0.5 h-4 w-4 bg-gradient-primary text-white text-[10px] font-bold rounded-full flex items-center justify-center">
                     {unreadCount > 9 ? "9+" : unreadCount}
                   </span>
                 )}
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-80">
+            <DropdownMenuContent align="end" className="w-80 rounded-2xl">
               <div className="px-3 py-2 border-b border-border">
                 <p className="text-sm font-semibold">Notificações</p>
               </div>
@@ -106,7 +104,7 @@ export function Header() {
                     <DropdownMenuItem key={n.id} className="flex items-start gap-3 px-3 py-2.5 cursor-pointer">
                       <Avatar className="h-8 w-8 shrink-0 mt-0.5">
                         <AvatarImage src={n.actor?.avatarUrl} />
-                        <AvatarFallback className="text-xs bg-primary text-primary-foreground">
+                        <AvatarFallback className="text-xs bg-gradient-primary text-white">
                           {(n.actor?.displayName || "U").slice(0, 2).toUpperCase()}
                         </AvatarFallback>
                       </Avatar>
@@ -118,7 +116,7 @@ export function Header() {
                           {formatDistanceToNow(new Date(n.createdAt), { addSuffix: true, locale: ptBR })}
                         </p>
                       </div>
-                      {!n.read && <div className="h-2 w-2 rounded-full bg-primary shrink-0 mt-1.5" />}
+                      {!n.read && <div className="h-2 w-2 rounded-full bg-gradient-primary shrink-0 mt-1.5" />}
                     </DropdownMenuItem>
                   ))
                 )}
@@ -131,15 +129,15 @@ export function Header() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon" className="rounded-full">
-                  <Avatar className="h-8 w-8">
+                  <Avatar className="h-8 w-8 ring-2 ring-primary/20">
                     <AvatarImage src={profile?.avatar_url || undefined} />
-                    <AvatarFallback className="bg-primary text-primary-foreground text-xs">
+                    <AvatarFallback className="bg-gradient-primary text-white text-xs">
                       {initials}
                     </AvatarFallback>
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuContent align="end" className="w-56 rounded-2xl">
                 <div className="px-2 py-1.5">
                   <p className="text-sm font-medium">{profile?.display_name || "Usuário"}</p>
                   <p className="text-xs text-muted-foreground">{user.email}</p>
@@ -158,7 +156,7 @@ export function Header() {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Button asChild size="sm" className="bg-gradient-primary">
+            <Button asChild size="sm" className="bg-gradient-primary border-0 rounded-xl">
               <Link to="/auth">Entrar</Link>
             </Button>
           )}

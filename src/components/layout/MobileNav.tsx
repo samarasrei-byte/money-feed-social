@@ -27,8 +27,8 @@ export function MobileNav() {
                 to={item.href}
                 className="flex flex-col items-center justify-center -mt-6"
               >
-                <div className="bg-gradient-primary p-3 rounded-full shadow-lg glow-primary">
-                  <Icon className="h-6 w-6 text-primary-foreground" />
+                <div className="bg-gradient-primary p-3.5 rounded-2xl shadow-lg glow-primary">
+                  <Icon className="h-6 w-6 text-white" />
                 </div>
               </Link>
             );
@@ -39,14 +39,14 @@ export function MobileNav() {
               key={item.href}
               to={item.href}
               className={cn(
-                "flex flex-col items-center justify-center gap-1 px-3 py-2 transition-colors",
+                "flex flex-col items-center justify-center gap-1 px-3 py-2 transition-all",
                 isActive
                   ? "text-primary"
                   : "text-muted-foreground hover:text-foreground"
               )}
             >
-              <Icon className="h-5 w-5" />
-              <span className="text-xs font-medium">{item.label}</span>
+              <Icon className={cn("h-5 w-5", isActive && "scale-110")} />
+              <span className="text-[10px] font-semibold">{item.label}</span>
             </Link>
           );
         })}
