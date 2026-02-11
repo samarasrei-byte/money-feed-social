@@ -156,6 +156,9 @@ export type Database = {
           id: string
           members_count: number
           name: string
+          pinned_post_id: string | null
+          rules: string | null
+          theme: string | null
         }
         Insert: {
           cover_url?: string | null
@@ -165,6 +168,9 @@ export type Database = {
           id?: string
           members_count?: number
           name: string
+          pinned_post_id?: string | null
+          rules?: string | null
+          theme?: string | null
         }
         Update: {
           cover_url?: string | null
@@ -174,8 +180,19 @@ export type Database = {
           id?: string
           members_count?: number
           name?: string
+          pinned_post_id?: string | null
+          rules?: string | null
+          theme?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "communities_pinned_post_id_fkey"
+            columns: ["pinned_post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       community_members: {
         Row: {
@@ -389,6 +406,7 @@ export type Database = {
       posts: {
         Row: {
           comments_count: number
+          community_id: string | null
           content: string
           created_at: string
           id: string
@@ -402,6 +420,7 @@ export type Database = {
         }
         Insert: {
           comments_count?: number
+          community_id?: string | null
           content: string
           created_at?: string
           id?: string
@@ -415,6 +434,7 @@ export type Database = {
         }
         Update: {
           comments_count?: number
+          community_id?: string | null
           content?: string
           created_at?: string
           id?: string
@@ -426,7 +446,15 @@ export type Database = {
           updated_at?: string
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "posts_community_id_fkey"
+            columns: ["community_id"]
+            isOneToOne: false
+            referencedRelation: "communities"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       profiles: {
         Row: {
