@@ -111,20 +111,24 @@ export default function Landing() {
         </div>
 
         {/* Nav */}
-        <nav className="relative z-20 container flex items-center justify-between px-4 py-5">
-          <div className="flex items-center">
-            <img src={logoImg} alt="OnlyShop" className="h-12 w-12 rounded-xl object-cover" />
-          </div>
-          <div className="flex items-center gap-3">
-            <Button asChild variant="ghost" size="sm" className="text-white/70 hover:text-white hover:bg-white/10">
-              <Link to="/install">
-                <Download className="h-4 w-4 mr-2" />
-                Instalar
-              </Link>
-            </Button>
-            <Button asChild size="sm" className="bg-gradient-primary border-0 glow-primary">
-              <Link to="/auth">Entrar</Link>
-            </Button>
+        <nav className="relative z-20 w-full backdrop-blur-xl bg-white/90 border-b border-white/20 shadow-sm">
+          <div className="container flex items-center justify-between px-4 py-3">
+            <div className="flex items-center gap-3">
+              <Button asChild variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
+                <Link to="/install">
+                  <Download className="h-4 w-4 mr-2" />
+                  Instalar
+                </Link>
+              </Button>
+            </div>
+            <div className="absolute left-1/2 -translate-x-1/2">
+              <img src={logoImg} alt="OnlyShop" className="h-14 w-14 rounded-2xl object-cover shadow-lg ring-2 ring-white/50" />
+            </div>
+            <div className="flex items-center gap-3">
+              <Button asChild size="sm" className="bg-gradient-primary border-0 glow-primary">
+                <Link to="/auth">Entrar</Link>
+              </Button>
+            </div>
           </div>
         </nav>
 
@@ -156,7 +160,7 @@ export default function Landing() {
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="w-full sm:w-auto border-white/20 text-white hover:bg-white/10 h-13 px-8 rounded-2xl">
+                <Button asChild size="lg" variant="outline" className="w-full sm:w-auto bg-white border-white/20 text-primary hover:bg-white/90 hover:text-primary h-13 px-8 rounded-2xl font-semibold">
                   <Link to="#plans">Ver planos</Link>
                 </Button>
               </div>
