@@ -392,6 +392,8 @@ export type Database = {
           content: string
           created_at: string
           id: string
+          label: string | null
+          label_metadata: Json | null
           likes_count: number
           media_url: string | null
           post_type: Database["public"]["Enums"]["post_type"]
@@ -403,6 +405,8 @@ export type Database = {
           content: string
           created_at?: string
           id?: string
+          label?: string | null
+          label_metadata?: Json | null
           likes_count?: number
           media_url?: string | null
           post_type?: Database["public"]["Enums"]["post_type"]
@@ -414,6 +418,8 @@ export type Database = {
           content?: string
           created_at?: string
           id?: string
+          label?: string | null
+          label_metadata?: Json | null
           likes_count?: number
           media_url?: string | null
           post_type?: Database["public"]["Enums"]["post_type"]
