@@ -20,6 +20,7 @@ import Affiliate from "./pages/Affiliate";
 import Install from "./pages/Install";
 import Admin from "./pages/Admin";
 import BrandArea from "./pages/BrandArea";
+import Products from "./pages/Products";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -47,6 +48,7 @@ const App = () => (
               <Route path="/affiliate" element={<Affiliate />} />
               <Route path="/admin" element={<Admin />} />
               <Route path="/brands" element={<BrandArea />} />
+              <Route path="/products" element={<Products />} />
               <Route path="/create" element={<Feed />} />
             </Route>
 
