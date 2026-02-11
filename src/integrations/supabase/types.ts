@@ -74,6 +74,143 @@ export type Database = {
         }
         Relationships: []
       }
+      brands: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          logo_url: string | null
+          name: string
+          slug: string
+          status: string
+          updated_at: string
+          user_id: string
+          verified: boolean
+          website: string | null
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          logo_url?: string | null
+          name: string
+          slug: string
+          status?: string
+          updated_at?: string
+          user_id: string
+          verified?: boolean
+          website?: string | null
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          logo_url?: string | null
+          name?: string
+          slug?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+          verified?: boolean
+          website?: string | null
+        }
+        Relationships: []
+      }
+      campaign_affiliates: {
+        Row: {
+          applied_at: string
+          approved_at: string | null
+          campaign_id: string
+          id: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          applied_at?: string
+          approved_at?: string | null
+          campaign_id: string
+          id?: string
+          status?: string
+          user_id: string
+        }
+        Update: {
+          applied_at?: string
+          approved_at?: string | null
+          campaign_id?: string
+          id?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaign_affiliates_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      campaigns: {
+        Row: {
+          bonus_percentage: number | null
+          brand_id: string
+          created_at: string
+          description: string | null
+          ends_at: string | null
+          id: string
+          max_affiliates: number | null
+          name: string
+          product_id: string | null
+          starts_at: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          bonus_percentage?: number | null
+          brand_id: string
+          created_at?: string
+          description?: string | null
+          ends_at?: string | null
+          id?: string
+          max_affiliates?: number | null
+          name: string
+          product_id?: string | null
+          starts_at?: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          bonus_percentage?: number | null
+          brand_id?: string
+          created_at?: string
+          description?: string | null
+          ends_at?: string | null
+          id?: string
+          max_affiliates?: number | null
+          name?: string
+          product_id?: string | null
+          starts_at?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaigns_brand_id_fkey"
+            columns: ["brand_id"]
+            isOneToOne: false
+            referencedRelation: "brands"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaigns_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       comments: {
         Row: {
           content: string
@@ -452,6 +589,68 @@ export type Database = {
             columns: ["community_id"]
             isOneToOne: false
             referencedRelation: "communities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      products: {
+        Row: {
+          active: boolean
+          brand_id: string
+          category: string | null
+          commission_type: string
+          commission_value: number
+          created_at: string
+          currency: string
+          description: string | null
+          id: string
+          image_url: string | null
+          name: string
+          price: number
+          promo_materials: Json | null
+          updated_at: string
+          video_url: string | null
+        }
+        Insert: {
+          active?: boolean
+          brand_id: string
+          category?: string | null
+          commission_type?: string
+          commission_value?: number
+          created_at?: string
+          currency?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name: string
+          price?: number
+          promo_materials?: Json | null
+          updated_at?: string
+          video_url?: string | null
+        }
+        Update: {
+          active?: boolean
+          brand_id?: string
+          category?: string | null
+          commission_type?: string
+          commission_value?: number
+          created_at?: string
+          currency?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          price?: number
+          promo_materials?: Json | null
+          updated_at?: string
+          video_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "products_brand_id_fkey"
+            columns: ["brand_id"]
+            isOneToOne: false
+            referencedRelation: "brands"
             referencedColumns: ["id"]
           },
         ]
