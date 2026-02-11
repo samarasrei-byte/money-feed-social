@@ -143,6 +143,7 @@ export function Header() {
                 <DropdownMenuItem asChild><Link to="/profile">Meu Perfil</Link></DropdownMenuItem>
                 <DropdownMenuItem asChild><Link to="/affiliate">Painel Afiliados</Link></DropdownMenuItem>
                 <DropdownMenuItem asChild><Link to="/brands">Área de Marcas</Link></DropdownMenuItem>
+                <DropdownMenuItem asChild><Link to="/products">Produtos</Link></DropdownMenuItem>
                 {userRole?.role === "admin" && (
                   <DropdownMenuItem asChild>
                     <Link to="/admin" className="flex items-center gap-2"><Shield className="h-4 w-4" />Painel Admin</Link>
