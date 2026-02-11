@@ -17,7 +17,6 @@ import {
   Users,
   Crown,
   Send,
-  Image as ImageIcon,
   Loader2,
   Heart,
   MessageCircle,
@@ -27,6 +26,7 @@ import {
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
+import { usePullToRefresh } from "@/hooks/usePullToRefresh";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
@@ -93,7 +93,6 @@ export default function CommunityDetail() {
     })();
   }, [id, navigate, toast]);
 
-  // Enrich posts with profiles + likes
   const enrichPosts = useCallback(
     async (postsData: any[]) => {
       const userIds = [...new Set(postsData.map((p) => p.user_id))];
@@ -129,7 +128,6 @@ export default function CommunityDetail() {
     [user]
   );
 
-  // Fetch posts
   const fetchPosts = useCallback(async () => {
     if (!id) return;
     setLoadingPosts(true);
@@ -178,7 +176,11 @@ export default function CommunityDetail() {
 
   const sentinelRef = useInfiniteScroll(loadMore, { enabled: hasMore && !loadingMore });
 
-  // Create post
+  // Pull to refresh
+  const { containerRef, pullDistance, refreshing } = usePullToRefresh({
+    onRefresh: async () => { await fetchPosts(); },
+  });
+
   const handlePost = async () => {
     if (!newPost.trim() || !user || !id) return;
     setPosting(true);
@@ -198,7 +200,6 @@ export default function CommunityDetail() {
     }
   };
 
-  // Like
   const handleLike = async (postId: string, isLiked: boolean) => {
     if (!user) return;
     setPosts((prev) =>
@@ -242,7 +243,18 @@ export default function CommunityDetail() {
   }
 
   return (
-    <div className="max-w-lg mx-auto pb-20">
+    <div ref={containerRef} className="max-w-lg mx-auto pb-20 overflow-auto">
+      {/* Pull to refresh */}
+      <div
+        className="flex justify-center items-center overflow-hidden transition-all duration-200"
+        style={{ height: pullDistance > 0 ? pullDistance : 0 }}
+      >
+        <Loader2
+          className={`h-5 w-5 text-primary transition-transform ${refreshing ? "animate-spin" : ""}`}
+          style={{ transform: `rotate(${pullDistance * 3}deg)` }}
+        />
+      </div>
+
       {/* Top Bar */}
       <div className="sticky top-0 z-20 bg-background/95 backdrop-blur-sm border-b border-border px-4 py-3 flex items-center gap-3">
         <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0" onClick={() => navigate("/communities")}>
@@ -319,7 +331,6 @@ export default function CommunityDetail() {
         <div className="divide-y divide-border">
           {posts.map((post) => (
             <div key={post.id} className="px-4 py-4 space-y-3 animate-fade-in">
-              {/* Author */}
               <div className="flex items-center gap-2.5">
                 <Avatar className="h-9 w-9">
                   <AvatarImage src={post.profile?.avatar_url || undefined} />
@@ -337,34 +348,17 @@ export default function CommunityDetail() {
                   </p>
                 </div>
               </div>
-
-              {/* Content */}
               <p className="text-sm leading-relaxed">{post.content}</p>
-
               {post.media_url && (
-                <img
-                  src={post.media_url}
-                  alt=""
-                  className="rounded-xl w-full max-h-80 object-cover"
-                  loading="lazy"
-                />
+                <img src={post.media_url} alt="" className="rounded-xl w-full max-h-80 object-cover" loading="lazy" />
               )}
-
-              {/* Actions */}
               <div className="flex items-center gap-5">
                 <button
                   onClick={() => handleLike(post.id, post.isLiked)}
                   className="flex items-center gap-1.5 text-xs text-muted-foreground transition-colors active:scale-95"
                 >
-                  <Heart
-                    className={cn(
-                      "h-4 w-4 transition-colors",
-                      post.isLiked && "fill-primary text-primary"
-                    )}
-                  />
-                  <span className={cn(post.isLiked && "text-primary font-medium")}>
-                    {post.likes_count}
-                  </span>
+                  <Heart className={cn("h-4 w-4 transition-colors", post.isLiked && "fill-primary text-primary")} />
+                  <span className={cn(post.isLiked && "text-primary font-medium")}>{post.likes_count}</span>
                 </button>
                 <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
                   <MessageCircle className="h-4 w-4" />
@@ -373,10 +367,7 @@ export default function CommunityDetail() {
                 <button
                   className="flex items-center gap-1.5 text-xs text-muted-foreground active:scale-95"
                   onClick={async () => {
-                    try {
-                      await navigator.clipboard.writeText(window.location.href);
-                      toast({ title: "Link copiado!" });
-                    } catch {}
+                    try { await navigator.clipboard.writeText(window.location.href); toast({ title: "Link copiado!" }); } catch {}
                   }}
                 >
                   <Share2 className="h-4 w-4" />
@@ -387,15 +378,11 @@ export default function CommunityDetail() {
         </div>
       )}
 
-      {/* Infinite scroll sentinel */}
       <div ref={sentinelRef} className="py-4 flex justify-center">
         {loadingMore && <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />}
-        {!hasMore && posts.length > 0 && (
-          <p className="text-[11px] text-muted-foreground">Você viu tudo 🎉</p>
-        )}
+        {!hasMore && posts.length > 0 && <p className="text-[11px] text-muted-foreground">Você viu tudo 🎉</p>}
       </div>
 
-      {/* Rules Sheet */}
       <Sheet open={showRules} onOpenChange={setShowRules}>
         <SheetContent side="bottom" className="h-[50vh] rounded-t-3xl">
           <SheetHeader>

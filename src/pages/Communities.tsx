@@ -2,8 +2,9 @@ import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import { Search, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { usePullToRefresh } from "@/hooks/usePullToRefresh";
 import { CommunityThemeTabs } from "@/components/communities/CommunityThemeTabs";
 import { CommunityCard } from "@/components/communities/CommunityCard";
 import { CommunitySkeleton } from "@/components/communities/CommunitySkeleton";
@@ -80,12 +81,15 @@ export default function Communities() {
 
   useEffect(() => { fetchCommunities(); }, [fetchCommunities]);
 
+  const { containerRef, pullDistance, refreshing } = usePullToRefresh({
+    onRefresh: async () => { await fetchCommunities(); },
+  });
+
   const handleJoinLeave = async (communityId: string, isMember: boolean) => {
     if (!user) {
       toast({ title: "Faça login", description: "Você precisa estar logado para participar" });
       return;
     }
-
     try {
       if (isMember) {
         await supabase.from("community_members").delete()
@@ -115,7 +119,18 @@ export default function Communities() {
   if (loading) return <CommunitySkeleton />;
 
   return (
-    <div className="max-w-lg mx-auto pb-20 space-y-5">
+    <div ref={containerRef} className="max-w-lg mx-auto pb-20 space-y-5 overflow-auto">
+      {/* Pull to refresh indicator */}
+      <div
+        className="flex justify-center items-center overflow-hidden transition-all duration-200"
+        style={{ height: pullDistance > 0 ? pullDistance : 0 }}
+      >
+        <Loader2
+          className={`h-5 w-5 text-primary transition-transform ${refreshing ? "animate-spin" : ""}`}
+          style={{ transform: `rotate(${pullDistance * 3}deg)` }}
+        />
+      </div>
+
       {/* Header */}
       <div className="flex items-center justify-between px-4 pt-2">
         <div>
