@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { VerifiedBadge } from "./VerifiedBadge";
 import { AffiliateButton } from "./AffiliateButton";
 import { PostActions } from "./PostActions";
+import { PostLabel, type PostLabelType } from "./PostLabel";
+import { PublicMetrics } from "./PublicMetrics";
 import { Play, Pause, Volume2, VolumeX } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { formatDistanceToNow } from "date-fns";
@@ -20,6 +22,8 @@ export interface PostData {
   userId: string;
   isLiked?: boolean;
   isSaved?: boolean;
+  label?: PostLabelType | null;
+  labelMetadata?: Record<string, any> | null;
   profile?: {
     username: string;
     displayName: string;
@@ -135,6 +139,14 @@ export function InstagramPost({
         </Button>
       </div>
 
+      {/* Post Label */}
+      {post.label && (
+        <PostLabel
+          label={post.label}
+          metadata={post.labelMetadata || undefined}
+        />
+      )}
+
       {/* Media */}
       {post.postType === "image" && post.mediaUrl && !imageError && (
         <div
@@ -238,6 +250,15 @@ export function InstagramPost({
             )}
           </p>
         </div>
+      )}
+
+      {/* Public Metrics for labeled posts */}
+      {post.label && post.labelMetadata && (
+        <PublicMetrics
+          earnings={post.labelMetadata.amount}
+          clicks={post.labelMetadata.clicks}
+          views={post.labelMetadata.views}
+        />
       )}
 
       {/* Affiliate CTA */}

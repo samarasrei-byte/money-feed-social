@@ -39,6 +39,8 @@ export default function Feed() {
           userId: post.user_id,
           isLiked: likedPostIds.has(post.id),
           isSaved: false,
+          label: (post as any).label || null,
+          labelMetadata: (post as any).label_metadata || null,
           profile: p
             ? { username: p.username || "user", displayName: p.display_name || "Usuário", avatarUrl: p.avatar_url || undefined, isVerified: false }
             : undefined,
