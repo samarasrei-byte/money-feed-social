@@ -160,8 +160,13 @@ export default function Landing() {
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="w-full sm:w-auto bg-white border-white/20 text-primary hover:bg-white/90 hover:text-primary h-13 px-8 rounded-2xl font-semibold">
-                  <Link to="#plans">Ver planos</Link>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="w-full sm:w-auto bg-white border-white/20 text-primary hover:bg-white/90 hover:text-primary h-13 px-8 rounded-2xl font-semibold"
+                  onClick={() => document.getElementById("plans")?.scrollIntoView({ behavior: "smooth" })}
+                >
+                  Ver planos
                 </Button>
               </div>
 
