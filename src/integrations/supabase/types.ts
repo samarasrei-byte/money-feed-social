@@ -833,6 +833,122 @@ export type Database = {
           },
         ]
       }
+      tiktok_connections: {
+        Row: {
+          access_token: string | null
+          avatar_url: string | null
+          created_at: string
+          display_name: string | null
+          followers_count: number | null
+          following_count: number | null
+          id: string
+          is_verified: boolean | null
+          last_synced_at: string | null
+          likes_count: number | null
+          refresh_token: string | null
+          scopes: string[] | null
+          tiktok_user_id: string | null
+          tiktok_username: string | null
+          token_expires_at: string | null
+          updated_at: string
+          user_id: string
+          video_count: number | null
+        }
+        Insert: {
+          access_token?: string | null
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          followers_count?: number | null
+          following_count?: number | null
+          id?: string
+          is_verified?: boolean | null
+          last_synced_at?: string | null
+          likes_count?: number | null
+          refresh_token?: string | null
+          scopes?: string[] | null
+          tiktok_user_id?: string | null
+          tiktok_username?: string | null
+          token_expires_at?: string | null
+          updated_at?: string
+          user_id: string
+          video_count?: number | null
+        }
+        Update: {
+          access_token?: string | null
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          followers_count?: number | null
+          following_count?: number | null
+          id?: string
+          is_verified?: boolean | null
+          last_synced_at?: string | null
+          likes_count?: number | null
+          refresh_token?: string | null
+          scopes?: string[] | null
+          tiktok_user_id?: string | null
+          tiktok_username?: string | null
+          token_expires_at?: string | null
+          updated_at?: string
+          user_id?: string
+          video_count?: number | null
+        }
+        Relationships: []
+      }
+      tiktok_posts: {
+        Row: {
+          affiliate_link_id: string | null
+          caption: string | null
+          comments_count: number | null
+          created_at: string
+          id: string
+          likes_count: number | null
+          shares_count: number | null
+          status: string
+          tiktok_video_id: string | null
+          updated_at: string
+          user_id: string
+          views_count: number | null
+        }
+        Insert: {
+          affiliate_link_id?: string | null
+          caption?: string | null
+          comments_count?: number | null
+          created_at?: string
+          id?: string
+          likes_count?: number | null
+          shares_count?: number | null
+          status?: string
+          tiktok_video_id?: string | null
+          updated_at?: string
+          user_id: string
+          views_count?: number | null
+        }
+        Update: {
+          affiliate_link_id?: string | null
+          caption?: string | null
+          comments_count?: number | null
+          created_at?: string
+          id?: string
+          likes_count?: number | null
+          shares_count?: number | null
+          status?: string
+          tiktok_video_id?: string | null
+          updated_at?: string
+          user_id?: string
+          views_count?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tiktok_posts_affiliate_link_id_fkey"
+            columns: ["affiliate_link_id"]
+            isOneToOne: false
+            referencedRelation: "affiliate_links"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_badges: {
         Row: {
           badge_id: string
