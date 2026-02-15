@@ -249,8 +249,8 @@ export default function Affiliate() {
           Upgrade para o plano Partner ou superior para acessar links de afiliado, 
           métricas e comissões
         </p>
-        <Button className="bg-gradient-primary">
-          Ver Planos
+        <Button asChild className="bg-gradient-primary">
+          <a href="/#plans">Ver Planos</a>
         </Button>
       </div>
     );
