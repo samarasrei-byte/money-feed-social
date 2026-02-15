@@ -39,21 +39,22 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur-md border-b border-border/40 safe-area-inset-top">
-      <div className="container flex h-11 items-center justify-between px-4">
+    <header className="sticky top-0 z-50 w-full glass safe-area-inset-top">
+      <div className="flex h-12 items-center justify-between px-4 max-w-2xl mx-auto">
         {/* Logo */}
-        <Link to="/feed" className="flex items-center">
-          <img src={logoImg} alt="OnlyShop" className="h-8 w-8 rounded-lg object-cover" />
+        <Link to="/feed" className="flex items-center gap-2">
+          <img src={logoImg} alt={APP_NAME} className="h-7 w-7 rounded-lg object-cover" />
+          <span className="font-bold text-sm hidden sm:block tracking-tight">{APP_NAME}</span>
         </Link>
 
         {/* Search - Desktop */}
-        <div className="hidden md:flex flex-1 max-w-sm mx-6">
+        <div className="hidden md:flex flex-1 max-w-xs mx-6">
           <div className="relative w-full">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground/50" />
             <input
               type="text"
               placeholder="Buscar..."
-              className="w-full h-8 pl-9 pr-4 rounded-lg bg-muted/40 border-0 text-xs focus:outline-none focus:ring-1 focus:ring-primary/30 transition-all placeholder:text-muted-foreground/60"
+              className="w-full h-8 pl-9 pr-4 rounded-full bg-muted/50 border-0 text-xs focus:outline-none focus:ring-1 focus:ring-primary/20 transition-all placeholder:text-muted-foreground/40"
             />
           </div>
         </div>
@@ -64,19 +65,19 @@ export function Header() {
             <InstallPrompt variant="compact" />
           </div>
 
-          <Button variant="ghost" size="icon" className="md:hidden h-8 w-8 rounded-lg">
+          <Button variant="ghost" size="icon" className="md:hidden h-8 w-8 rounded-full text-muted-foreground">
             <Search className="h-4 w-4" />
           </Button>
 
           {user && (
             <>
-              <Button variant="ghost" size="icon" asChild className="h-8 w-8 rounded-lg">
+              <Button variant="ghost" size="icon" asChild className="h-8 w-8 rounded-full text-muted-foreground">
                 <Link to="/chat">
                   <MessageSquare className="h-4 w-4" />
                 </Link>
               </Button>
               <CartSheet />
-              <Button variant="ghost" size="icon" asChild className="h-8 w-8 rounded-lg">
+              <Button variant="ghost" size="icon" asChild className="h-8 w-8 rounded-full text-muted-foreground">
                 <Link to="/affiliate">
                   <Link2 className="h-4 w-4" />
                 </Link>
@@ -87,42 +88,40 @@ export function Header() {
           {/* Notifications */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="relative h-8 w-8 rounded-lg" onClick={markAllRead}>
+              <Button variant="ghost" size="icon" className="relative h-8 w-8 rounded-full text-muted-foreground" onClick={markAllRead}>
                 <Bell className="h-4 w-4" />
                 {unreadCount > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 h-4 w-4 bg-gradient-primary text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                  <span className="absolute -top-0.5 -right-0.5 h-4 min-w-4 bg-primary text-primary-foreground text-[9px] font-bold rounded-full flex items-center justify-center px-1">
                     {unreadCount > 9 ? "9+" : unreadCount}
                   </span>
                 )}
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-72 rounded-xl">
-              <div className="px-3 py-2 border-b border-border">
-                <p className="text-sm font-semibold">Notificações</p>
+            <DropdownMenuContent align="end" className="w-72 rounded-2xl border-border/30 shadow-lg">
+              <div className="px-3 py-2 border-b border-border/30">
+                <p className="text-xs font-semibold">Notificações</p>
               </div>
-              <ScrollArea className="max-h-80">
+              <ScrollArea className="max-h-72">
                 {notifications.length === 0 ? (
-                  <div className="px-3 py-6 text-center text-sm text-muted-foreground">
+                  <div className="px-3 py-8 text-center text-xs text-muted-foreground">
                     Nenhuma notificação
                   </div>
                 ) : (
                   notifications.slice(0, 20).map((n) => (
-                    <DropdownMenuItem key={n.id} className="flex items-start gap-3 px-3 py-2.5 cursor-pointer">
-                      <Avatar className="h-8 w-8 shrink-0 mt-0.5">
+                    <DropdownMenuItem key={n.id} className="flex items-start gap-2.5 px-3 py-2 cursor-pointer">
+                      <Avatar className="h-7 w-7 shrink-0 mt-0.5">
                         <AvatarImage src={n.actor?.avatarUrl} />
-                        <AvatarFallback className="text-xs bg-gradient-primary text-white">
+                        <AvatarFallback className="text-[9px] bg-muted text-muted-foreground font-semibold">
                           {(n.actor?.displayName || "U").slice(0, 2).toUpperCase()}
                         </AvatarFallback>
                       </Avatar>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm leading-tight">
-                          {notifText(n.type, n.actor?.displayName)}
-                        </p>
-                        <p className="text-xs text-muted-foreground mt-0.5">
+                        <p className="text-xs leading-snug">{notifText(n.type, n.actor?.displayName)}</p>
+                        <p className="text-[10px] text-muted-foreground mt-0.5">
                           {formatDistanceToNow(new Date(n.createdAt), { addSuffix: true, locale: ptBR })}
                         </p>
                       </div>
-                      {!n.read && <div className="h-2 w-2 rounded-full bg-gradient-primary shrink-0 mt-1.5" />}
+                      {!n.read && <div className="h-1.5 w-1.5 rounded-full bg-primary shrink-0 mt-2" />}
                     </DropdownMenuItem>
                   ))
                 )}
@@ -134,8 +133,8 @@ export function Header() {
           {user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="rounded-full">
-                  <Avatar className="h-7 w-7 ring-1.5 ring-border">
+                <Button variant="ghost" size="icon" className="rounded-full ml-0.5">
+                  <Avatar className="h-7 w-7">
                     <AvatarImage src={profile?.avatar_url || undefined} />
                     <AvatarFallback className="bg-muted text-foreground text-[10px] font-semibold">
                       {initials}
@@ -143,28 +142,28 @@ export function Header() {
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-52 rounded-xl">
-                <div className="px-2 py-1.5">
-                  <p className="text-sm font-medium">{profile?.display_name || "Usuário"}</p>
-                  <p className="text-xs text-muted-foreground">{user.email}</p>
+              <DropdownMenuContent align="end" className="w-48 rounded-2xl border-border/30 shadow-lg">
+                <div className="px-3 py-2">
+                  <p className="text-xs font-semibold truncate">{profile?.display_name || "Usuário"}</p>
+                  <p className="text-[10px] text-muted-foreground truncate">{user.email}</p>
                 </div>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild><Link to="/profile">Meu Perfil</Link></DropdownMenuItem>
-                <DropdownMenuItem asChild><Link to="/affiliate">Painel Afiliados</Link></DropdownMenuItem>
-                <DropdownMenuItem asChild><Link to="/brands">Área de Marcas</Link></DropdownMenuItem>
-                <DropdownMenuItem asChild><Link to="/products">Produtos</Link></DropdownMenuItem>
+                <DropdownMenuSeparator className="bg-border/30" />
+                <DropdownMenuItem asChild className="text-xs"><Link to="/profile">Meu Perfil</Link></DropdownMenuItem>
+                <DropdownMenuItem asChild className="text-xs"><Link to="/affiliate">Painel Afiliados</Link></DropdownMenuItem>
+                <DropdownMenuItem asChild className="text-xs"><Link to="/brands">Área de Marcas</Link></DropdownMenuItem>
+                <DropdownMenuItem asChild className="text-xs"><Link to="/products">Produtos</Link></DropdownMenuItem>
                 {userRole?.role === "admin" && (
-                  <DropdownMenuItem asChild>
-                    <Link to="/admin" className="flex items-center gap-2"><Shield className="h-4 w-4" />Painel Admin</Link>
+                  <DropdownMenuItem asChild className="text-xs">
+                    <Link to="/admin" className="flex items-center gap-2"><Shield className="h-3.5 w-3.5" />Painel Admin</Link>
                   </DropdownMenuItem>
                 )}
-                <DropdownMenuItem asChild><Link to="/install">Instalar App</Link></DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={signOut} className="text-destructive">Sair</DropdownMenuItem>
+                <DropdownMenuItem asChild className="text-xs"><Link to="/install">Instalar App</Link></DropdownMenuItem>
+                <DropdownMenuSeparator className="bg-border/30" />
+                <DropdownMenuItem onClick={signOut} className="text-xs text-destructive">Sair</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Button asChild size="sm" className="h-7 text-xs bg-primary hover:bg-primary/90 border-0 rounded-lg px-3">
+            <Button asChild size="sm" className="h-7 text-[11px] bg-foreground text-background hover:bg-foreground/90 border-0 rounded-full px-4 ml-1">
               <Link to="/auth">Entrar</Link>
             </Button>
           )}

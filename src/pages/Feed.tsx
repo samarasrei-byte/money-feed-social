@@ -196,8 +196,8 @@ export default function Feed() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-20">
-        <Loader2 className="h-6 w-6 animate-spin text-primary" />
+      <div className="flex items-center justify-center py-24">
+        <Loader2 className="h-5 w-5 animate-spin text-muted-foreground/30" />
       </div>
     );
   }
@@ -210,7 +210,7 @@ export default function Feed() {
         style={{ height: pullDistance > 0 ? pullDistance : 0 }}
       >
         <Loader2
-          className={`h-5 w-5 text-primary transition-transform ${pullRefreshing ? "animate-spin" : ""}`}
+          className={`h-4 w-4 text-muted-foreground/40 transition-transform ${pullRefreshing ? "animate-spin" : ""}`}
           style={{ transform: `rotate(${pullDistance * 3}deg)` }}
         />
       </div>
@@ -218,10 +218,13 @@ export default function Feed() {
       {/* Stories */}
       <StoriesBar />
 
+      {/* Divider */}
+      <div className="h-px bg-border/30" />
+
       {/* Posts */}
-      <div className="space-y-0">
+      <div>
         {posts.map((post, index) => (
-          <div key={post.id} className="animate-fade-in" style={{ animationDelay: `${index * 50}ms` }}>
+          <div key={post.id} className="animate-fade-in" style={{ animationDelay: `${Math.min(index * 30, 300)}ms` }}>
             <InstagramPost
               post={post}
               onLike={() => handleLike(post.id, !!post.isLiked)}
@@ -236,9 +239,9 @@ export default function Feed() {
       </div>
 
       {/* Infinite scroll sentinel */}
-      <div ref={sentinelRef} className="py-6 flex justify-center">
-        {loadingMore && <Loader2 className="h-5 w-5 animate-spin text-primary" />}
-        {!hasMore && posts.length > 0 && <p className="text-xs text-muted-foreground">Você viu tudo 🎉</p>}
+      <div ref={sentinelRef} className="py-8 flex justify-center">
+        {loadingMore && <Loader2 className="h-4 w-4 animate-spin text-muted-foreground/30" />}
+        {!hasMore && posts.length > 0 && <p className="text-[11px] text-muted-foreground/30">Você viu tudo ✨</p>}
       </div>
 
       {/* FAB */}
