@@ -23,6 +23,8 @@ import BrandArea from "./pages/BrandArea";
 import Products from "./pages/Products";
 import TikTok from "./pages/TikTok";
 import NotFound from "./pages/NotFound";
+import Terms from "./pages/Terms";
+import Privacy from "./pages/Privacy";
 
 const queryClient = new QueryClient();
 
@@ -38,6 +40,8 @@ const App = () => (
             <Route path="/" element={<Landing />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/install" element={<Install />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/privacy" element={<Privacy />} />
             
             {/* App routes with layout */}
             <Route element={<AppLayout />}>
