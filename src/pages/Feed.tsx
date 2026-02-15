@@ -7,9 +7,8 @@ import { CommentsSheet } from "@/components/feed/CommentsSheet";
 import { StoriesBar } from "@/components/feed/StoriesBar";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { usePullToRefresh } from "@/hooks/usePullToRefresh";
-import { Loader2, RefreshCw } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { Button } from "@/components/ui/button";
 
 const PAGE_SIZE = 15;
 
@@ -113,14 +112,12 @@ export default function Feed() {
 
   const sentinelRef = useInfiniteScroll(loadMore, { enabled: hasMore && !loadingMore });
 
-  // Pull to refresh
   const { containerRef, pullDistance, refreshing: pullRefreshing } = usePullToRefresh({
     onRefresh: async () => { await fetchPosts(true); },
   });
 
   useEffect(() => { fetchPosts(); }, [fetchPosts]);
 
-  // Create notification helper
   const createNotification = useCallback(async (targetUserId: string, type: string, postId: string) => {
     if (!user || user.id === targetUserId) return;
     try {
@@ -130,7 +127,7 @@ export default function Feed() {
         type,
         post_id: postId,
       });
-    } catch {}
+    } catch { }
   }, [user]);
 
   const handleLike = async (postId: string, isLiked: boolean) => {
@@ -165,7 +162,7 @@ export default function Feed() {
     try {
       if (navigator.share) await navigator.share(shareData);
       else { await navigator.clipboard.writeText(shareData.url); toast({ title: "Link copiado!" }); }
-    } catch {}
+    } catch { }
   };
 
   const handleComment = (postId: string) => setCommentsPostId(postId);
@@ -180,35 +177,27 @@ export default function Feed() {
     toast({ title: "Seguindo!", description: "Você começou a seguir este usuário" });
   };
 
-  const handleProfileClick = () => {};
+  const handleProfileClick = () => { };
 
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
       </div>
     );
   }
 
   return (
-    <div ref={containerRef} className="max-w-lg mx-auto pb-4 overflow-auto">
-      {/* Pull to refresh indicator */}
+    <div ref={containerRef} className="max-w-lg mx-auto overflow-auto hide-scrollbar">
+      {/* Pull to refresh */}
       <div
         className="flex justify-center items-center overflow-hidden transition-all duration-200"
         style={{ height: pullDistance > 0 ? pullDistance : 0 }}
       >
         <Loader2
-          className={`h-6 w-6 text-primary transition-transform ${pullRefreshing ? "animate-spin" : ""}`}
+          className={`h-5 w-5 text-muted-foreground transition-transform ${pullRefreshing ? "animate-spin" : ""}`}
           style={{ transform: `rotate(${pullDistance * 3}deg)` }}
         />
-      </div>
-
-      {/* Header */}
-      <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm border-b border-border px-3 py-2 flex items-center justify-between">
-        <h1 className="text-xl font-bold text-gradient-primary">Feed</h1>
-        <Button variant="ghost" size="icon" className="h-9 w-9" onClick={() => fetchPosts(true)} disabled={refreshing}>
-          <RefreshCw className={`h-5 w-5 ${refreshing ? "animate-spin" : ""}`} />
-        </Button>
       </div>
 
       {/* Stories */}
@@ -216,12 +205,12 @@ export default function Feed() {
 
       {/* Posts */}
       {posts.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-20 gap-4">
-          <p className="text-muted-foreground text-center">Nenhuma publicação ainda.<br />Seja o primeiro a postar!</p>
+        <div className="flex flex-col items-center justify-center py-20 gap-4 px-4">
+          <p className="text-muted-foreground text-center text-sm">Nenhuma publicação ainda.<br />Seja o primeiro a postar!</p>
           {user && <CreatePostDialog onPostCreated={() => fetchPosts()} />}
         </div>
       ) : (
-        <div className="divide-y divide-border">
+        <div className="divide-y divide-border/50">
           {posts.map((post) => (
             <InstagramPost
               key={post.id}
@@ -238,8 +227,8 @@ export default function Feed() {
       )}
 
       {/* Infinite scroll sentinel */}
-      <div ref={sentinelRef} className="py-4 flex justify-center">
-        {loadingMore && <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />}
+      <div ref={sentinelRef} className="py-6 flex justify-center">
+        {loadingMore && <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />}
         {!hasMore && posts.length > 0 && <p className="text-xs text-muted-foreground">Você viu tudo 🎉</p>}
       </div>
 
