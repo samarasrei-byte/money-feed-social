@@ -1,4 +1,4 @@
-import { Heart, MessageCircle, Send, Bookmark, UserPlus } from "lucide-react";
+import { Heart, MessageCircle, Send, Bookmark } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface PostActionsProps {
@@ -21,32 +21,33 @@ export function PostActions({
   commentsCount,
   isLiked,
   isSaved = false,
-  isFollowing = false,
   onLike,
   onComment,
   onShare,
   onSave,
-  onFollow,
   vertical = false,
   className,
 }: PostActionsProps) {
   if (vertical) {
     return (
-      <div className={cn("flex flex-col items-center gap-4", className)}>
-        <button onClick={onLike} className="flex flex-col items-center gap-1" aria-label="Curtir">
-          <Heart className={cn("h-7 w-7 transition-transform active:scale-125", isLiked && "fill-accent text-accent")} />
-          {likesCount > 0 && <span className="text-[11px] font-medium">{formatCount(likesCount)}</span>}
+      <div className={cn("flex flex-col items-center gap-5", className)}>
+        <button onClick={onLike} className="flex flex-col items-center gap-1 group" aria-label="Curtir">
+          <Heart className={cn(
+            "h-7 w-7 transition-all duration-200 group-active:scale-125",
+            isLiked ? "fill-red-500 text-red-500" : "text-foreground"
+          )} />
+          {likesCount > 0 && <span className="text-[10px] font-semibold">{formatCount(likesCount)}</span>}
         </button>
-        <button onClick={onComment} className="flex flex-col items-center gap-1" aria-label="Comentar">
-          <MessageCircle className="h-7 w-7" />
-          {commentsCount > 0 && <span className="text-[11px] font-medium">{formatCount(commentsCount)}</span>}
+        <button onClick={onComment} className="flex flex-col items-center gap-1 group" aria-label="Comentar">
+          <MessageCircle className="h-7 w-7 group-active:scale-110 transition-transform" />
+          {commentsCount > 0 && <span className="text-[10px] font-semibold">{formatCount(commentsCount)}</span>}
         </button>
-        <button onClick={onShare} aria-label="Compartilhar">
-          <Send className="h-7 w-7" />
+        <button onClick={onShare} className="group" aria-label="Compartilhar">
+          <Send className="h-7 w-7 group-active:scale-110 transition-transform" />
         </button>
         {onSave && (
-          <button onClick={onSave} aria-label="Salvar">
-            <Bookmark className={cn("h-7 w-7", isSaved && "fill-current")} />
+          <button onClick={onSave} className="group" aria-label="Salvar">
+            <Bookmark className={cn("h-7 w-7 group-active:scale-110 transition-transform", isSaved && "fill-foreground")} />
           </button>
         )}
       </div>
@@ -55,29 +56,26 @@ export function PostActions({
 
   return (
     <div className={cn("flex items-center justify-between", className)}>
-      <div className="flex items-center gap-3.5">
-        <button
-          onClick={onLike}
-          className="active:scale-110 transition-transform"
-          aria-label="Curtir"
-        >
-          <Heart
-            className={cn(
-              "h-[22px] w-[22px] transition-all",
-              isLiked ? "fill-destructive text-destructive scale-105" : "hover:text-muted-foreground"
-            )}
-          />
+      <div className="flex items-center gap-4">
+        <button onClick={onLike} className="group" aria-label="Curtir">
+          <Heart className={cn(
+            "h-6 w-6 transition-all duration-200 group-active:scale-125",
+            isLiked ? "fill-red-500 text-red-500" : "text-foreground hover:text-foreground/60"
+          )} />
         </button>
-        <button onClick={onComment} className="active:scale-110 transition-transform" aria-label="Comentar">
-          <MessageCircle className="h-[22px] w-[22px] hover:text-muted-foreground transition-colors" />
+        <button onClick={onComment} className="group" aria-label="Comentar">
+          <MessageCircle className="h-6 w-6 text-foreground hover:text-foreground/60 transition-colors group-active:scale-110" />
         </button>
-        <button onClick={onShare} className="active:scale-110 transition-transform" aria-label="Compartilhar">
-          <Send className="h-[22px] w-[22px] hover:text-muted-foreground transition-colors" />
+        <button onClick={onShare} className="group" aria-label="Compartilhar">
+          <Send className="h-6 w-6 text-foreground hover:text-foreground/60 transition-colors group-active:scale-110" />
         </button>
       </div>
       {onSave && (
-        <button onClick={onSave} className="active:scale-110 transition-transform" aria-label="Salvar">
-          <Bookmark className={cn("h-[22px] w-[22px] transition-all", isSaved && "fill-foreground")} />
+        <button onClick={onSave} className="group" aria-label="Salvar">
+          <Bookmark className={cn(
+            "h-6 w-6 transition-all duration-200 group-active:scale-110",
+            isSaved ? "fill-foreground text-foreground" : "text-foreground hover:text-foreground/60"
+          )} />
         </button>
       )}
     </div>

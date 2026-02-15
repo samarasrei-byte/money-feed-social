@@ -14,15 +14,15 @@ export default function Chat() {
 
   if (!user) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 px-4 text-center gap-4">
-        <div className="h-16 w-16 rounded-2xl bg-gradient-primary flex items-center justify-center">
-          <MessageSquare className="h-8 w-8 text-white" />
+      <div className="flex flex-col items-center justify-center py-24 px-4 text-center gap-4">
+        <div className="h-14 w-14 rounded-2xl bg-muted/30 flex items-center justify-center">
+          <MessageSquare className="h-6 w-6 text-muted-foreground/20" />
         </div>
-        <h2 className="text-xl font-bold">Mensagens</h2>
-        <p className="text-muted-foreground text-sm max-w-xs">
-          Faça login para acessar suas mensagens e conversar com outros usuários.
+        <h2 className="text-base font-bold">Mensagens</h2>
+        <p className="text-xs text-muted-foreground/40 max-w-xs">
+          Faça login para acessar suas mensagens.
         </p>
-        <Button asChild className="bg-gradient-primary border-0 rounded-xl">
+        <Button asChild size="sm" className="rounded-full bg-foreground text-background">
           <Link to="/auth">Entrar</Link>
         </Button>
       </div>
@@ -35,24 +35,17 @@ export default function Chat() {
       <ChatView
         conversationId={activeConversationId}
         participant={conv?.participant}
-        onBack={() => {
-          setActiveConversationId(null);
-          fetchConversations();
-        }}
+        onBack={() => { setActiveConversationId(null); fetchConversations(); }}
       />
     );
   }
 
   return (
     <div className="max-w-lg mx-auto">
-      <div className="px-4 py-4 border-b border-border/30">
-        <h1 className="text-xl font-bold">Mensagens</h1>
+      <div className="px-4 py-5">
+        <h1 className="text-lg font-bold tracking-tight">Mensagens</h1>
       </div>
-      <ConversationList
-        conversations={conversations}
-        loading={loading}
-        onSelect={(id) => setActiveConversationId(id)}
-      />
+      <ConversationList conversations={conversations} loading={loading} onSelect={(id) => setActiveConversationId(id)} />
     </div>
   );
 }
