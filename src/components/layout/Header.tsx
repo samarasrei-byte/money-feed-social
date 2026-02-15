@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { Bell, Search, Link2, Shield } from "lucide-react";
+import { Bell, Search, Link2, Shield, MessageSquare } from "lucide-react";
+import { CartSheet } from "@/components/cart/CartSheet";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { useNotifications } from "@/hooks/useNotifications";
@@ -68,11 +69,19 @@ export function Header() {
           </Button>
 
           {user && (
-            <Button variant="ghost" size="icon" asChild className="rounded-xl">
-              <Link to="/affiliate">
-                <Link2 className="h-5 w-5" />
-              </Link>
-            </Button>
+            <>
+              <Button variant="ghost" size="icon" asChild className="rounded-xl">
+                <Link to="/chat">
+                  <MessageSquare className="h-5 w-5" />
+                </Link>
+              </Button>
+              <CartSheet />
+              <Button variant="ghost" size="icon" asChild className="rounded-xl">
+                <Link to="/affiliate">
+                  <Link2 className="h-5 w-5" />
+                </Link>
+              </Button>
+            </>
           )}
 
           {/* Notifications */}

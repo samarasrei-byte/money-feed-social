@@ -22,6 +22,8 @@ import Admin from "./pages/Admin";
 import BrandArea from "./pages/BrandArea";
 import Products from "./pages/Products";
 import TikTok from "./pages/TikTok";
+import Chat from "./pages/Chat";
+import Checkout from "./pages/Checkout";
 import NotFound from "./pages/NotFound";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
@@ -55,6 +57,8 @@ const App = () => (
               <Route path="/brands" element={<BrandArea />} />
               <Route path="/products" element={<Products />} />
               <Route path="/tiktok" element={<TikTok />} />
+              <Route path="/chat" element={<Chat />} />
+              <Route path="/checkout" element={<Checkout />} />
               <Route path="/create" element={<Feed />} />
             </Route>
 
