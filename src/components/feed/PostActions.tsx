@@ -1,5 +1,4 @@
-import { Heart, MessageCircle, Share2, Bookmark, UserPlus } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Heart, MessageCircle, Send, Bookmark, UserPlus } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface PostActionsProps {
@@ -31,107 +30,62 @@ export function PostActions({
   vertical = false,
   className,
 }: PostActionsProps) {
-  const formatCount = (count: number) => {
-    if (count >= 1000000) return `${(count / 1000000).toFixed(1)}M`;
-    if (count >= 1000) return `${(count / 1000).toFixed(1)}K`;
-    return count.toString();
-  };
-
-  const ActionButton = ({
-    icon: Icon,
-    count,
-    isActive,
-    activeClass,
-    onClick,
-    label,
-  }: {
-    icon: React.ElementType;
-    count?: number;
-    isActive?: boolean;
-    activeClass?: string;
-    onClick: () => void;
-    label: string;
-  }) => (
-    <Button
-      variant="ghost"
-      size="sm"
-      className={cn(
-        "flex gap-1.5 transition-all duration-200",
-        vertical ? "flex-col h-auto py-2 px-3" : "flex-row h-9",
-        isActive && activeClass
-      )}
-      onClick={onClick}
-      aria-label={label}
-    >
-      <Icon
-        className={cn(
-          "transition-transform duration-200",
-          vertical ? "h-6 w-6" : "h-5 w-5",
-          isActive && "scale-110 fill-current"
+  if (vertical) {
+    return (
+      <div className={cn("flex flex-col items-center gap-4", className)}>
+        <button onClick={onLike} className="flex flex-col items-center gap-1" aria-label="Curtir">
+          <Heart className={cn("h-7 w-7 transition-transform active:scale-125", isLiked && "fill-accent text-accent")} />
+          {likesCount > 0 && <span className="text-[11px] font-medium">{formatCount(likesCount)}</span>}
+        </button>
+        <button onClick={onComment} className="flex flex-col items-center gap-1" aria-label="Comentar">
+          <MessageCircle className="h-7 w-7" />
+          {commentsCount > 0 && <span className="text-[11px] font-medium">{formatCount(commentsCount)}</span>}
+        </button>
+        <button onClick={onShare} aria-label="Compartilhar">
+          <Send className="h-7 w-7" />
+        </button>
+        {onSave && (
+          <button onClick={onSave} aria-label="Salvar">
+            <Bookmark className={cn("h-7 w-7", isSaved && "fill-current")} />
+          </button>
         )}
-      />
-      {count !== undefined && (
-        <span className={cn("text-xs font-medium", vertical && "text-[10px]")}>
-          {formatCount(count)}
-        </span>
-      )}
-    </Button>
-  );
+      </div>
+    );
+  }
 
   return (
-    <div
-      className={cn(
-        "flex items-center",
-        vertical ? "flex-col gap-2" : "gap-1 w-full justify-between",
-        className
-      )}
-    >
-      <ActionButton
-        icon={Heart}
-        count={likesCount}
-        isActive={isLiked}
-        activeClass="text-accent"
-        onClick={onLike}
-        label="Curtir"
-      />
-
-      <ActionButton
-        icon={MessageCircle}
-        count={commentsCount}
-        onClick={onComment}
-        label="Comentar"
-      />
-
-      <ActionButton
-        icon={Share2}
-        onClick={onShare}
-        label="Compartilhar"
-      />
-
-      {onSave && (
-        <ActionButton
-          icon={Bookmark}
-          isActive={isSaved}
-          activeClass="text-primary"
-          onClick={onSave}
-          label="Salvar"
-        />
-      )}
-
-      {onFollow && !isFollowing && (
-        <Button
-          variant="ghost"
-          size="icon"
-          className={cn(
-            "rounded-full bg-primary text-primary-foreground hover:bg-primary/90",
-            vertical ? "h-10 w-10" : "h-8 w-8"
-          )}
-          onClick={onFollow}
-          aria-label="Seguir"
+    <div className={cn("flex items-center justify-between", className)}>
+      <div className="flex items-center gap-4">
+        <button
+          onClick={onLike}
+          className="active:scale-110 transition-transform"
+          aria-label="Curtir"
         >
-          <UserPlus className={vertical ? "h-5 w-5" : "h-4 w-4"} />
-        </Button>
+          <Heart
+            className={cn(
+              "h-6 w-6 transition-all",
+              isLiked ? "fill-accent text-accent scale-110" : "hover:text-muted-foreground"
+            )}
+          />
+        </button>
+        <button onClick={onComment} className="active:scale-110 transition-transform" aria-label="Comentar">
+          <MessageCircle className="h-6 w-6 hover:text-muted-foreground transition-colors" />
+        </button>
+        <button onClick={onShare} className="active:scale-110 transition-transform" aria-label="Compartilhar">
+          <Send className="h-6 w-6 hover:text-muted-foreground transition-colors" />
+        </button>
+      </div>
+      {onSave && (
+        <button onClick={onSave} className="active:scale-110 transition-transform" aria-label="Salvar">
+          <Bookmark className={cn("h-6 w-6 transition-all", isSaved && "fill-foreground")} />
+        </button>
       )}
     </div>
   );
+}
+
+function formatCount(count: number) {
+  if (count >= 1000000) return `${(count / 1000000).toFixed(1)}M`;
+  if (count >= 1000) return `${(count / 1000).toFixed(1)}K`;
+  return count.toString();
 }
