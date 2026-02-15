@@ -9,6 +9,7 @@ import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { usePullToRefresh } from "@/hooks/usePullToRefresh";
 import { Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { MOCK_FEED_POSTS } from "@/lib/mockData";
 
 const PAGE_SIZE = 15;
 
@@ -75,20 +76,27 @@ export default function Feed() {
         const { data: postsData, error } = await supabase
           .from("posts").select("*").order("created_at", { ascending: false }).limit(PAGE_SIZE);
         if (error) throw error;
-        if (!postsData || postsData.length === 0) { setPosts([]); setHasMore(false); return; }
+        if (!postsData || postsData.length === 0) {
+          setPosts(MOCK_FEED_POSTS);
+          setHasMore(false);
+          return;
+        }
         const enriched = await enrichPosts(postsData);
-        setPosts(enriched);
-        setHasMore(postsData.length === PAGE_SIZE);
-        cursorRef.current = postsData[postsData.length - 1].created_at;
+        // Merge real posts with mock affiliate posts for demo
+        const combined = [...enriched, ...MOCK_FEED_POSTS];
+        setPosts(combined);
+        setHasMore(false);
       } catch (error) {
         console.error("Error fetching posts:", error);
-        toast({ variant: "destructive", title: "Erro", description: "Não foi possível carregar o feed" });
+        // Fallback to mock data on error
+        setPosts(MOCK_FEED_POSTS);
+        setHasMore(false);
       } finally {
         setLoading(false);
         setRefreshing(false);
       }
     },
-    [enrichPosts, toast]
+    [enrichPosts]
   );
 
   const loadMore = useCallback(async () => {
@@ -131,6 +139,13 @@ export default function Feed() {
   }, [user]);
 
   const handleLike = async (postId: string, isLiked: boolean) => {
+    // Allow mock likes without auth
+    if (postId.startsWith("mock-")) {
+      setPosts((prev) =>
+        prev.map((p) => p.id === postId ? { ...p, isLiked: !isLiked, likesCount: isLiked ? p.likesCount - 1 : p.likesCount + 1 } : p)
+      );
+      return;
+    }
     if (!user) {
       toast({ title: "Faça login", description: "Você precisa estar logado para curtir" });
       return;
@@ -182,7 +197,7 @@ export default function Feed() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+        <Loader2 className="h-6 w-6 animate-spin text-primary" />
       </div>
     );
   }
@@ -195,7 +210,7 @@ export default function Feed() {
         style={{ height: pullDistance > 0 ? pullDistance : 0 }}
       >
         <Loader2
-          className={`h-5 w-5 text-muted-foreground transition-transform ${pullRefreshing ? "animate-spin" : ""}`}
+          className={`h-5 w-5 text-primary transition-transform ${pullRefreshing ? "animate-spin" : ""}`}
           style={{ transform: `rotate(${pullDistance * 3}deg)` }}
         />
       </div>
@@ -204,16 +219,10 @@ export default function Feed() {
       <StoriesBar />
 
       {/* Posts */}
-      {posts.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-20 gap-4 px-4">
-          <p className="text-muted-foreground text-center text-sm">Nenhuma publicação ainda.<br />Seja o primeiro a postar!</p>
-          {user && <CreatePostDialog onPostCreated={() => fetchPosts()} />}
-        </div>
-      ) : (
-        <div className="divide-y divide-border/50">
-          {posts.map((post) => (
+      <div className="space-y-0">
+        {posts.map((post, index) => (
+          <div key={post.id} className="animate-fade-in" style={{ animationDelay: `${index * 50}ms` }}>
             <InstagramPost
-              key={post.id}
               post={post}
               onLike={() => handleLike(post.id, !!post.isLiked)}
               onComment={() => handleComment(post.id)}
@@ -222,13 +231,13 @@ export default function Feed() {
               onFollow={handleFollow}
               onProfileClick={handleProfileClick}
             />
-          ))}
-        </div>
-      )}
+          </div>
+        ))}
+      </div>
 
       {/* Infinite scroll sentinel */}
       <div ref={sentinelRef} className="py-6 flex justify-center">
-        {loadingMore && <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />}
+        {loadingMore && <Loader2 className="h-5 w-5 animate-spin text-primary" />}
         {!hasMore && posts.length > 0 && <p className="text-xs text-muted-foreground">Você viu tudo 🎉</p>}
       </div>
 
