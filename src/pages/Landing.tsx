@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { 
   ArrowRight, 
@@ -11,38 +10,89 @@ import {
   Zap,
   Star,
   Check,
-  Download,
   Sparkles,
-  ChevronRight
+  ChevronRight,
+  Play,
+  BarChart3,
+  Globe,
+  MessageCircle,
+  Heart,
+  Award,
+  Clock,
+  Target,
+  Rocket
 } from "lucide-react";
-import { InstallPrompt } from "@/components/pwa/InstallPrompt";
-import { APP_NAME, APP_TAGLINE } from "@/lib/constants";
+import { APP_NAME } from "@/lib/constants";
 import logoImg from "@/assets/color-palette-ref.png";
+
+const stats = [
+  { value: "10K+", label: "Membros ativos" },
+  { value: "R$1M+", label: "Em comissões pagas" },
+  { value: "4.9★", label: "Avaliação média" },
+  { value: "500+", label: "Marcas parceiras" },
+];
 
 const features = [
   {
-    icon: Users,
-    title: "Rede Social Gratuita",
-    description: "Perfil público, feed, comunidades e ranking. Tudo grátis para começar.",
-    gradient: "from-pink-500 to-purple-600",
+    icon: Globe,
+    title: "Rede Social Completa",
+    description: "Perfil, feed, stories, comunidades e chat. Tudo integrado para você crescer organicamente.",
   },
   {
     icon: TrendingUp,
     title: "Sistema de Afiliados",
-    description: "Ganhe comissões indicando produtos. Tracking completo e transparente.",
-    gradient: "from-orange-500 to-pink-500",
+    description: "Links rastreáveis, comissões automáticas e dashboard completo de performance.",
   },
   {
     icon: DollarSign,
     title: "Monetização Nativa",
-    description: "Transforme seu conteúdo em renda. O feed gera dinheiro.",
-    gradient: "from-emerald-500 to-teal-500",
+    description: "Cada post pode gerar receita. Métricas públicas de ganhos inspiram e convertem.",
   },
   {
     icon: Shield,
-    title: "Plataforma Segura",
-    description: "Dados protegidos, pagamentos seguros e suporte dedicado.",
-    gradient: "from-purple-500 to-indigo-500",
+    title: "100% Seguro",
+    description: "Pagamentos protegidos, dados criptografados e suporte dedicado 24/7.",
+  },
+  {
+    icon: BarChart3,
+    title: "Analytics Avançado",
+    description: "Saiba exatamente o que funciona. CTR, conversões e ROI em tempo real.",
+  },
+  {
+    icon: MessageCircle,
+    title: "Comunidade Ativa",
+    description: "Grupos temáticos, mentoria e networking com os maiores nomes do mercado.",
+  },
+];
+
+const testimonials = [
+  {
+    name: "Marina Sales",
+    role: "Top Afiliada",
+    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face",
+    text: "Em 3 meses fui de zero a R$12.400/mês em comissões. A plataforma é incrível!",
+    earnings: "R$ 87.500",
+  },
+  {
+    name: "Pedro Henrique",
+    role: "Creator & Afiliado",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
+    text: "O tracking transparente mudou tudo. Sei exatamente quanto cada conteúdo gera.",
+    earnings: "R$ 45.200",
+  },
+  {
+    name: "Rafa Digital",
+    role: "Influencer",
+    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
+    text: "A prova social verificada no feed faz os seguidores confiarem. Conversão explodiu.",
+    earnings: "R$ 120.000",
+  },
+  {
+    name: "Beatriz Nova",
+    role: "Iniciante",
+    avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face",
+    text: "Primeiro mês e já fiz R$2.100! O suporte da comunidade é sensacional.",
+    earnings: "R$ 2.100",
   },
 ];
 
@@ -51,82 +101,71 @@ const plans = [
     name: "Free",
     price: "R$ 0",
     period: "para sempre",
-    description: "Comece agora e explore a plataforma",
+    description: "Explore a plataforma sem compromisso",
     features: ["Perfil público", "Feed social", "Comunidades", "Ranking"],
     highlight: false,
+    cta: "Começar grátis",
   },
   {
     name: "Starter",
     price: "R$ 65,90",
     period: "/mês",
-    description: "Treinamento completo para começar",
-    features: [
-      "Tudo do Free",
-      "Treinamento gamificado",
-      "Missões e badges",
-      "Onboarding para vendas",
-    ],
+    description: "Treinamento completo para iniciar",
+    features: ["Tudo do Free", "Treinamento gamificado", "Missões e badges", "Onboarding vendas"],
     highlight: false,
+    cta: "Começar agora",
   },
   {
     name: "Partner",
     price: "R$ 699",
     period: "/mês",
     description: "Para quem quer monetizar de verdade",
-    features: [
-      "Tudo do Starter",
-      "Links de afiliado",
-      "Painel de vendas",
-      "Comissão maior",
-      "Kit físico",
-    ],
+    features: ["Tudo do Starter", "Links de afiliado", "Painel de vendas", "Comissão maior", "Kit físico"],
     highlight: true,
+    cta: "Quero monetizar",
   },
   {
     name: "Business",
     price: "R$ 998,10",
     period: "/mês",
-    description: "Crie sua própria agência",
-    features: [
-      "Tudo do Partner",
-      "Business Mode",
-      "Criar afiliados",
-      "B2B e relatórios",
-    ],
+    description: "Monte sua agência",
+    features: ["Tudo do Partner", "Business Mode", "Criar afiliados", "B2B e relatórios"],
     highlight: false,
+    cta: "Escalar negócio",
   },
+];
+
+const steps = [
+  { step: "01", title: "Crie sua conta", description: "Cadastro rápido em menos de 1 minuto. Sem cartão de crédito.", icon: Rocket },
+  { step: "02", title: "Monte seu perfil", description: "Adicione bio, foto e conecte suas redes sociais.", icon: Users },
+  { step: "03", title: "Poste conteúdo", description: "Compartilhe no feed, participe de comunidades e cresça.", icon: Heart },
+  { step: "04", title: "Monetize", description: "Ative seus links de afiliado e comece a ganhar comissões.", icon: DollarSign },
 ];
 
 export default function Landing() {
   return (
-    <div className="min-h-screen bg-background overflow-hidden">
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex flex-col">
-        {/* Animated background */}
-        <div className="absolute inset-0 bg-gradient-dark" />
+    <div className="min-h-screen bg-background overflow-x-hidden">
+      {/* ─── HERO ─── */}
+      <section className="relative min-h-[100dvh] flex flex-col">
+        <div className="absolute inset-0 bg-gradient-to-b from-foreground via-foreground/95 to-foreground/90" />
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[900px] h-[900px] rounded-full blur-[120px] opacity-30 bg-gradient-primary" />
-          <div className="absolute bottom-0 -right-32 w-[500px] h-[500px] rounded-full blur-[100px] opacity-20" style={{ background: "hsl(25 95% 53%)" }} />
-          <div className="absolute top-1/2 -left-32 w-[400px] h-[400px] rounded-full blur-[100px] opacity-15" style={{ background: "hsl(270 91% 65%)" }} />
+          <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[700px] rounded-full blur-[140px] opacity-20 bg-primary" />
+          <div className="absolute bottom-20 -right-20 w-[400px] h-[400px] rounded-full blur-[120px] opacity-10 bg-accent" />
         </div>
 
         {/* Nav */}
-        <nav className="relative z-20 w-full backdrop-blur-xl bg-white/90 border-b border-white/20 shadow-sm">
+        <nav className="relative z-20 w-full border-b border-white/5">
           <div className="container flex items-center justify-between px-4 py-3">
-            <div className="flex items-center gap-3">
-              <Button asChild variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-                <Link to="/install">
-                  <Download className="h-4 w-4 mr-2" />
-                  Instalar
-                </Link>
+            <div className="flex items-center gap-2">
+              <img src={logoImg} alt={APP_NAME} className="h-8 w-8 rounded-lg object-cover" />
+              <span className="font-semibold text-white text-sm hidden sm:block">{APP_NAME}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Button asChild variant="ghost" size="sm" className="text-white/60 hover:text-white hover:bg-white/5 text-xs">
+                <Link to="/auth">Login</Link>
               </Button>
-            </div>
-            <div className="absolute left-1/2 -translate-x-1/2">
-              <img src={logoImg} alt="OnlyShop" className="h-14 w-14 rounded-2xl object-cover shadow-lg ring-2 ring-white/50" />
-            </div>
-            <div className="flex items-center gap-3">
-              <Button asChild size="sm" className="bg-gradient-primary border-0 glow-primary">
-                <Link to="/auth">Entrar</Link>
+              <Button asChild size="sm" className="bg-primary hover:bg-primary/90 text-xs h-8 px-4 rounded-lg">
+                <Link to="/auth">Criar conta</Link>
               </Button>
             </div>
           </div>
@@ -134,229 +173,339 @@ export default function Landing() {
 
         {/* Hero Content */}
         <div className="relative z-10 flex-1 flex items-center">
-          <div className="container px-4 py-16">
+          <div className="container px-4 py-12 md:py-20">
             <div className="max-w-3xl mx-auto text-center">
-              <Badge className="mb-8 bg-white/10 text-white/90 border-white/20 backdrop-blur-sm px-4 py-1.5">
-                <Sparkles className="h-3.5 w-3.5 mr-1.5" />
-                Plataforma #1 de Social Commerce
+              <Badge className="mb-6 bg-white/5 text-white/70 border-white/10 text-xs font-medium px-3 py-1">
+                <Sparkles className="h-3 w-3 mr-1.5 text-primary" />
+                Plataforma #1 de Social Commerce no Brasil
               </Badge>
               
-              <h1 className="text-5xl md:text-7xl font-display font-bold text-white mb-8 leading-[1.1] tracking-tight">
-                {APP_TAGLINE.split(" ").slice(0, 4).join(" ")}{" "}
-                <span className="text-gradient-primary">
-                  {APP_TAGLINE.split(" ").slice(4).join(" ")}
-                </span>
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-[1.08] tracking-tight">
+                Transforme seu
+                <br />
+                <span className="text-primary">conteúdo em renda</span>
               </h1>
               
-              <p className="text-lg md:text-xl text-white/60 mb-10 max-w-2xl mx-auto leading-relaxed">
-                Junte-se à rede social onde seu conteúdo gera dinheiro e o dinheiro 
-                gera mais conteúdo. Comece grátis hoje.
+              <p className="text-base sm:text-lg text-white/40 mb-8 max-w-xl mx-auto leading-relaxed">
+                A rede social onde cada post pode gerar receita. Junte-se a 10.000+ criadores que já monetizam seu conteúdo.
               </p>
 
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Button asChild size="lg" className="bg-gradient-primary w-full sm:w-auto glow-primary text-base h-13 px-8 rounded-2xl">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-12">
+                <Button asChild size="lg" className="bg-primary hover:bg-primary/90 w-full sm:w-auto text-sm h-12 px-8 rounded-xl">
                   <Link to="/auth">
                     Criar conta grátis
-                    <ArrowRight className="ml-2 h-5 w-5" />
+                    <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
                 <Button
                   size="lg"
                   variant="outline"
-                  className="w-full sm:w-auto bg-white border-white/20 text-primary hover:bg-white/90 hover:text-primary h-13 px-8 rounded-2xl font-semibold"
-                  onClick={() => document.getElementById("plans")?.scrollIntoView({ behavior: "smooth" })}
+                  className="w-full sm:w-auto bg-transparent border-white/10 text-white/70 hover:bg-white/5 hover:text-white h-12 px-8 rounded-xl text-sm"
+                  onClick={() => document.getElementById("how-it-works")?.scrollIntoView({ behavior: "smooth" })}
                 >
-                  Ver planos
+                  <Play className="mr-2 h-4 w-4" />
+                  Como funciona
                 </Button>
               </div>
 
-              {/* Social Proof */}
-              <div className="mt-16 flex items-center justify-center gap-8 text-sm text-white/50">
-                <div className="flex items-center gap-1.5">
-                  <Star className="h-4 w-4 text-warning fill-warning" />
-                  <span>4.9/5 avaliação</span>
-                </div>
-                <div className="h-4 w-px bg-white/20" />
-                <div>10k+ membros</div>
-                <div className="h-4 w-px bg-white/20" />
-                <div>R$ 1M+ em comissões</div>
+              {/* Stats row */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 max-w-2xl mx-auto">
+                {stats.map((stat) => (
+                  <div key={stat.label} className="text-center">
+                    <div className="text-xl sm:text-2xl font-bold text-white">{stat.value}</div>
+                    <div className="text-[11px] sm:text-xs text-white/30 mt-0.5">{stat.label}</div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         </div>
+      </section>
 
-        {/* Scroll indicator */}
-        <div className="relative z-10 flex justify-center pb-8">
-          <div className="w-6 h-10 border-2 border-white/20 rounded-full flex justify-center pt-2">
-            <div className="w-1 h-2.5 bg-white/40 rounded-full animate-float" />
+      {/* ─── SOCIAL PROOF BAR ─── */}
+      <section className="py-4 bg-muted/50 border-y border-border/50">
+        <div className="container px-4">
+          <div className="flex items-center justify-center gap-6 sm:gap-10 flex-wrap text-xs sm:text-sm text-muted-foreground">
+            <div className="flex items-center gap-1.5">
+              <Star className="h-3.5 w-3.5 text-amber-500 fill-amber-500" />
+              <span className="font-medium">4.9/5</span> de avaliação
+            </div>
+            <div className="flex items-center gap-1.5">
+              <Users className="h-3.5 w-3.5 text-primary" />
+              <span className="font-medium">10K+</span> criadores
+            </div>
+            <div className="flex items-center gap-1.5">
+              <TrendingUp className="h-3.5 w-3.5 text-emerald-500" />
+              <span className="font-medium">R$1M+</span> pagos em comissões
+            </div>
+            <div className="flex items-center gap-1.5">
+              <Clock className="h-3.5 w-3.5 text-blue-500" />
+              <span className="font-medium">&lt;1min</span> para começar
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-24 relative">
+      {/* ─── HOW IT WORKS ─── */}
+      <section id="how-it-works" className="py-16 sm:py-24">
         <div className="container px-4">
-          <div className="text-center mb-16">
-            <Badge variant="secondary" className="mb-4">
-              <Zap className="h-3 w-3 mr-1" /> Recursos
-            </Badge>
-            <h2 className="text-3xl md:text-5xl font-display font-bold mb-5">
-              Tudo que você precisa para{" "}
-              <span className="text-gradient-primary">crescer</span>
+          <div className="text-center mb-12 sm:mb-16">
+            <p className="text-xs font-semibold text-primary uppercase tracking-wider mb-2">Simples e rápido</p>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3">
+              Como funciona
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-              Uma plataforma completa que combina rede social, afiliados e 
-              monetização em um só lugar.
+            <p className="text-muted-foreground max-w-lg mx-auto text-sm">
+              Em 4 passos simples você já está monetizando seu conteúdo.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {features.map((feature) => (
-              <Card key={feature.title} className="border-0 shadow-lg card-hover group bg-card">
-                <CardHeader>
-                  <div className={`w-14 h-14 bg-gradient-to-br ${feature.gradient} rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                    <feature.icon className="h-7 w-7 text-white" />
-                  </div>
-                  <CardTitle className="text-lg">{feature.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {feature.description}
-                  </p>
-                </CardContent>
-              </Card>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+            {steps.map((s) => (
+              <div key={s.step} className="text-center group">
+                <div className="w-12 h-12 rounded-xl bg-primary/5 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/10 transition-colors">
+                  <s.icon className="h-5 w-5 text-primary" />
+                </div>
+                <div className="text-[10px] font-bold text-primary/40 uppercase tracking-widest mb-1">Passo {s.step}</div>
+                <h3 className="font-semibold text-sm mb-1">{s.title}</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">{s.description}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Pricing Section */}
-      <section id="plans" className="py-24 bg-muted/30">
+      {/* ─── FEATURES ─── */}
+      <section className="py-16 sm:py-24 bg-muted/30">
         <div className="container px-4">
-          <div className="text-center mb-16">
-            <Badge variant="secondary" className="mb-4">
-              <DollarSign className="h-3 w-3 mr-1" /> Planos
-            </Badge>
-            <h2 className="text-3xl md:text-5xl font-display font-bold mb-5">
-              Escolha seu{" "}
-              <span className="text-gradient-primary">plano</span>
+          <div className="text-center mb-12 sm:mb-16">
+            <p className="text-xs font-semibold text-primary uppercase tracking-wider mb-2">Recursos</p>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3">
+              Tudo que você precisa para <span className="text-primary">crescer</span>
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
+            <p className="text-muted-foreground max-w-lg mx-auto text-sm">
+              Rede social, afiliados e monetização em um só lugar.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto">
+            {features.map((feature) => (
+              <div key={feature.title} className="p-5 rounded-xl bg-background border border-border/50 hover:border-border transition-colors">
+                <div className="w-10 h-10 rounded-lg bg-primary/5 flex items-center justify-center mb-3">
+                  <feature.icon className="h-5 w-5 text-primary" />
+                </div>
+                <h3 className="font-semibold text-sm mb-1">{feature.title}</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">{feature.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── TESTIMONIALS ─── */}
+      <section className="py-16 sm:py-24">
+        <div className="container px-4">
+          <div className="text-center mb-12 sm:mb-16">
+            <p className="text-xs font-semibold text-primary uppercase tracking-wider mb-2">Depoimentos</p>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3">
+              Quem usa, <span className="text-primary">recomenda</span>
+            </h2>
+            <p className="text-muted-foreground max-w-lg mx-auto text-sm">
+              Veja o que nossos membros estão dizendo sobre a plataforma.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
+            {testimonials.map((t) => (
+              <div key={t.name} className="p-5 rounded-xl bg-background border border-border/50 flex flex-col">
+                <div className="flex items-center gap-1 mb-3">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-3 w-3 text-amber-500 fill-amber-500" />
+                  ))}
+                </div>
+                <p className="text-xs text-foreground/80 leading-relaxed flex-1 mb-4">"{t.text}"</p>
+                <div className="flex items-center gap-2.5 pt-3 border-t border-border/50">
+                  <img src={t.avatar} alt={t.name} className="h-8 w-8 rounded-full object-cover" />
+                  <div className="flex-1 min-w-0">
+                    <div className="text-xs font-semibold truncate">{t.name}</div>
+                    <div className="text-[10px] text-muted-foreground">{t.role}</div>
+                  </div>
+                  <div className="text-[10px] font-bold text-emerald-600 bg-emerald-500/10 px-2 py-0.5 rounded-full">
+                    {t.earnings}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── RESULTS BANNER ─── */}
+      <section className="py-12 sm:py-16 bg-foreground text-background">
+        <div className="container px-4">
+          <div className="max-w-4xl mx-auto grid sm:grid-cols-3 gap-8 text-center">
+            <div>
+              <div className="text-3xl sm:text-4xl font-bold text-primary mb-1">R$ 12.400</div>
+              <p className="text-xs text-background/40">Maior ganho mensal de um afiliado</p>
+            </div>
+            <div>
+              <div className="text-3xl sm:text-4xl font-bold text-primary mb-1">8.2%</div>
+              <p className="text-xs text-background/40">CTR médio dos top creators</p>
+            </div>
+            <div>
+              <div className="text-3xl sm:text-4xl font-bold text-primary mb-1">145K</div>
+              <p className="text-xs text-background/40">Visualizações em um único post</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── PRICING ─── */}
+      <section id="plans" className="py-16 sm:py-24">
+        <div className="container px-4">
+          <div className="text-center mb-12 sm:mb-16">
+            <p className="text-xs font-semibold text-primary uppercase tracking-wider mb-2">Planos</p>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3">
+              Escolha seu <span className="text-primary">plano</span>
+            </h2>
+            <p className="text-muted-foreground max-w-lg mx-auto text-sm">
               Comece grátis e evolua conforme seus resultados crescem.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
             {plans.map((plan) => (
-              <Card
+              <div
                 key={plan.name}
-                className={`relative card-hover ${
+                className={`relative rounded-xl p-5 flex flex-col ${
                   plan.highlight
-                    ? "border-primary shadow-xl ring-2 ring-primary/20 scale-[1.03] z-10"
-                    : "border-border"
+                    ? "bg-primary/5 border-2 border-primary ring-1 ring-primary/20"
+                    : "bg-background border border-border/50"
                 }`}
               >
                 {plan.highlight && (
-                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
-                    <Badge className="bg-gradient-primary border-0 shadow-lg px-4">
-                      <Sparkles className="h-3 w-3 mr-1" />
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                    <Badge className="bg-primary text-primary-foreground border-0 text-[10px] px-3">
                       Mais Popular
                     </Badge>
                   </div>
                 )}
-                <CardHeader>
-                  <CardTitle className="text-xl">{plan.name}</CardTitle>
-                  <CardDescription>{plan.description}</CardDescription>
-                  <div className="pt-4">
-                    <span className="text-4xl font-bold">{plan.price}</span>
-                    <span className="text-muted-foreground ml-1">{plan.period}</span>
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-5">
-                  <ul className="space-y-3">
-                    {plan.features.map((feature) => (
-                      <li key={feature} className="flex items-center gap-2.5 text-sm">
-                        <div className="h-5 w-5 rounded-full bg-success/10 flex items-center justify-center shrink-0">
-                          <Check className="h-3 w-3 text-success" />
-                        </div>
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                  <Button
-                    asChild
-                    className={`w-full rounded-xl h-11 ${
-                      plan.highlight ? "bg-gradient-primary border-0 glow-primary" : ""
-                    }`}
-                    variant={plan.highlight ? "default" : "outline"}
-                  >
-                    <Link to="/auth" className="gap-2">
-                      {plan.price === "R$ 0" ? "Começar grátis" : "Escolher plano"}
-                      <ChevronRight className="h-4 w-4" />
-                    </Link>
-                  </Button>
-                </CardContent>
-              </Card>
+                <div className="mb-4">
+                  <h3 className="font-semibold text-sm">{plan.name}</h3>
+                  <p className="text-[11px] text-muted-foreground mt-0.5">{plan.description}</p>
+                </div>
+                <div className="mb-4">
+                  <span className="text-2xl font-bold">{plan.price}</span>
+                  <span className="text-xs text-muted-foreground ml-1">{plan.period}</span>
+                </div>
+                <ul className="space-y-2 mb-5 flex-1">
+                  {plan.features.map((f) => (
+                    <li key={f} className="flex items-center gap-2 text-xs">
+                      <Check className="h-3.5 w-3.5 text-primary shrink-0" />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+                <Button
+                  asChild
+                  size="sm"
+                  className={`w-full rounded-lg h-9 text-xs ${
+                    plan.highlight ? "bg-primary hover:bg-primary/90" : ""
+                  }`}
+                  variant={plan.highlight ? "default" : "outline"}
+                >
+                  <Link to="/auth">
+                    {plan.cta}
+                    <ChevronRight className="h-3.5 w-3.5 ml-1" />
+                  </Link>
+                </Button>
+              </div>
             ))}
           </div>
 
-          {/* PRO Plan CTA */}
-          <div className="mt-16 text-center">
-            <Card className="max-w-2xl mx-auto bg-gradient-dark text-white border-0 overflow-hidden relative">
-              <div className="absolute inset-0 opacity-20 bg-gradient-primary" />
-              <CardContent className="py-10 relative z-10">
-                <Badge className="bg-white/10 text-white border-white/20 mb-4">Enterprise</Badge>
-                <h3 className="text-2xl font-bold mb-3">Plano PRO para Marcas</h3>
-                <p className="text-white/70 mb-6">
-                  USD $9.999 + 3% | Setup completo, destaque no app e acesso aos 
-                  top afiliados.
+          {/* Enterprise */}
+          <div className="mt-10 max-w-2xl mx-auto">
+            <div className="rounded-xl bg-foreground text-background p-6 sm:p-8 text-center relative overflow-hidden">
+              <div className="absolute inset-0 bg-primary/5" />
+              <div className="relative z-10">
+                <Badge className="bg-white/10 text-background/70 border-white/10 text-[10px] mb-3">Enterprise</Badge>
+                <h3 className="text-lg font-bold mb-1">Plano PRO para Marcas</h3>
+                <p className="text-xs text-background/40 mb-5">
+                  USD $9.999 + 3% · Setup completo, destaque no app e acesso aos top afiliados.
                 </p>
-                <Button variant="secondary" asChild size="lg" className="rounded-xl">
+                <Button asChild size="sm" className="bg-primary hover:bg-primary/90 rounded-lg text-xs h-9 px-6">
                   <Link to="/auth">Falar com time comercial</Link>
                 </Button>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-24 bg-gradient-primary relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full blur-3xl" />
-        </div>
-        <div className="container px-4 text-center relative z-10">
-          <h2 className="text-3xl md:text-5xl font-display font-bold text-white mb-6">
-            Pronto para transformar seu<br />conteúdo em renda?
-          </h2>
-          <p className="text-lg text-white/80 mb-10 max-w-2xl mx-auto">
-            Junte-se a milhares de pessoas que já estão monetizando na Only Shop.
-          </p>
-          <Button asChild size="lg" className="bg-white text-foreground hover:bg-white/90 rounded-2xl h-13 px-10 shadow-xl">
-            <Link to="/auth">
-              Criar conta grátis
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-          </Button>
+      {/* ─── FAQ QUICK ─── */}
+      <section className="py-16 sm:py-24 bg-muted/30">
+        <div className="container px-4 max-w-3xl">
+          <div className="text-center mb-12">
+            <p className="text-xs font-semibold text-primary uppercase tracking-wider mb-2">Dúvidas</p>
+            <h2 className="text-2xl sm:text-3xl font-bold">Perguntas frequentes</h2>
+          </div>
+          {[
+            { q: "Preciso pagar para começar?", a: "Não! O plano Free é gratuito para sempre. Você pode explorar a rede social, comunidades e ranking sem pagar nada." },
+            { q: "Como funciona o sistema de afiliados?", a: "Ao fazer upgrade para o plano Partner, você recebe links de afiliado rastreáveis. Cada venda gerada pelo seu link gera comissão automática." },
+            { q: "Quanto tempo leva para começar a ganhar?", a: "Depende do seu esforço e nicho. Alguns membros reportam ganhos já na primeira semana, outros no primeiro mês." },
+            { q: "Posso usar em qualquer dispositivo?", a: "Sim! A plataforma funciona no navegador do celular, tablet e computador. Também pode ser instalada como app (PWA)." },
+          ].map((faq) => (
+            <details key={faq.q} className="group border-b border-border/50 py-4 cursor-pointer">
+              <summary className="flex items-center justify-between text-sm font-medium list-none">
+                {faq.q}
+                <ChevronRight className="h-4 w-4 text-muted-foreground transition-transform group-open:rotate-90" />
+              </summary>
+              <p className="mt-2 text-xs text-muted-foreground leading-relaxed pr-8">{faq.a}</p>
+            </details>
+          ))}
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-10 border-t bg-background">
+      {/* ─── FINAL CTA ─── */}
+      <section className="py-16 sm:py-24 bg-foreground text-background relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 right-0 w-72 h-72 bg-primary/10 rounded-full blur-[120px]" />
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-accent/10 rounded-full blur-[100px]" />
+        </div>
+        <div className="container px-4 text-center relative z-10">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
+            Pronto para transformar seu
+            <br className="hidden sm:block" />
+            conteúdo em renda?
+          </h2>
+          <p className="text-sm text-background/40 mb-8 max-w-md mx-auto">
+            Junte-se a milhares de criadores que já monetizam na {APP_NAME}. É grátis para começar.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <Button asChild size="lg" className="bg-primary hover:bg-primary/90 rounded-xl h-12 px-8 text-sm">
+              <Link to="/auth">
+                Criar conta grátis
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+          <p className="text-[10px] text-background/20 mt-4">Sem cartão de crédito · Cancele a qualquer momento</p>
+        </div>
+      </section>
+
+      {/* ─── FOOTER ─── */}
+      <footer className="py-8 border-t border-border/50 bg-background">
         <div className="container px-4">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <img src={logoImg} alt="OnlyShop" className="h-8 w-8 rounded-lg object-cover" />
-              <span className="font-display font-bold text-lg">{APP_NAME}</span>
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div className="flex items-center gap-2">
+              <img src={logoImg} alt={APP_NAME} className="h-6 w-6 rounded-md object-cover" />
+              <span className="font-semibold text-sm">{APP_NAME}</span>
             </div>
-            <div className="flex items-center gap-4 text-sm text-muted-foreground">
-              <Link to="/terms" className="hover:text-foreground transition-colors">Termos de Uso</Link>
-              <span>·</span>
+            <div className="flex items-center gap-4 text-xs text-muted-foreground">
+              <Link to="/terms" className="hover:text-foreground transition-colors">Termos</Link>
               <Link to="/privacy" className="hover:text-foreground transition-colors">Privacidade</Link>
             </div>
-            <p className="text-sm text-muted-foreground">
-              © 2026 Only Shop. Todos os direitos reservados.
+            <p className="text-[11px] text-muted-foreground">
+              © 2026 {APP_NAME}. Todos os direitos reservados.
             </p>
           </div>
         </div>
