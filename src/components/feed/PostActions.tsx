@@ -55,7 +55,7 @@ export function PostActions({
 
   return (
     <div className={cn("flex items-center justify-between", className)}>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3.5">
         <button
           onClick={onLike}
           className="active:scale-110 transition-transform"
@@ -63,21 +63,21 @@ export function PostActions({
         >
           <Heart
             className={cn(
-              "h-6 w-6 transition-all",
-              isLiked ? "fill-accent text-accent scale-110" : "hover:text-muted-foreground"
+              "h-[22px] w-[22px] transition-all",
+              isLiked ? "fill-destructive text-destructive scale-105" : "hover:text-muted-foreground"
             )}
           />
         </button>
         <button onClick={onComment} className="active:scale-110 transition-transform" aria-label="Comentar">
-          <MessageCircle className="h-6 w-6 hover:text-muted-foreground transition-colors" />
+          <MessageCircle className="h-[22px] w-[22px] hover:text-muted-foreground transition-colors" />
         </button>
         <button onClick={onShare} className="active:scale-110 transition-transform" aria-label="Compartilhar">
-          <Send className="h-6 w-6 hover:text-muted-foreground transition-colors" />
+          <Send className="h-[22px] w-[22px] hover:text-muted-foreground transition-colors" />
         </button>
       </div>
       {onSave && (
         <button onClick={onSave} className="active:scale-110 transition-transform" aria-label="Salvar">
-          <Bookmark className={cn("h-6 w-6 transition-all", isSaved && "fill-foreground")} />
+          <Bookmark className={cn("h-[22px] w-[22px] transition-all", isSaved && "fill-foreground")} />
         </button>
       )}
     </div>
