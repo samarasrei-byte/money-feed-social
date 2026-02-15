@@ -103,18 +103,18 @@ export function InstagramPost({
   const shouldTruncate = post.content.length > 120;
 
   return (
-    <article className="bg-background border-b border-border/30">
+    <article className="bg-background border-b border-border/20">
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-2.5">
+      <div className="flex items-center justify-between px-3 py-2">
         <div
-          className="flex items-center gap-2.5 cursor-pointer flex-1 min-w-0"
+          className="flex items-center gap-2 cursor-pointer flex-1 min-w-0"
           onClick={onProfileClick}
         >
           <div className="relative shrink-0">
-            <div className="rounded-full p-[1.5px] bg-gradient-primary">
-              <Avatar className="h-9 w-9 border-[2px] border-background">
+            <div className="rounded-full p-[1px] bg-gradient-to-tr from-primary/60 to-accent/60">
+              <Avatar className="h-8 w-8 border-[1.5px] border-background">
                 <AvatarImage src={post.profile?.avatarUrl} alt={post.profile?.displayName} />
-                <AvatarFallback className="bg-muted text-foreground text-[10px] font-bold">
+                <AvatarFallback className="bg-muted text-foreground text-[9px] font-semibold">
                   {initials}
                 </AvatarFallback>
               </Avatar>
@@ -142,11 +142,11 @@ export function InstagramPost({
           </div>
         </div>
         <div className="flex items-center gap-1">
-          <span className="text-[11px] text-muted-foreground">{timeAgo}</span>
+          <span className="text-[11px] text-muted-foreground/70">{timeAgo}</span>
           <Button
             variant="ghost"
             size="icon"
-            className="h-7 w-7 rounded-full text-muted-foreground"
+            className="h-7 w-7 rounded-full text-muted-foreground/60"
             onClick={onFollow}
           >
             <MoreHorizontal className="h-4 w-4" />
@@ -241,7 +241,7 @@ export function InstagramPost({
       )}
 
       {/* Actions */}
-      <div className="px-4 pt-2.5">
+      <div className="px-3 pt-2">
         <PostActions
           likesCount={post.likesCount}
           commentsCount={post.commentsCount}
@@ -256,21 +256,21 @@ export function InstagramPost({
 
       {/* Likes */}
       {post.likesCount > 0 && (
-        <p className="px-4 pt-1 text-[13px] font-semibold">
+        <p className="px-3 pt-0.5 text-[13px] font-semibold">
           {post.likesCount.toLocaleString("pt-BR")} curtida{post.likesCount !== 1 && "s"}
         </p>
       )}
 
       {/* Caption */}
       {post.postType !== "text" && post.content && (
-        <div className="px-4 pt-0.5 pb-0.5">
-          <p className="text-[13px] leading-[18px]">
+        <div className="px-3 pt-0.5 pb-0.5">
+          <p className="text-[13px] leading-[17px]">
             <span className="font-semibold mr-1">{post.profile?.username}</span>
             {shouldTruncate && !expanded ? (
               <>
                 {post.content.slice(0, 120)}
                 <button
-                  className="text-muted-foreground ml-1 text-[13px]"
+                  className="text-muted-foreground/60 ml-1 text-[13px]"
                   onClick={() => setExpanded(true)}
                 >
                   ...mais
@@ -294,7 +294,7 @@ export function InstagramPost({
 
       {/* Affiliate CTA */}
       {post.affiliateLink && (
-        <div className="px-4 py-1.5">
+        <div className="px-3 py-1">
           <AffiliateButton
             affiliateUrl={post.affiliateLink.url}
             productName={post.affiliateLink.productName}
@@ -306,14 +306,14 @@ export function InstagramPost({
       {/* Comments */}
       {post.commentsCount > 0 && (
         <button
-          className="px-4 pb-1 text-[13px] text-muted-foreground"
+          className="px-3 pb-1 text-[12px] text-muted-foreground/60"
           onClick={onComment}
         >
           Ver {post.commentsCount > 1 ? `todos os ${post.commentsCount} comentários` : `${post.commentsCount} comentário`}
         </button>
       )}
 
-      <div className="h-1" />
+      <div className="h-0.5" />
     </article>
   );
 }

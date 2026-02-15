@@ -39,46 +39,46 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full glass border-b safe-area-inset-top">
-      <div className="container flex h-14 items-center justify-between px-4">
+    <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur-md border-b border-border/40 safe-area-inset-top">
+      <div className="container flex h-11 items-center justify-between px-4">
         {/* Logo */}
         <Link to="/feed" className="flex items-center">
-          <img src={logoImg} alt="OnlyShop" className="h-10 w-10 rounded-xl object-cover" />
+          <img src={logoImg} alt="OnlyShop" className="h-8 w-8 rounded-lg object-cover" />
         </Link>
 
         {/* Search - Desktop */}
-        <div className="hidden md:flex flex-1 max-w-md mx-8">
+        <div className="hidden md:flex flex-1 max-w-sm mx-6">
           <div className="relative w-full">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
             <input
               type="text"
               placeholder="Buscar..."
-              className="w-full h-10 pl-10 pr-4 rounded-xl bg-muted/50 border-0 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+              className="w-full h-8 pl-9 pr-4 rounded-lg bg-muted/40 border-0 text-xs focus:outline-none focus:ring-1 focus:ring-primary/30 transition-all placeholder:text-muted-foreground/60"
             />
           </div>
         </div>
 
         {/* Actions */}
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-0.5">
           <div className="hidden md:block">
             <InstallPrompt variant="compact" />
           </div>
 
-          <Button variant="ghost" size="icon" className="md:hidden rounded-xl">
-            <Search className="h-5 w-5" />
+          <Button variant="ghost" size="icon" className="md:hidden h-8 w-8 rounded-lg">
+            <Search className="h-4 w-4" />
           </Button>
 
           {user && (
             <>
-              <Button variant="ghost" size="icon" asChild className="rounded-xl">
+              <Button variant="ghost" size="icon" asChild className="h-8 w-8 rounded-lg">
                 <Link to="/chat">
-                  <MessageSquare className="h-5 w-5" />
+                  <MessageSquare className="h-4 w-4" />
                 </Link>
               </Button>
               <CartSheet />
-              <Button variant="ghost" size="icon" asChild className="rounded-xl">
+              <Button variant="ghost" size="icon" asChild className="h-8 w-8 rounded-lg">
                 <Link to="/affiliate">
-                  <Link2 className="h-5 w-5" />
+                  <Link2 className="h-4 w-4" />
                 </Link>
               </Button>
             </>
@@ -87,8 +87,8 @@ export function Header() {
           {/* Notifications */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="relative rounded-xl" onClick={markAllRead}>
-                <Bell className="h-5 w-5" />
+              <Button variant="ghost" size="icon" className="relative h-8 w-8 rounded-lg" onClick={markAllRead}>
+                <Bell className="h-4 w-4" />
                 {unreadCount > 0 && (
                   <span className="absolute -top-0.5 -right-0.5 h-4 w-4 bg-gradient-primary text-white text-[10px] font-bold rounded-full flex items-center justify-center">
                     {unreadCount > 9 ? "9+" : unreadCount}
@@ -96,7 +96,7 @@ export function Header() {
                 )}
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-80 rounded-2xl">
+            <DropdownMenuContent align="end" className="w-72 rounded-xl">
               <div className="px-3 py-2 border-b border-border">
                 <p className="text-sm font-semibold">Notificações</p>
               </div>
@@ -135,15 +135,15 @@ export function Header() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon" className="rounded-full">
-                  <Avatar className="h-8 w-8 ring-2 ring-primary/20">
+                  <Avatar className="h-7 w-7 ring-1.5 ring-border">
                     <AvatarImage src={profile?.avatar_url || undefined} />
-                    <AvatarFallback className="bg-gradient-primary text-white text-xs">
+                    <AvatarFallback className="bg-muted text-foreground text-[10px] font-semibold">
                       {initials}
                     </AvatarFallback>
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56 rounded-2xl">
+              <DropdownMenuContent align="end" className="w-52 rounded-xl">
                 <div className="px-2 py-1.5">
                   <p className="text-sm font-medium">{profile?.display_name || "Usuário"}</p>
                   <p className="text-xs text-muted-foreground">{user.email}</p>
@@ -164,7 +164,7 @@ export function Header() {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Button asChild size="sm" className="bg-gradient-primary border-0 rounded-xl">
+            <Button asChild size="sm" className="h-7 text-xs bg-primary hover:bg-primary/90 border-0 rounded-lg px-3">
               <Link to="/auth">Entrar</Link>
             </Button>
           )}

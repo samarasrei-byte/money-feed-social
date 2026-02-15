@@ -176,32 +176,32 @@ export function StoriesBar() {
         onChange={handleUpload}
       />
 
-      <div className="border-b border-border/30 bg-background">
+      <div className="border-b border-border/20 bg-background">
         <ScrollArea className="w-full">
-          <div className="flex gap-2 px-3 py-2.5">
+          <div className="flex gap-1.5 px-3 py-2">
             {/* Add story */}
             {user && (
               <button
-                className="flex flex-col items-center gap-1 min-w-[60px]"
+                className="flex flex-col items-center gap-0.5 min-w-[56px]"
                 onClick={() => fileInputRef.current?.click()}
                 disabled={uploading}
               >
                 <div className="relative">
-                  <Avatar className="h-[52px] w-[52px] border-2 border-background">
+                  <Avatar className="h-[48px] w-[48px] border-[1.5px] border-background">
                     <AvatarImage src={profile?.avatar_url || undefined} />
-                    <AvatarFallback className="bg-muted text-muted-foreground text-[10px] font-bold">
+                    <AvatarFallback className="bg-muted text-muted-foreground text-[9px] font-semibold">
                       {(profile?.display_name || "V").slice(0, 2).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
-                  <div className="absolute -bottom-0.5 -right-0.5 h-[18px] w-[18px] rounded-full bg-primary text-primary-foreground flex items-center justify-center border-2 border-background">
+                  <div className="absolute -bottom-0.5 -right-0.5 h-4 w-4 rounded-full bg-primary text-primary-foreground flex items-center justify-center border-[1.5px] border-background">
                     {uploading ? (
-                      <Loader2 className="h-2.5 w-2.5 animate-spin" />
+                      <Loader2 className="h-2 w-2 animate-spin" />
                     ) : (
-                      <Plus className="h-2.5 w-2.5 stroke-[3]" />
+                      <Plus className="h-2 w-2 stroke-[3]" />
                     )}
                   </div>
                 </div>
-                <span className="text-[10px] text-muted-foreground leading-tight">Seu story</span>
+                <span className="text-[9px] text-muted-foreground/70 leading-tight">Seu story</span>
               </button>
             )}
 
@@ -213,23 +213,23 @@ export function StoriesBar() {
                 return (
                   <button
                     key={su.userId}
-                    className="flex flex-col items-center gap-1 min-w-[60px]"
+                    className="flex flex-col items-center gap-0.5 min-w-[56px]"
                     onClick={() => openStory(su)}
                   >
                     <div
                       className={cn(
-                        "rounded-full p-[1.5px]",
-                        hasNew ? "bg-gradient-primary" : "bg-muted-foreground/30"
+                        "rounded-full p-[1px]",
+                        hasNew ? "bg-gradient-to-tr from-primary/70 to-accent/70" : "bg-border/50"
                       )}
                     >
-                      <Avatar className="h-[52px] w-[52px] border-2 border-background">
+                      <Avatar className="h-[48px] w-[48px] border-[1.5px] border-background">
                         <AvatarImage src={su.avatarUrl} alt={su.displayName} />
-                        <AvatarFallback className="bg-muted text-muted-foreground text-[10px] font-bold">
+                        <AvatarFallback className="bg-muted text-muted-foreground text-[9px] font-semibold">
                           {su.displayName.slice(0, 2).toUpperCase()}
                         </AvatarFallback>
                       </Avatar>
                     </div>
-                    <span className="text-[10px] text-muted-foreground truncate w-14 text-center leading-tight">
+                    <span className="text-[9px] text-muted-foreground/70 truncate w-13 text-center leading-tight">
                       {su.username.length > 8 ? su.username.slice(0, 8) + "…" : su.username}
                     </span>
                   </button>
@@ -239,21 +239,21 @@ export function StoriesBar() {
             {/* Own stories */}
             {hasOwnStories && (
               <button
-                className="flex flex-col items-center gap-1 min-w-[60px]"
+                className="flex flex-col items-center gap-0.5 min-w-[56px]"
                 onClick={() => {
                   const own = storyUsers.find((u) => u.userId === user?.id);
                   if (own) openStory(own);
                 }}
               >
-                <div className="rounded-full p-[1.5px] bg-gradient-primary">
-                  <Avatar className="h-[52px] w-[52px] border-2 border-background">
+                <div className="rounded-full p-[1px] bg-gradient-to-tr from-primary/70 to-accent/70">
+                  <Avatar className="h-[48px] w-[48px] border-[1.5px] border-background">
                     <AvatarImage src={profile?.avatar_url || undefined} />
-                    <AvatarFallback className="bg-muted text-muted-foreground text-[10px] font-bold">
+                    <AvatarFallback className="bg-muted text-muted-foreground text-[9px] font-semibold">
                       {(profile?.display_name || "V").slice(0, 2).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
                 </div>
-                <span className="text-[10px] text-muted-foreground leading-tight">Meu story</span>
+                <span className="text-[9px] text-muted-foreground/70 leading-tight">Meu story</span>
               </button>
             )}
 
@@ -261,23 +261,23 @@ export function StoriesBar() {
             {displayMockStories && MOCK_STORIES.map((ms) => (
               <button
                 key={ms.userId}
-                className="flex flex-col items-center gap-1 min-w-[60px]"
+                className="flex flex-col items-center gap-0.5 min-w-[56px]"
                 onClick={() => toast({ title: `Story de ${ms.displayName}`, description: "Conteúdo de demonstração" })}
               >
                 <div
                   className={cn(
-                    "rounded-full p-[1.5px]",
-                    ms.hasNew ? "bg-gradient-primary" : "bg-muted-foreground/30"
+                    "rounded-full p-[1px]",
+                    ms.hasNew ? "bg-gradient-to-tr from-primary/70 to-accent/70" : "bg-border/50"
                   )}
                 >
-                  <Avatar className="h-[52px] w-[52px] border-2 border-background">
+                  <Avatar className="h-[48px] w-[48px] border-[1.5px] border-background">
                     <AvatarImage src={ms.avatarUrl} alt={ms.displayName} />
-                    <AvatarFallback className="bg-muted text-muted-foreground text-[10px] font-bold">
+                    <AvatarFallback className="bg-muted text-muted-foreground text-[9px] font-semibold">
                       {ms.displayName.slice(0, 2).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
                 </div>
-                <span className="text-[10px] text-muted-foreground truncate w-14 text-center leading-tight">
+                <span className="text-[9px] text-muted-foreground/70 truncate w-13 text-center leading-tight">
                   {ms.username.length > 8 ? ms.username.slice(0, 8) + "…" : ms.username}
                 </span>
               </button>
