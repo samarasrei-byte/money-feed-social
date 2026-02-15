@@ -21,6 +21,7 @@ import Install from "./pages/Install";
 import Admin from "./pages/Admin";
 import BrandArea from "./pages/BrandArea";
 import Products from "./pages/Products";
+import TikTok from "./pages/TikTok";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -49,6 +50,7 @@ const App = () => (
               <Route path="/admin" element={<Admin />} />
               <Route path="/brands" element={<BrandArea />} />
               <Route path="/products" element={<Products />} />
+              <Route path="/tiktok" element={<TikTok />} />
               <Route path="/create" element={<Feed />} />
             </Route>
 
