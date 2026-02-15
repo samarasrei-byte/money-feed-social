@@ -1,10 +1,10 @@
 import { Link, useLocation } from "react-router-dom";
-import { Home, Users, Trophy, User, PlusCircle } from "lucide-react";
+import { Home, MessageSquare, Trophy, User, PlusCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
   { href: "/feed", icon: Home, label: "Feed" },
-  { href: "/communities", icon: Users, label: "Comunidades" },
+  { href: "/chat", icon: MessageSquare, label: "Chat" },
   { href: "/create", icon: PlusCircle, label: "Criar", isAction: true },
   { href: "/ranking", icon: Trophy, label: "Ranking" },
   { href: "/profile", icon: User, label: "Perfil" },
