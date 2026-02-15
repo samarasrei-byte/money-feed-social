@@ -350,8 +350,13 @@ export default function Landing() {
               <img src={logoImg} alt="OnlyShop" className="h-8 w-8 rounded-lg object-cover" />
               <span className="font-display font-bold text-lg">{APP_NAME}</span>
             </div>
+            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+              <Link to="/terms" className="hover:text-foreground transition-colors">Termos de Uso</Link>
+              <span>·</span>
+              <Link to="/privacy" className="hover:text-foreground transition-colors">Privacidade</Link>
+            </div>
             <p className="text-sm text-muted-foreground">
-              © 2024 Only Shop. Todos os direitos reservados.
+              © 2026 Only Shop. Todos os direitos reservados.
             </p>
           </div>
         </div>
