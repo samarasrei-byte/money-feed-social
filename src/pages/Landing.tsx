@@ -4,7 +4,9 @@ import { Badge } from "@/components/ui/badge";
 import {
   ArrowRight, Users, TrendingUp, DollarSign, Shield, Star, Check,
   Sparkles, ChevronRight, Play, BarChart3, Globe, MessageCircle, Heart,
-  Clock, Rocket, Zap, Award, Target, Eye
+  Clock, Rocket, Zap, Award, Target, Eye, X, ShieldCheck, Smartphone,
+  Headphones, Lock, CreditCard, RefreshCw, Gift, Crown, Flame, Instagram,
+  Youtube, Twitter
 } from "lucide-react";
 import { APP_NAME } from "@/lib/constants";
 import logoImg from "@/assets/color-palette-ref.png";
@@ -27,10 +29,12 @@ const features = [
 ];
 
 const testimonials = [
-  { name: "Marina Sales", role: "Top Afiliada · 3 meses", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face", text: "Em 3 meses fui de zero a R$12.400/mês em comissões.", earnings: "R$87.5K" },
-  { name: "Pedro Henrique", role: "Creator · 6 meses", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face", text: "O tracking transparente mudou completamente meu jogo.", earnings: "R$45.2K" },
-  { name: "Rafa Digital", role: "Influencer · 1 ano", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face", text: "Meu CTR subiu de 2% pra 8% com a prova social verificada.", earnings: "R$120K" },
-  { name: "Beatriz Nova", role: "Iniciante · 1 mês", avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face", text: "Primeiro mês e já fiz R$2.100! A comunidade ajuda demais.", earnings: "R$2.1K" },
+  { name: "Marina Sales", role: "Top Afiliada · 3 meses", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face", text: "Em 3 meses fui de zero a R$12.400/mês em comissões. A plataforma mudou minha vida financeira.", earnings: "R$87.5K" },
+  { name: "Pedro Henrique", role: "Creator · 6 meses", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face", text: "O tracking transparente mudou completamente meu jogo. Sei exatamente de onde vem cada centavo.", earnings: "R$45.2K" },
+  { name: "Rafa Digital", role: "Influencer · 1 ano", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face", text: "Meu CTR subiu de 2% pra 8% com a prova social verificada. Resultados reais e mensuráveis.", earnings: "R$120K" },
+  { name: "Beatriz Nova", role: "Iniciante · 1 mês", avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face", text: "Primeiro mês e já fiz R$2.100! A comunidade ajuda demais. Recomendo pra qualquer iniciante.", earnings: "R$2.1K" },
+  { name: "Lucas Ferreira", role: "Agência · 8 meses", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face", text: "Gerencio 15 afiliados pela plataforma. O dashboard B2B é incomparável no mercado.", earnings: "R$230K" },
+  { name: "Ana Clara", role: "Creator · 4 meses", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face", text: "Saí do CLT pra viver de conteúdo. Hoje faturo 3x mais e tenho liberdade total.", earnings: "R$56K" },
 ];
 
 const plans = [
@@ -48,17 +52,35 @@ const steps = [
 ];
 
 const faqs = [
-  { q: "Preciso pagar para começar?", a: "Não! O plano Free é gratuito para sempre." },
-  { q: "Como funciona o sistema de afiliados?", a: "Faça upgrade para o plano Partner e receba links rastreáveis. Cada venda gera comissão automática." },
-  { q: "Quanto tempo leva para ter resultado?", a: "Alguns membros reportam ganhos na primeira semana. A maioria atinge resultados em 30-60 dias." },
-  { q: "Funciona em qualquer dispositivo?", a: "Sim! Navegador, celular, tablet. Também instala como app nativo (PWA)." },
-  { q: "Posso cancelar a qualquer momento?", a: "Sim, sem burocracia. Cancele pelo painel." },
+  { q: "Preciso pagar para começar?", a: "Não! O plano Free é gratuito para sempre. Você pode explorar toda a rede social sem pagar nada." },
+  { q: "Como funciona o sistema de afiliados?", a: "Faça upgrade para o plano Partner e receba links rastreáveis. Cada venda gera comissão automática depositada na sua conta." },
+  { q: "Quanto tempo leva para ter resultado?", a: "Alguns membros reportam ganhos na primeira semana. A maioria atinge resultados consistentes em 30-60 dias." },
+  { q: "Funciona em qualquer dispositivo?", a: "Sim! Navegador, celular, tablet. Também instala como app nativo (PWA) direto no seu celular." },
+  { q: "Posso cancelar a qualquer momento?", a: "Sim, sem burocracia. Cancele pelo painel em dois cliques. Sem multa, sem pegadinha." },
+  { q: "É seguro colocar meus dados?", a: "Totalmente. Usamos criptografia de ponta e nunca compartilhamos seus dados com terceiros." },
+  { q: "Qual a diferença pro Instagram/TikTok?", a: "Aqui você monetiza diretamente. Cada post tem potencial de gerar comissão via links de afiliado integrados." },
+];
+
+const beforeAfter = [
+  { before: "Postar sem retorno financeiro", after: "Cada post gera comissão rastreável" },
+  { before: "Não saber de onde vem as vendas", after: "Dashboard com analytics em tempo real" },
+  { before: "Depender de publi de marcas", after: "Monetização própria e automática" },
+  { before: "Trabalhar sozinho sem suporte", after: "Comunidade ativa com top creators" },
+  { before: "Links genéricos sem tracking", after: "Links personalizados com CTR otimizado" },
+];
+
+const trustBadges = [
+  { icon: ShieldCheck, label: "Dados criptografados" },
+  { icon: Lock, label: "Pagamentos seguros" },
+  { icon: CreditCard, label: "Checkout protegido" },
+  { icon: Headphones, label: "Suporte 24/7" },
+  { icon: RefreshCw, label: "Garantia 7 dias" },
+  { icon: Smartphone, label: "App nativo (PWA)" },
 ];
 
 /* ─── Reusable glass card ─── */
 const Glass = ({ children, className = "", glow = false }: { children: React.ReactNode; className?: string; glow?: boolean }) => (
   <div className={`relative rounded-3xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl ${glow ? "shadow-[0_0_60px_-15px_hsl(330,81%,60%,0.25)]" : ""} ${className}`}>
-    {/* Inner shine */}
     <div className="absolute inset-0 rounded-3xl bg-gradient-to-b from-white/[0.06] to-transparent pointer-events-none" />
     <div className="relative z-10">{children}</div>
   </div>
@@ -72,7 +94,6 @@ export default function Landing() {
         <div className="absolute top-[-20%] left-[-10%] w-[60vw] h-[60vw] rounded-full bg-[hsl(330,81%,60%)] opacity-[0.07] blur-[150px]" />
         <div className="absolute top-[30%] right-[-15%] w-[50vw] h-[50vw] rounded-full bg-[hsl(270,91%,65%)] opacity-[0.05] blur-[150px]" />
         <div className="absolute bottom-[-10%] left-[20%] w-[40vw] h-[40vw] rounded-full bg-[hsl(25,95%,53%)] opacity-[0.05] blur-[130px]" />
-        {/* Noise overlay */}
         <div className="absolute inset-0 opacity-[0.015]" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E\")" }} />
       </div>
 
@@ -82,6 +103,12 @@ export default function Landing() {
           <Link to="/" className="flex items-center gap-2.5">
             <img src={logoImg} alt={APP_NAME} className="h-10 w-10 rounded-xl object-cover" />
           </Link>
+          <div className="hidden sm:flex items-center gap-6 text-xs text-white/40">
+            <button onClick={() => document.getElementById("how-it-works")?.scrollIntoView({ behavior: "smooth" })} className="hover:text-white transition-colors">Como funciona</button>
+            <button onClick={() => document.getElementById("features")?.scrollIntoView({ behavior: "smooth" })} className="hover:text-white transition-colors">Recursos</button>
+            <button onClick={() => document.getElementById("plans")?.scrollIntoView({ behavior: "smooth" })} className="hover:text-white transition-colors">Planos</button>
+            <button onClick={() => document.getElementById("faq")?.scrollIntoView({ behavior: "smooth" })} className="hover:text-white transition-colors">FAQ</button>
+          </div>
           <div className="flex items-center gap-2">
             <Button asChild variant="ghost" size="sm" className="text-white/40 hover:text-white hover:bg-white/5 text-xs h-9 rounded-full px-4">
               <Link to="/auth">Login</Link>
@@ -111,10 +138,10 @@ export default function Landing() {
             </h1>
 
             <p className="text-sm sm:text-base text-white/35 mb-8 max-w-md leading-relaxed mx-auto sm:mx-0">
-              A rede social onde cada post pode gerar receita. Junte-se a mais de 10.000 criadores que já monetizam.
+              A rede social onde cada post pode gerar receita. Junte-se a mais de 10.000 criadores que já monetizam seu conteúdo diariamente.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mb-16">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mb-10">
               <Button asChild size="lg" className="bg-gradient-to-r from-[hsl(330,81%,60%)] to-[hsl(270,91%,65%)] hover:opacity-90 text-white w-full sm:w-auto text-sm h-13 px-8 rounded-full font-bold border-0 shadow-[0_8px_40px_-8px_hsl(330,81%,60%,0.5)]">
                 <Link to="/auth">
                   Começar grátis
@@ -131,9 +158,21 @@ export default function Landing() {
                 Como funciona
               </Button>
             </div>
+
+            {/* Mini social proof under CTA */}
+            <div className="flex items-center gap-3 mb-16 justify-center sm:justify-start">
+              <div className="flex -space-x-2">
+                {testimonials.slice(0, 4).map((t) => (
+                  <img key={t.name} src={t.avatar} alt="" className="h-7 w-7 rounded-full border-2 border-[hsl(240,12%,3%)] object-cover" />
+                ))}
+              </div>
+              <div className="text-[11px] text-white/40">
+                <span className="text-white/70 font-semibold">+10.000</span> criadores ativos
+              </div>
+            </div>
           </div>
 
-          {/* Stats - glass cards */}
+          {/* Stats */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {stats.map((stat) => (
               <Glass key={stat.label} className="p-4 sm:p-5 text-center">
@@ -169,9 +208,9 @@ export default function Landing() {
           </div>
           <div className="grid sm:grid-cols-3 gap-4">
             {[
-              { icon: Heart, title: "Criadores de Conteúdo", desc: "Monetize seus posts com links de afiliado rastreáveis." },
-              { icon: Award, title: "Afiliados Profissionais", desc: "Painel completo de vendas e comissões automáticas." },
-              { icon: Target, title: "Marcas & Agências", desc: "Acesse os top criadores e escale com social commerce." },
+              { icon: Heart, title: "Criadores de Conteúdo", desc: "Monetize seus posts com links de afiliado rastreáveis. Cada conteúdo vira uma fonte de receita." },
+              { icon: Award, title: "Afiliados Profissionais", desc: "Painel completo de vendas, comissões automáticas e ferramentas profissionais de tracking." },
+              { icon: Target, title: "Marcas & Agências", desc: "Acesse os top criadores do Brasil e escale suas vendas com social commerce." },
             ].map((item) => (
               <div key={item.title} className="p-6 rounded-3xl border border-[hsl(240,6%,90%)] bg-[hsl(240,5%,97%)] group hover:border-[hsl(330,81%,60%,0.3)] hover:shadow-[0_8px_30px_-10px_hsl(330,81%,60%,0.12)] transition-all duration-500">
                 <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[hsl(330,81%,60%,0.12)] to-[hsl(270,91%,65%,0.06)] border border-[hsl(330,81%,60%,0.1)] flex items-center justify-center mb-4">
@@ -185,7 +224,7 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ═══ HOW IT WORKS ═══ */}
+      {/* ═══ HOW IT WORKS ═══ (dark) */}
       <section id="how-it-works" className="py-20 sm:py-28 relative z-10">
         <div className="max-w-5xl mx-auto px-5">
           <div className="text-center mb-16">
@@ -196,7 +235,7 @@ export default function Landing() {
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {steps.map((s, i) => (
+            {steps.map((s) => (
               <div key={s.n} className="relative text-center group">
                 <div className="text-6xl font-black bg-clip-text text-transparent bg-gradient-to-b from-white/[0.06] to-transparent mb-1 select-none">{s.n}</div>
                 <Glass className="p-5 mx-auto group-hover:border-[hsl(330,81%,60%,0.3)] transition-all duration-500">
@@ -212,8 +251,36 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ═══ FEATURES ═══ (light) */}
-      <section className="py-20 sm:py-28 relative z-10 bg-[hsl(240,5%,97%)] text-[hsl(240,10%,4%)]">
+      {/* ═══ BEFORE/AFTER ═══ (light) */}
+      <section className="py-20 sm:py-28 relative z-10 bg-white text-[hsl(240,10%,4%)]">
+        <div className="max-w-4xl mx-auto px-5">
+          <div className="text-center mb-14">
+            <p className="text-[10px] font-bold text-[hsl(330,81%,60%)] uppercase tracking-[0.2em] mb-3">Antes vs Depois</p>
+            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-[hsl(240,10%,4%)]">
+              O que muda com o <span className="bg-clip-text text-transparent bg-gradient-to-r from-[hsl(25,95%,53%)] to-[hsl(330,81%,60%)]">{APP_NAME}</span>
+            </h2>
+          </div>
+
+          <div className="space-y-3">
+            {beforeAfter.map((item, i) => (
+              <div key={i} className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 sm:gap-5">
+                <div className="p-4 rounded-2xl bg-[hsl(0,80%,97%)] border border-[hsl(0,60%,90%)] text-center">
+                  <X className="h-4 w-4 text-red-400 mx-auto mb-1.5" />
+                  <p className="text-xs text-[hsl(240,4%,46%)] leading-relaxed">{item.before}</p>
+                </div>
+                <ArrowRight className="h-4 w-4 text-[hsl(330,81%,60%)] shrink-0" />
+                <div className="p-4 rounded-2xl bg-[hsl(160,60%,97%)] border border-[hsl(160,40%,88%)] text-center">
+                  <Check className="h-4 w-4 text-emerald-500 mx-auto mb-1.5" />
+                  <p className="text-xs text-[hsl(240,10%,4%)] leading-relaxed font-medium">{item.after}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ FEATURES ═══ (light gray) */}
+      <section id="features" className="py-20 sm:py-28 relative z-10 bg-[hsl(240,5%,97%)] text-[hsl(240,10%,4%)]">
         <div className="max-w-5xl mx-auto px-5">
           <div className="text-center mb-14">
             <p className="text-[10px] font-bold text-[hsl(330,81%,60%)] uppercase tracking-[0.2em] mb-3">Recursos</p>
@@ -236,7 +303,7 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ═══ RESULTS BANNER ═══ */}
+      {/* ═══ RESULTS BANNER ═══ (dark) */}
       <section className="py-16 relative z-10">
         <div className="max-w-4xl mx-auto px-5">
           <Glass glow className="p-8 sm:p-10 overflow-hidden">
@@ -258,7 +325,33 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ═══ TESTIMONIALS ═══ */}
+      {/* ═══ INTEGRATIONS / PLATFORMS ═══ (light) */}
+      <section className="py-16 sm:py-20 relative z-10 bg-white text-[hsl(240,10%,4%)]">
+        <div className="max-w-4xl mx-auto px-5 text-center">
+          <p className="text-[10px] font-bold text-[hsl(330,81%,60%)] uppercase tracking-[0.2em] mb-3">Integrações</p>
+          <h2 className="text-xl sm:text-3xl font-bold tracking-tight text-[hsl(240,10%,4%)] mb-4">
+            Funciona com as redes que você já usa
+          </h2>
+          <p className="text-xs text-[hsl(240,4%,46%)] mb-10 max-w-md mx-auto">Conecte suas redes sociais e centralize tudo em um único painel de controle.</p>
+          <div className="flex items-center justify-center gap-6 sm:gap-10 flex-wrap">
+            {[
+              { icon: Instagram, name: "Instagram", color: "from-pink-500 to-purple-500" },
+              { icon: Youtube, name: "YouTube", color: "from-red-500 to-red-600" },
+              { icon: Twitter, name: "X / Twitter", color: "from-gray-700 to-gray-900" },
+              { icon: Globe, name: "TikTok", color: "from-cyan-400 to-pink-500" },
+            ].map((p) => (
+              <div key={p.name} className="flex flex-col items-center gap-2 group">
+                <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${p.color} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform`}>
+                  <p.icon className="h-6 w-6 text-white" />
+                </div>
+                <span className="text-[10px] text-[hsl(240,4%,46%)] font-medium">{p.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ TESTIMONIALS ═══ (dark) */}
       <section className="py-20 sm:py-28 relative z-10">
         <div className="max-w-5xl mx-auto px-5">
           <div className="text-center mb-14">
@@ -266,9 +359,10 @@ export default function Landing() {
             <h2 className="text-2xl sm:text-4xl font-bold tracking-tight">
               Resultados <span className="bg-clip-text text-transparent bg-gradient-to-r from-[hsl(330,81%,60%)] to-[hsl(270,91%,65%)]">reais</span>
             </h2>
+            <p className="text-xs text-white/30 mt-3 max-w-md mx-auto">Veja o que nossos membros estão dizendo sobre a plataforma.</p>
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {testimonials.map((t) => (
               <Glass key={t.name} className="p-5 flex flex-col">
                 <div className="flex items-center gap-0.5 mb-3">
@@ -289,7 +383,26 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ═══ PRICING ═══ */}
+      {/* ═══ TRUST BADGES ═══ (light) */}
+      <section className="py-14 sm:py-16 relative z-10 bg-[hsl(240,5%,97%)] text-[hsl(240,10%,4%)]">
+        <div className="max-w-4xl mx-auto px-5">
+          <div className="text-center mb-10">
+            <h3 className="text-lg sm:text-xl font-bold text-[hsl(240,10%,4%)]">Sua segurança é prioridade</h3>
+          </div>
+          <div className="grid grid-cols-3 sm:grid-cols-6 gap-4">
+            {trustBadges.map((b) => (
+              <div key={b.label} className="flex flex-col items-center gap-2 text-center">
+                <div className="w-11 h-11 rounded-xl bg-white border border-[hsl(240,6%,90%)] flex items-center justify-center shadow-sm">
+                  <b.icon className="h-5 w-5 text-[hsl(330,81%,60%)]" />
+                </div>
+                <span className="text-[9px] text-[hsl(240,4%,46%)] font-medium leading-tight">{b.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ PRICING ═══ (dark) */}
       <section id="plans" className="py-20 sm:py-28 relative z-10">
         <div className="max-w-5xl mx-auto px-5">
           <div className="text-center mb-14">
@@ -297,6 +410,7 @@ export default function Landing() {
             <h2 className="text-2xl sm:text-4xl font-bold tracking-tight">
               Escolha seu <span className="bg-clip-text text-transparent bg-gradient-to-r from-[hsl(25,95%,53%)] to-[hsl(330,81%,60%)]">plano</span>
             </h2>
+            <p className="text-xs text-white/30 mt-3 max-w-md mx-auto">Comece grátis e faça upgrade quando quiser. Sem compromisso.</p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -346,16 +460,37 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ═══ FAQ ═══ (light) */}
-      <section className="py-20 sm:py-28 relative z-10 bg-white text-[hsl(240,10%,4%)]">
+      {/* ═══ GUARANTEE ═══ (light) */}
+      <section className="py-16 sm:py-20 relative z-10 bg-white text-[hsl(240,10%,4%)]">
+        <div className="max-w-3xl mx-auto px-5">
+          <div className="p-8 sm:p-10 rounded-3xl border border-[hsl(160,40%,88%)] bg-[hsl(160,50%,97%)] text-center">
+            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-500 flex items-center justify-center mx-auto mb-5 shadow-[0_8px_30px_-8px_hsl(160,84%,39%,0.4)]">
+              <ShieldCheck className="h-8 w-8 text-white" />
+            </div>
+            <h3 className="text-xl sm:text-2xl font-bold text-[hsl(240,10%,4%)] mb-3">Garantia de 7 dias</h3>
+            <p className="text-sm text-[hsl(240,4%,46%)] leading-relaxed max-w-lg mx-auto mb-4">
+              Experimente qualquer plano pago por 7 dias. Se não ficar satisfeito, devolvemos 100% do seu investimento. Sem perguntas, sem burocracia.
+            </p>
+            <div className="flex items-center justify-center gap-4 text-[11px] text-[hsl(240,4%,46%)]">
+              <span className="flex items-center gap-1"><Check className="h-3 w-3 text-emerald-500" />Sem multa</span>
+              <span className="flex items-center gap-1"><Check className="h-3 w-3 text-emerald-500" />Sem pegadinha</span>
+              <span className="flex items-center gap-1"><Check className="h-3 w-3 text-emerald-500" />Reembolso total</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ FAQ ═══ (light gray) */}
+      <section id="faq" className="py-20 sm:py-28 relative z-10 bg-[hsl(240,5%,97%)] text-[hsl(240,10%,4%)]">
         <div className="max-w-2xl mx-auto px-5">
           <div className="text-center mb-14">
             <p className="text-[10px] font-bold text-[hsl(330,81%,60%)] uppercase tracking-[0.2em] mb-3">FAQ</p>
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[hsl(240,10%,4%)]">Perguntas frequentes</h2>
+            <p className="text-xs text-[hsl(240,4%,46%)] mt-3">Tire suas dúvidas antes de começar.</p>
           </div>
           <div className="space-y-2">
             {faqs.map((faq) => (
-              <div key={faq.q} className="rounded-2xl border border-[hsl(240,6%,90%)] bg-[hsl(240,5%,97%)] overflow-hidden">
+              <div key={faq.q} className="rounded-2xl border border-[hsl(240,6%,90%)] bg-white overflow-hidden">
                 <details className="group">
                   <summary className="flex items-center justify-between text-sm font-medium px-5 py-4 list-none text-[hsl(240,10%,20%)] hover:text-[hsl(240,10%,4%)] transition-colors cursor-pointer">
                     {faq.q}
@@ -371,37 +506,101 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ═══ FINAL CTA ═══ */}
+      {/* ═══ URGENCY BANNER ═══ (dark) */}
+      <section className="py-10 relative z-10 border-y border-white/[0.05]">
+        <div className="max-w-4xl mx-auto px-5">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[hsl(25,95%,53%)] to-[hsl(330,81%,60%)] flex items-center justify-center shrink-0">
+                <Flame className="h-5 w-5 text-white" />
+              </div>
+              <div>
+                <p className="text-sm font-bold">Vagas limitadas para o plano Partner</p>
+                <p className="text-[11px] text-white/35">Apenas 50 vagas disponíveis por mês. Garanta a sua.</p>
+              </div>
+            </div>
+            <Button asChild size="sm" className="bg-gradient-to-r from-[hsl(25,95%,53%)] to-[hsl(330,81%,60%)] text-white hover:opacity-90 rounded-full h-10 px-6 text-xs font-bold border-0 shadow-[0_4px_20px_hsl(25,95%,53%,0.3)] shrink-0">
+              <Link to="/auth">
+                Garantir vaga
+                <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ FINAL CTA ═══ (dark) */}
       <section className="py-24 sm:py-32 relative z-10">
         <div className="max-w-2xl mx-auto px-5 text-center">
           <Glass glow className="p-10 sm:p-14">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[hsl(330,81%,60%)] to-[hsl(270,91%,65%)] flex items-center justify-center mx-auto mb-6 shadow-[0_8px_30px_-8px_hsl(330,81%,60%,0.4)]">
+              <Crown className="h-7 w-7 text-white" />
+            </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">
               Pronto para{" "}
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-[hsl(25,95%,53%)] via-[hsl(330,81%,60%)] to-[hsl(270,91%,65%)]">começar?</span>
             </h2>
             <p className="text-sm text-white/30 mb-8 max-w-md mx-auto">
-              Junte-se a milhares de criadores que já monetizam seu conteúdo.
+              Junte-se a milhares de criadores que já monetizam seu conteúdo todos os dias.
             </p>
             <Button asChild size="lg" className="bg-gradient-to-r from-[hsl(330,81%,60%)] to-[hsl(270,91%,65%)] hover:opacity-90 text-white rounded-full h-13 px-10 text-sm font-bold border-0 shadow-[0_8px_40px_-8px_hsl(330,81%,60%,0.5)]">
               <Link to="/auth">Criar conta grátis<ArrowRight className="ml-2 h-4 w-4" /></Link>
             </Button>
             <p className="text-[10px] text-white/15 mt-5">Sem cartão · Cancele quando quiser · Suporte em português</p>
+
+            {/* Mini avatars */}
+            <div className="flex items-center justify-center gap-2 mt-6">
+              <div className="flex -space-x-1.5">
+                {testimonials.slice(0, 5).map((t) => (
+                  <img key={t.name} src={t.avatar} alt="" className="h-6 w-6 rounded-full border border-white/10 object-cover" />
+                ))}
+              </div>
+              <span className="text-[10px] text-white/25">+10K criadores ativos</span>
+            </div>
           </Glass>
         </div>
       </section>
 
       {/* ═══ FOOTER ═══ */}
-      <footer className="py-8 border-t border-white/[0.05] relative z-10">
-        <div className="max-w-6xl mx-auto px-5 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <img src={logoImg} alt={APP_NAME} className="h-6 w-6 rounded-lg object-cover" />
-            <span className="font-bold text-xs">{APP_NAME}</span>
+      <footer className="py-10 border-t border-white/[0.05] relative z-10">
+        <div className="max-w-6xl mx-auto px-5">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-8">
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <img src={logoImg} alt={APP_NAME} className="h-7 w-7 rounded-lg object-cover" />
+                <span className="font-bold text-xs">{APP_NAME}</span>
+              </div>
+              <p className="text-[10px] text-white/20 leading-relaxed">A rede social de monetização #1 do Brasil.</p>
+            </div>
+            <div>
+              <p className="text-[10px] font-bold text-white/40 uppercase tracking-widest mb-3">Produto</p>
+              <div className="space-y-2">
+                <button onClick={() => document.getElementById("features")?.scrollIntoView({ behavior: "smooth" })} className="block text-[11px] text-white/25 hover:text-white transition-colors">Recursos</button>
+                <button onClick={() => document.getElementById("plans")?.scrollIntoView({ behavior: "smooth" })} className="block text-[11px] text-white/25 hover:text-white transition-colors">Planos</button>
+                <button onClick={() => document.getElementById("faq")?.scrollIntoView({ behavior: "smooth" })} className="block text-[11px] text-white/25 hover:text-white transition-colors">FAQ</button>
+              </div>
+            </div>
+            <div>
+              <p className="text-[10px] font-bold text-white/40 uppercase tracking-widest mb-3">Legal</p>
+              <div className="space-y-2">
+                <Link to="/terms" className="block text-[11px] text-white/25 hover:text-white transition-colors">Termos de Uso</Link>
+                <Link to="/privacy" className="block text-[11px] text-white/25 hover:text-white transition-colors">Privacidade</Link>
+              </div>
+            </div>
+            <div>
+              <p className="text-[10px] font-bold text-white/40 uppercase tracking-widest mb-3">Comunidade</p>
+              <div className="space-y-2">
+                <Link to="/auth" className="block text-[11px] text-white/25 hover:text-white transition-colors">Criar conta</Link>
+                <Link to="/auth" className="block text-[11px] text-white/25 hover:text-white transition-colors">Login</Link>
+              </div>
+            </div>
           </div>
-          <div className="flex items-center gap-4 text-[11px] text-white/25">
-            <Link to="/terms" className="hover:text-white transition-colors">Termos</Link>
-            <Link to="/privacy" className="hover:text-white transition-colors">Privacidade</Link>
+          <div className="pt-6 border-t border-white/[0.05] flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p className="text-[10px] text-white/15">© 2026 {APP_NAME}. Todos os direitos reservados.</p>
+            <div className="flex items-center gap-4 text-[11px] text-white/20">
+              <span>🇧🇷 Feito no Brasil</span>
+            </div>
           </div>
-          <p className="text-[10px] text-white/15">© 2026 {APP_NAME}. Todos os direitos reservados.</p>
         </div>
       </footer>
     </div>
