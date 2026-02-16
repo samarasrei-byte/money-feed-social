@@ -251,12 +251,12 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ═══ BEFORE/AFTER ═══ (light) */}
-      <section className="py-20 sm:py-28 relative z-10 bg-white text-[hsl(240,10%,4%)]">
+      {/* ═══ BEFORE/AFTER ═══ (dark) */}
+      <section className="py-20 sm:py-28 relative z-10">
         <div className="max-w-4xl mx-auto px-5">
           <div className="text-center mb-14">
             <p className="text-[10px] font-bold text-[hsl(330,81%,60%)] uppercase tracking-[0.2em] mb-3">Antes vs Depois</p>
-            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-[hsl(240,10%,4%)]">
+            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight">
               O que muda com o <span className="bg-clip-text text-transparent bg-gradient-to-r from-[hsl(25,95%,53%)] to-[hsl(330,81%,60%)]">{APP_NAME}</span>
             </h2>
           </div>
@@ -264,14 +264,14 @@ export default function Landing() {
           <div className="space-y-3">
             {beforeAfter.map((item, i) => (
               <div key={i} className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 sm:gap-5">
-                <div className="p-4 rounded-2xl bg-[hsl(0,80%,97%)] border border-[hsl(0,60%,90%)] text-center">
+                <div className="p-4 rounded-2xl bg-red-500/[0.06] border border-red-500/[0.1] text-center">
                   <X className="h-4 w-4 text-red-400 mx-auto mb-1.5" />
-                  <p className="text-xs text-[hsl(240,4%,46%)] leading-relaxed">{item.before}</p>
+                  <p className="text-xs text-white/40 leading-relaxed">{item.before}</p>
                 </div>
                 <ArrowRight className="h-4 w-4 text-[hsl(330,81%,60%)] shrink-0" />
-                <div className="p-4 rounded-2xl bg-[hsl(160,60%,97%)] border border-[hsl(160,40%,88%)] text-center">
-                  <Check className="h-4 w-4 text-emerald-500 mx-auto mb-1.5" />
-                  <p className="text-xs text-[hsl(240,10%,4%)] leading-relaxed font-medium">{item.after}</p>
+                <div className="p-4 rounded-2xl bg-emerald-500/[0.06] border border-emerald-500/[0.1] text-center">
+                  <Check className="h-4 w-4 text-emerald-400 mx-auto mb-1.5" />
+                  <p className="text-xs text-white/70 leading-relaxed font-medium">{item.after}</p>
                 </div>
               </div>
             ))}
@@ -279,25 +279,25 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ═══ FEATURES ═══ (light gray) */}
-      <section id="features" className="py-20 sm:py-28 relative z-10 bg-[hsl(240,5%,97%)] text-[hsl(240,10%,4%)]">
+      {/* ═══ FEATURES ═══ (dark) */}
+      <section id="features" className="py-20 sm:py-28 relative z-10">
         <div className="max-w-5xl mx-auto px-5">
           <div className="text-center mb-14">
             <p className="text-[10px] font-bold text-[hsl(330,81%,60%)] uppercase tracking-[0.2em] mb-3">Recursos</p>
-            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-[hsl(240,10%,4%)]">
+            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight">
               Tudo para <span className="bg-clip-text text-transparent bg-gradient-to-r from-[hsl(25,95%,53%)] via-[hsl(330,81%,60%)] to-[hsl(270,91%,65%)]">crescer e monetizar</span>
             </h2>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {features.map((f) => (
-              <div key={f.title} className="p-5 rounded-3xl border border-[hsl(240,6%,90%)] bg-white group hover:border-[hsl(330,81%,60%,0.3)] hover:shadow-[0_8px_30px_-10px_hsl(330,81%,60%,0.12)] transition-all duration-500">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[hsl(330,81%,60%,0.1)] to-[hsl(270,91%,65%,0.05)] border border-[hsl(330,81%,60%,0.08)] flex items-center justify-center mb-4">
+              <Glass key={f.title} className="p-5 group hover:border-[hsl(330,81%,60%,0.3)] transition-all duration-500">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[hsl(330,81%,60%,0.15)] to-transparent border border-white/[0.06] flex items-center justify-center mb-4">
                   <f.icon className="h-5 w-5 text-[hsl(330,81%,60%)] group-hover:text-[hsl(25,95%,53%)] transition-colors" />
                 </div>
-                <h3 className="font-bold text-sm mb-1.5 text-[hsl(240,10%,4%)]">{f.title}</h3>
-                <p className="text-xs text-[hsl(240,4%,46%)] leading-relaxed">{f.desc}</p>
-              </div>
+                <h3 className="font-bold text-sm mb-1.5">{f.title}</h3>
+                <p className="text-xs text-white/35 leading-relaxed">{f.desc}</p>
+              </Glass>
             ))}
           </div>
         </div>
@@ -325,14 +325,14 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ═══ INTEGRATIONS / PLATFORMS ═══ (light) */}
-      <section className="py-16 sm:py-20 relative z-10 bg-white text-[hsl(240,10%,4%)]">
+      {/* ═══ INTEGRATIONS / PLATFORMS ═══ (dark) */}
+      <section className="py-16 sm:py-20 relative z-10">
         <div className="max-w-4xl mx-auto px-5 text-center">
           <p className="text-[10px] font-bold text-[hsl(330,81%,60%)] uppercase tracking-[0.2em] mb-3">Integrações</p>
-          <h2 className="text-xl sm:text-3xl font-bold tracking-tight text-[hsl(240,10%,4%)] mb-4">
+          <h2 className="text-xl sm:text-3xl font-bold tracking-tight mb-4">
             Funciona com as redes que você já usa
           </h2>
-          <p className="text-xs text-[hsl(240,4%,46%)] mb-10 max-w-md mx-auto">Conecte suas redes sociais e centralize tudo em um único painel de controle.</p>
+          <p className="text-xs text-white/35 mb-10 max-w-md mx-auto">Conecte suas redes sociais e centralize tudo em um único painel de controle.</p>
           <div className="flex items-center justify-center gap-6 sm:gap-10 flex-wrap">
             {[
               { icon: Instagram, name: "Instagram", color: "from-pink-500 to-purple-500" },
@@ -344,7 +344,7 @@ export default function Landing() {
                 <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${p.color} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform`}>
                   <p.icon className="h-6 w-6 text-white" />
                 </div>
-                <span className="text-[10px] text-[hsl(240,4%,46%)] font-medium">{p.name}</span>
+                <span className="text-[10px] text-white/40 font-medium">{p.name}</span>
               </div>
             ))}
           </div>
@@ -383,19 +383,19 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ═══ TRUST BADGES ═══ (light) */}
-      <section className="py-14 sm:py-16 relative z-10 bg-[hsl(240,5%,97%)] text-[hsl(240,10%,4%)]">
+      {/* ═══ TRUST BADGES ═══ (dark) */}
+      <section className="py-14 sm:py-16 relative z-10 border-y border-white/[0.05]">
         <div className="max-w-4xl mx-auto px-5">
           <div className="text-center mb-10">
-            <h3 className="text-lg sm:text-xl font-bold text-[hsl(240,10%,4%)]">Sua segurança é prioridade</h3>
+            <h3 className="text-lg sm:text-xl font-bold">Sua segurança é prioridade</h3>
           </div>
           <div className="grid grid-cols-3 sm:grid-cols-6 gap-4">
             {trustBadges.map((b) => (
               <div key={b.label} className="flex flex-col items-center gap-2 text-center">
-                <div className="w-11 h-11 rounded-xl bg-white border border-[hsl(240,6%,90%)] flex items-center justify-center shadow-sm">
+                <div className="w-11 h-11 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center">
                   <b.icon className="h-5 w-5 text-[hsl(330,81%,60%)]" />
                 </div>
-                <span className="text-[9px] text-[hsl(240,4%,46%)] font-medium leading-tight">{b.label}</span>
+                <span className="text-[9px] text-white/30 font-medium leading-tight">{b.label}</span>
               </div>
             ))}
           </div>
@@ -480,24 +480,24 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ═══ FAQ ═══ (light gray) */}
-      <section id="faq" className="py-20 sm:py-28 relative z-10 bg-[hsl(240,5%,97%)] text-[hsl(240,10%,4%)]">
+      {/* ═══ FAQ ═══ (dark) */}
+      <section id="faq" className="py-20 sm:py-28 relative z-10">
         <div className="max-w-2xl mx-auto px-5">
           <div className="text-center mb-14">
             <p className="text-[10px] font-bold text-[hsl(330,81%,60%)] uppercase tracking-[0.2em] mb-3">FAQ</p>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[hsl(240,10%,4%)]">Perguntas frequentes</h2>
-            <p className="text-xs text-[hsl(240,4%,46%)] mt-3">Tire suas dúvidas antes de começar.</p>
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Perguntas frequentes</h2>
+            <p className="text-xs text-white/30 mt-3">Tire suas dúvidas antes de começar.</p>
           </div>
           <div className="space-y-2">
             {faqs.map((faq) => (
-              <div key={faq.q} className="rounded-2xl border border-[hsl(240,6%,90%)] bg-white overflow-hidden">
+              <div key={faq.q} className="rounded-2xl border border-white/[0.06] bg-white/[0.03] overflow-hidden">
                 <details className="group">
-                  <summary className="flex items-center justify-between text-sm font-medium px-5 py-4 list-none text-[hsl(240,10%,20%)] hover:text-[hsl(240,10%,4%)] transition-colors cursor-pointer">
+                  <summary className="flex items-center justify-between text-sm font-medium px-5 py-4 list-none text-white/70 hover:text-white transition-colors cursor-pointer">
                     {faq.q}
-                    <ChevronRight className="h-3.5 w-3.5 text-[hsl(240,4%,46%)] transition-transform group-open:rotate-90 shrink-0 ml-3" />
+                    <ChevronRight className="h-3.5 w-3.5 text-white/25 transition-transform group-open:rotate-90 shrink-0 ml-3" />
                   </summary>
                   <div className="px-5 pb-4">
-                    <p className="text-xs text-[hsl(240,4%,46%)] leading-relaxed">{faq.a}</p>
+                    <p className="text-xs text-white/35 leading-relaxed">{faq.a}</p>
                   </div>
                 </details>
               </div>
