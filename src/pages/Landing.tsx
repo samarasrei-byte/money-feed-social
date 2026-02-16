@@ -158,12 +158,12 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ═══ PARA QUEM ═══ */}
-      <section className="py-20 sm:py-28 relative z-10">
+      {/* ═══ PARA QUEM ═══ (light) */}
+      <section className="py-20 sm:py-28 relative z-10 bg-white text-[hsl(240,10%,4%)]">
         <div className="max-w-5xl mx-auto px-5">
           <div className="text-center mb-14">
             <p className="text-[10px] font-bold text-[hsl(330,81%,60%)] uppercase tracking-[0.2em] mb-3">Para quem é</p>
-            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight">
+            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-[hsl(240,10%,4%)]">
               Feito para quem quer <span className="bg-clip-text text-transparent bg-gradient-to-r from-[hsl(25,95%,53%)] to-[hsl(330,81%,60%)]">crescer</span>
             </h2>
           </div>
@@ -173,13 +173,13 @@ export default function Landing() {
               { icon: Award, title: "Afiliados Profissionais", desc: "Painel completo de vendas e comissões automáticas." },
               { icon: Target, title: "Marcas & Agências", desc: "Acesse os top criadores e escale com social commerce." },
             ].map((item) => (
-              <Glass key={item.title} className="p-6 group hover:border-white/[0.15] transition-all duration-500">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[hsl(330,81%,60%,0.2)] to-[hsl(270,91%,65%,0.1)] border border-white/[0.06] flex items-center justify-center mb-4 group-hover:from-[hsl(330,81%,60%,0.4)] transition-all">
+              <div key={item.title} className="p-6 rounded-3xl border border-[hsl(240,6%,90%)] bg-[hsl(240,5%,97%)] group hover:border-[hsl(330,81%,60%,0.3)] hover:shadow-[0_8px_30px_-10px_hsl(330,81%,60%,0.12)] transition-all duration-500">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[hsl(330,81%,60%,0.12)] to-[hsl(270,91%,65%,0.06)] border border-[hsl(330,81%,60%,0.1)] flex items-center justify-center mb-4">
                   <item.icon className="h-5 w-5 text-[hsl(330,81%,60%)]" />
                 </div>
-                <h3 className="font-bold text-sm mb-2">{item.title}</h3>
-                <p className="text-xs text-white/35 leading-relaxed">{item.desc}</p>
-              </Glass>
+                <h3 className="font-bold text-sm mb-2 text-[hsl(240,10%,4%)]">{item.title}</h3>
+                <p className="text-xs text-[hsl(240,4%,46%)] leading-relaxed">{item.desc}</p>
+              </div>
             ))}
           </div>
         </div>
@@ -212,25 +212,25 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ═══ FEATURES ═══ */}
-      <section className="py-20 sm:py-28 relative z-10">
+      {/* ═══ FEATURES ═══ (light) */}
+      <section className="py-20 sm:py-28 relative z-10 bg-[hsl(240,5%,97%)] text-[hsl(240,10%,4%)]">
         <div className="max-w-5xl mx-auto px-5">
           <div className="text-center mb-14">
             <p className="text-[10px] font-bold text-[hsl(330,81%,60%)] uppercase tracking-[0.2em] mb-3">Recursos</p>
-            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight">
+            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-[hsl(240,10%,4%)]">
               Tudo para <span className="bg-clip-text text-transparent bg-gradient-to-r from-[hsl(25,95%,53%)] via-[hsl(330,81%,60%)] to-[hsl(270,91%,65%)]">crescer e monetizar</span>
             </h2>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {features.map((f) => (
-              <Glass key={f.title} className="p-5 group hover:border-[hsl(330,81%,60%,0.2)] transition-all duration-500">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[hsl(330,81%,60%,0.15)] to-transparent border border-white/[0.06] flex items-center justify-center mb-4">
+              <div key={f.title} className="p-5 rounded-3xl border border-[hsl(240,6%,90%)] bg-white group hover:border-[hsl(330,81%,60%,0.3)] hover:shadow-[0_8px_30px_-10px_hsl(330,81%,60%,0.12)] transition-all duration-500">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[hsl(330,81%,60%,0.1)] to-[hsl(270,91%,65%,0.05)] border border-[hsl(330,81%,60%,0.08)] flex items-center justify-center mb-4">
                   <f.icon className="h-5 w-5 text-[hsl(330,81%,60%)] group-hover:text-[hsl(25,95%,53%)] transition-colors" />
                 </div>
-                <h3 className="font-bold text-sm mb-1.5">{f.title}</h3>
-                <p className="text-xs text-white/30 leading-relaxed">{f.desc}</p>
-              </Glass>
+                <h3 className="font-bold text-sm mb-1.5 text-[hsl(240,10%,4%)]">{f.title}</h3>
+                <p className="text-xs text-[hsl(240,4%,46%)] leading-relaxed">{f.desc}</p>
+              </div>
             ))}
           </div>
         </div>
@@ -346,26 +346,26 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ═══ FAQ ═══ */}
-      <section className="py-20 sm:py-28 relative z-10">
+      {/* ═══ FAQ ═══ (light) */}
+      <section className="py-20 sm:py-28 relative z-10 bg-white text-[hsl(240,10%,4%)]">
         <div className="max-w-2xl mx-auto px-5">
           <div className="text-center mb-14">
             <p className="text-[10px] font-bold text-[hsl(330,81%,60%)] uppercase tracking-[0.2em] mb-3">FAQ</p>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Perguntas frequentes</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[hsl(240,10%,4%)]">Perguntas frequentes</h2>
           </div>
           <div className="space-y-2">
             {faqs.map((faq) => (
-              <Glass key={faq.q} className="overflow-hidden">
+              <div key={faq.q} className="rounded-2xl border border-[hsl(240,6%,90%)] bg-[hsl(240,5%,97%)] overflow-hidden">
                 <details className="group">
-                  <summary className="flex items-center justify-between text-sm font-medium px-5 py-4 list-none text-white/70 hover:text-white transition-colors cursor-pointer">
+                  <summary className="flex items-center justify-between text-sm font-medium px-5 py-4 list-none text-[hsl(240,10%,20%)] hover:text-[hsl(240,10%,4%)] transition-colors cursor-pointer">
                     {faq.q}
-                    <ChevronRight className="h-3.5 w-3.5 text-white/20 transition-transform group-open:rotate-90 shrink-0 ml-3" />
+                    <ChevronRight className="h-3.5 w-3.5 text-[hsl(240,4%,46%)] transition-transform group-open:rotate-90 shrink-0 ml-3" />
                   </summary>
                   <div className="px-5 pb-4">
-                    <p className="text-xs text-white/30 leading-relaxed">{faq.a}</p>
+                    <p className="text-xs text-[hsl(240,4%,46%)] leading-relaxed">{faq.a}</p>
                   </div>
                 </details>
-              </Glass>
+              </div>
             ))}
           </div>
         </div>
