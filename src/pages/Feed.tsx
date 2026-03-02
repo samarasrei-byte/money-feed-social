@@ -7,9 +7,8 @@ import { CommentsSheet } from "@/components/feed/CommentsSheet";
 import { StoriesBar } from "@/components/feed/StoriesBar";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { usePullToRefresh } from "@/hooks/usePullToRefresh";
-import { Loader2 } from "lucide-react";
+import { Loader2, Sparkles } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { MOCK_FEED_POSTS } from "@/lib/mockData";
 
 const PAGE_SIZE = 15;
 
@@ -77,19 +76,17 @@ export default function Feed() {
           .from("posts").select("*").order("created_at", { ascending: false }).limit(PAGE_SIZE);
         if (error) throw error;
         if (!postsData || postsData.length === 0) {
-          setPosts(MOCK_FEED_POSTS);
+          setPosts([]);
           setHasMore(false);
           return;
         }
         const enriched = await enrichPosts(postsData);
-        // Merge real posts with mock affiliate posts for demo
-        const combined = [...enriched, ...MOCK_FEED_POSTS];
-        setPosts(combined);
-        setHasMore(false);
+        setPosts(enriched);
+        setHasMore(postsData.length === PAGE_SIZE);
+        cursorRef.current = postsData[postsData.length - 1].created_at;
       } catch (error) {
         console.error("Error fetching posts:", error);
-        // Fallback to mock data on error
-        setPosts(MOCK_FEED_POSTS);
+        setPosts([]);
         setHasMore(false);
       } finally {
         setLoading(false);
@@ -139,13 +136,6 @@ export default function Feed() {
   }, [user]);
 
   const handleLike = async (postId: string, isLiked: boolean) => {
-    // Allow mock likes without auth
-    if (postId.startsWith("mock-")) {
-      setPosts((prev) =>
-        prev.map((p) => p.id === postId ? { ...p, isLiked: !isLiked, likesCount: isLiked ? p.likesCount - 1 : p.likesCount + 1 } : p)
-      );
-      return;
-    }
     if (!user) {
       toast({ title: "Faça login", description: "Você precisa estar logado para curtir" });
       return;
@@ -222,21 +212,33 @@ export default function Feed() {
       <div className="h-px bg-border/30" />
 
       {/* Posts */}
-      <div>
-        {posts.map((post, index) => (
-          <div key={post.id} className="animate-fade-in" style={{ animationDelay: `${Math.min(index * 30, 300)}ms` }}>
-            <InstagramPost
-              post={post}
-              onLike={() => handleLike(post.id, !!post.isLiked)}
-              onComment={() => handleComment(post.id)}
-              onShare={() => handleShare(post)}
-              onSave={() => handleSave(post.id)}
-              onFollow={handleFollow}
-              onProfileClick={handleProfileClick}
-            />
+      {posts.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-24 gap-3 text-center px-6">
+          <div className="h-16 w-16 rounded-2xl bg-muted/30 flex items-center justify-center">
+            <Sparkles className="h-6 w-6 text-muted-foreground/20" />
           </div>
-        ))}
-      </div>
+          <h2 className="text-sm font-bold">Nenhum post ainda</h2>
+          <p className="text-xs text-muted-foreground/40 max-w-xs">
+            Seja o primeiro a publicar! Crie conteúdo e compartilhe com a comunidade.
+          </p>
+        </div>
+      ) : (
+        <div>
+          {posts.map((post, index) => (
+            <div key={post.id} className="animate-fade-in" style={{ animationDelay: `${Math.min(index * 30, 300)}ms` }}>
+              <InstagramPost
+                post={post}
+                onLike={() => handleLike(post.id, !!post.isLiked)}
+                onComment={() => handleComment(post.id)}
+                onShare={() => handleShare(post)}
+                onSave={() => handleSave(post.id)}
+                onFollow={handleFollow}
+                onProfileClick={handleProfileClick}
+              />
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Infinite scroll sentinel */}
       <div ref={sentinelRef} className="py-8 flex justify-center">
