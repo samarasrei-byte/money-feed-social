@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,14 +12,89 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Camera, Edit3, Calendar, Loader2, Grid3X3, Heart, Bookmark } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Profile() {
   const { user, profile, userRole, loading, updateProfile } = useAuth();
+  const { toast } = useToast();
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [isUploadingAvatar, setIsUploadingAvatar] = useState(false);
   const [displayName, setDisplayName] = useState(profile?.display_name || "");
   const [username, setUsername] = useState(profile?.username || "");
   const [bio, setBio] = useState(profile?.bio || "");
+  const avatarInputRef = useRef<HTMLInputElement>(null);
+
+  // Real stats
+  const [stats, setStats] = useState({ posts: 0, followers: 0, following: 0 });
+  const [statsLoading, setStatsLoading] = useState(true);
+
+  useEffect(() => {
+    if (user) fetchStats();
+  }, [user]);
+
+  useEffect(() => {
+    if (profile) {
+      setDisplayName(profile.display_name || "");
+      setUsername(profile.username || "");
+      setBio(profile.bio || "");
+    }
+  }, [profile]);
+
+  const fetchStats = async () => {
+    if (!user) return;
+    try {
+      const [postsRes, followersRes, followingRes] = await Promise.all([
+        supabase.from("posts").select("*", { count: "exact", head: true }).eq("user_id", user.id),
+        supabase.from("follows").select("*", { count: "exact", head: true }).eq("following_id", user.id),
+        supabase.from("follows").select("*", { count: "exact", head: true }).eq("follower_id", user.id),
+      ]);
+      setStats({
+        posts: postsRes.count || 0,
+        followers: followersRes.count || 0,
+        following: followingRes.count || 0,
+      });
+    } catch (e) {
+      console.error("Error fetching stats:", e);
+    } finally {
+      setStatsLoading(false);
+    }
+  };
+
+  const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !user) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+      toast({ variant: "destructive", title: "Arquivo muito grande", description: "Máximo 5MB" });
+      return;
+    }
+
+    setIsUploadingAvatar(true);
+    try {
+      const ext = file.name.split(".").pop();
+      const filePath = `${user.id}/avatar.${ext}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from("avatars")
+        .upload(filePath, file, { upsert: true });
+
+      if (uploadError) throw uploadError;
+
+      const { data: { publicUrl } } = supabase.storage
+        .from("avatars")
+        .getPublicUrl(filePath);
+
+      // Add cache buster
+      const avatarUrl = `${publicUrl}?t=${Date.now()}`;
+      await updateProfile({ avatar_url: avatarUrl } as any);
+      toast({ title: "Avatar atualizado!" });
+    } catch (error: any) {
+      toast({ variant: "destructive", title: "Erro no upload", description: error.message });
+    } finally {
+      setIsUploadingAvatar(false);
+    }
+  };
 
   if (loading) return <div className="flex items-center justify-center min-h-[50vh]"><Loader2 className="h-4 w-4 animate-spin text-muted-foreground/30" /></div>;
   if (!user) return <Navigate to="/auth" replace />;
@@ -34,14 +110,20 @@ export default function Profile() {
 
   return (
     <div className="max-w-lg mx-auto py-6 space-y-5">
+      {/* Hidden file input */}
+      <input
+        ref={avatarInputRef}
+        type="file"
+        accept="image/*"
+        className="hidden"
+        onChange={handleAvatarUpload}
+      />
+
       {/* Profile Card */}
       <div className="mx-4">
         {/* Cover */}
         <div className="h-28 rounded-t-2xl bg-gradient-to-br from-primary/10 via-accent/5 to-primary/[0.02] relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background/20" />
-          <Button size="icon" variant="ghost" className="absolute bottom-2 right-2 h-7 w-7 rounded-full bg-background/60 backdrop-blur-xl">
-            <Camera className="h-3 w-3" />
-          </Button>
         </div>
 
         <div className="px-4 pb-5 bg-background border-x border-b border-border/20 rounded-b-2xl relative">
@@ -54,8 +136,13 @@ export default function Profile() {
                   <AvatarFallback className="bg-muted text-foreground text-lg font-bold">{initials}</AvatarFallback>
                 </Avatar>
               </div>
-              <Button size="icon" className="absolute bottom-0 right-0 h-6 w-6 rounded-full bg-foreground text-background">
-                <Camera className="h-3 w-3" />
+              <Button
+                size="icon"
+                className="absolute bottom-0 right-0 h-6 w-6 rounded-full bg-foreground text-background"
+                onClick={() => avatarInputRef.current?.click()}
+                disabled={isUploadingAvatar}
+              >
+                {isUploadingAvatar ? <Loader2 className="h-3 w-3 animate-spin" /> : <Camera className="h-3 w-3" />}
               </Button>
             </div>
           </div>
@@ -102,9 +189,13 @@ export default function Profile() {
 
           {/* Stats */}
           <div className="flex items-center gap-6 mt-4 pt-4 border-t border-border/15">
-            {[["0","Publicações"],["0","Seguidores"],["0","Seguindo"]].map(([v,l]) => (
+            {[
+              [stats.posts.toString(), "Publicações"],
+              [stats.followers.toString(), "Seguidores"],
+              [stats.following.toString(), "Seguindo"],
+            ].map(([v, l]) => (
               <div key={l} className="text-center">
-                <p className="text-sm font-bold">{v}</p>
+                <p className="text-sm font-bold">{statsLoading ? "–" : v}</p>
                 <p className="text-[10px] text-muted-foreground/30">{l}</p>
               </div>
             ))}

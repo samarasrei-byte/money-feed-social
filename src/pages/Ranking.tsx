@@ -8,35 +8,126 @@ import { cn } from "@/lib/utils";
 
 interface RankingUser {
   id: string; user_id: string; username: string; display_name: string;
-  avatar_url: string | null; score: number; change?: number; rank: number;
+  avatar_url: string | null; score: number; rank: number;
 }
 
-type RankingPeriod = "daily" | "weekly" | "monthly";
-type RankingType = "earnings" | "growth" | "engagement";
+type RankingType = "engagement" | "posts" | "followers";
 
 export default function Ranking() {
   const { user } = useAuth();
   const [rankings, setRankings] = useState<RankingUser[]>([]);
   const [loading, setLoading] = useState(true);
-  const [period, setPeriod] = useState<RankingPeriod>("weekly");
-  const [type, setType] = useState<RankingType>("earnings");
+  const [type, setType] = useState<RankingType>("engagement");
 
-  useEffect(() => { fetchRankings(); }, [period, type]);
+  useEffect(() => { fetchRankings(); }, [type]);
 
   const fetchRankings = async () => {
     setLoading(true);
     try {
-      const { data: profiles } = await supabase.from("profiles").select("id, user_id, username, display_name, avatar_url").not("username", "is", null).limit(20);
-      const ranked: RankingUser[] = (profiles || []).map((p, i) => ({
-        ...p, score: Math.floor(Math.random() * 50000) + 1000, change: Math.floor(Math.random() * 10) - 3, rank: i + 1,
-      })).sort((a, b) => b.score - a.score).map((p, i) => ({ ...p, rank: i + 1 }));
-      setRankings(ranked);
+      if (type === "engagement") {
+        // Rank by likes received on posts
+        const { data: posts } = await supabase
+          .from("posts")
+          .select("user_id, likes_count")
+          .order("likes_count", { ascending: false })
+          .limit(100);
+
+        // Aggregate by user
+        const userScores = new Map<string, number>();
+        posts?.forEach(p => {
+          userScores.set(p.user_id, (userScores.get(p.user_id) || 0) + p.likes_count);
+        });
+
+        const sortedUsers = [...userScores.entries()].sort((a, b) => b[1] - a[1]).slice(0, 20);
+        const userIds = sortedUsers.map(([uid]) => uid);
+
+        if (userIds.length === 0) { setRankings([]); setLoading(false); return; }
+
+        const { data: profiles } = await supabase
+          .from("profiles")
+          .select("id, user_id, username, display_name, avatar_url")
+          .in("user_id", userIds);
+
+        const profileMap = new Map(profiles?.map(p => [p.user_id, p]) || []);
+        const ranked: RankingUser[] = sortedUsers
+          .map(([uid, score], i) => {
+            const p = profileMap.get(uid);
+            if (!p) return null;
+            return { ...p, username: p.username || "user", display_name: p.display_name || "Usuário", score, rank: i + 1 };
+          })
+          .filter(Boolean) as RankingUser[];
+
+        setRankings(ranked);
+      } else if (type === "posts") {
+        // Rank by number of posts
+        const { data: posts } = await supabase
+          .from("posts")
+          .select("user_id");
+
+        const userCounts = new Map<string, number>();
+        posts?.forEach(p => {
+          userCounts.set(p.user_id, (userCounts.get(p.user_id) || 0) + 1);
+        });
+
+        const sorted = [...userCounts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 20);
+        const userIds = sorted.map(([uid]) => uid);
+
+        if (userIds.length === 0) { setRankings([]); setLoading(false); return; }
+
+        const { data: profiles } = await supabase
+          .from("profiles")
+          .select("id, user_id, username, display_name, avatar_url")
+          .in("user_id", userIds);
+
+        const profileMap = new Map(profiles?.map(p => [p.user_id, p]) || []);
+        const ranked: RankingUser[] = sorted
+          .map(([uid, score], i) => {
+            const p = profileMap.get(uid);
+            if (!p) return null;
+            return { ...p, username: p.username || "user", display_name: p.display_name || "Usuário", score, rank: i + 1 };
+          })
+          .filter(Boolean) as RankingUser[];
+
+        setRankings(ranked);
+      } else {
+        // Rank by followers count
+        const { data: follows } = await supabase
+          .from("follows")
+          .select("following_id");
+
+        const userCounts = new Map<string, number>();
+        follows?.forEach(f => {
+          userCounts.set(f.following_id, (userCounts.get(f.following_id) || 0) + 1);
+        });
+
+        const sorted = [...userCounts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 20);
+        const userIds = sorted.map(([uid]) => uid);
+
+        if (userIds.length === 0) { setRankings([]); setLoading(false); return; }
+
+        const { data: profiles } = await supabase
+          .from("profiles")
+          .select("id, user_id, username, display_name, avatar_url")
+          .in("user_id", userIds);
+
+        const profileMap = new Map(profiles?.map(p => [p.user_id, p]) || []);
+        const ranked: RankingUser[] = sorted
+          .map(([uid, score], i) => {
+            const p = profileMap.get(uid);
+            if (!p) return null;
+            return { ...p, username: p.username || "user", display_name: p.display_name || "Usuário", score, rank: i + 1 };
+          })
+          .filter(Boolean) as RankingUser[];
+
+        setRankings(ranked);
+      }
     } catch (e) { console.error(e); } finally { setLoading(false); }
   };
 
   const fmtScore = (s: number, t: RankingType) => {
-    if (t === "earnings") { if (s >= 1e6) return `R$${(s/1e6).toFixed(1)}M`; if (s >= 1e3) return `R$${(s/1e3).toFixed(1)}K`; return `R$${s}`; }
-    if (s >= 1e3) return `${(s/1e3).toFixed(1)}K`; return s.toString();
+    if (t === "engagement") return `${s} ❤️`;
+    if (t === "posts") return `${s} posts`;
+    return `${s} seguidores`;
   };
 
   if (loading) return <div className="flex items-center justify-center min-h-[50vh]"><Loader2 className="h-4 w-4 animate-spin text-muted-foreground/30" /></div>;
@@ -49,19 +140,10 @@ export default function Ranking() {
         <p className="text-[11px] text-muted-foreground/40">Os melhores da plataforma</p>
       </div>
 
-      {/* Period pills */}
-      <div className="flex justify-center gap-1">
-        {([["daily","Hoje"],["weekly","Semana"],["monthly","Mês"]] as const).map(([id,label]) => (
-          <button key={id} onClick={() => setPeriod(id)} className={cn("px-4 py-1.5 rounded-full text-[11px] font-medium transition-all", period === id ? "bg-foreground text-background" : "text-muted-foreground/40 hover:text-foreground")}>
-            {label}
-          </button>
-        ))}
-      </div>
-
       {/* Type tabs */}
       <Tabs value={type} onValueChange={(v) => setType(v as RankingType)}>
         <TabsList className="w-full h-9 p-0.5 bg-muted/30 rounded-full border-0">
-          {([["earnings","Comissões",DollarSign],["growth","Crescimento",TrendingUp],["engagement","Engajamento",Flame]] as const).map(([id,label,Icon]) => (
+          {([["engagement","Engajamento",Flame],["posts","Publicações",TrendingUp],["followers","Seguidores",DollarSign]] as const).map(([id,label,Icon]) => (
             <TabsTrigger key={id} value={id} className="flex-1 gap-1.5 text-[11px] h-8 rounded-full data-[state=active]:shadow-none">
               <Icon className="h-3.5 w-3.5" /><span className="hidden sm:inline">{label}</span>
             </TabsTrigger>
@@ -111,11 +193,6 @@ export default function Ranking() {
                 </div>
                 <div className="text-right">
                   <p className="text-xs font-bold text-success">{fmtScore(r.score, type)}</p>
-                  {r.change !== undefined && r.change !== 0 && (
-                    <p className={cn("text-[9px] flex items-center justify-end gap-0.5", r.change > 0 ? "text-success" : "text-destructive")}>
-                      <TrendingUp className={cn("h-2.5 w-2.5", r.change < 0 && "rotate-180")} />{Math.abs(r.change)}
-                    </p>
-                  )}
                 </div>
               </div>
             ))}
@@ -124,7 +201,8 @@ export default function Ranking() {
           {rankings.length === 0 && (
             <div className="py-20 text-center">
               <Trophy className="h-8 w-8 mx-auto text-muted-foreground/10 mb-3" />
-              <p className="text-xs text-muted-foreground/30">Nenhum ranking disponível</p>
+              <p className="text-xs text-muted-foreground/30">Nenhum ranking disponível ainda</p>
+              <p className="text-[10px] text-muted-foreground/20 mt-1">Publique e interaja para aparecer aqui!</p>
             </div>
           )}
         </TabsContent>

@@ -25,6 +25,7 @@ import TikTok from "./pages/TikTok";
 import Chat from "./pages/Chat";
 import Checkout from "./pages/Checkout";
 import NotFound from "./pages/NotFound";
+import Settings from "./pages/Settings";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 
@@ -59,6 +60,7 @@ const App = () => (
               <Route path="/tiktok" element={<TikTok />} />
               <Route path="/chat" element={<Chat />} />
               <Route path="/checkout" element={<Checkout />} />
+              <Route path="/settings" element={<Settings />} />
               <Route path="/create" element={<Feed />} />
             </Route>
 
