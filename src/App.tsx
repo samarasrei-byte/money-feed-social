@@ -34,6 +34,8 @@ import CourseDetail from "./pages/CourseDetail";
 import CourseLearn from "./pages/CourseLearn";
 import CourseBuilder from "./pages/CourseBuilder";
 import Opportunities from "./pages/Opportunities";
+import Reels from "./pages/Reels";
+import Live from "./pages/Live";
 
 const queryClient = new QueryClient();
 
@@ -70,6 +72,8 @@ const App = () => (
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/create" element={<Feed />} />
+              <Route path="/reels" element={<Reels />} />
+              <Route path="/live" element={<Live />} />
               <Route path="/courses" element={<Courses />} />
               <Route path="/courses/:id" element={<CourseDetail />} />
               <Route path="/courses/:id/learn" element={<CourseLearn />} />
