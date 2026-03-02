@@ -36,6 +36,7 @@ import CourseBuilder from "./pages/CourseBuilder";
 import Opportunities from "./pages/Opportunities";
 import Reels from "./pages/Reels";
 import Live from "./pages/Live";
+import Analytics from "./pages/Analytics";
 
 const queryClient = new QueryClient();
 
@@ -74,6 +75,7 @@ const App = () => (
               <Route path="/create" element={<Feed />} />
               <Route path="/reels" element={<Reels />} />
               <Route path="/live" element={<Live />} />
+              <Route path="/analytics" element={<Analytics />} />
               <Route path="/courses" element={<Courses />} />
               <Route path="/courses/:id" element={<CourseDetail />} />
               <Route path="/courses/:id/learn" element={<CourseLearn />} />
