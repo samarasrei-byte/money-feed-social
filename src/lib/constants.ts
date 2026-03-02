@@ -24,6 +24,7 @@ export const USER_ROLES = {
 // Navigation items
 export const NAV_ITEMS = [
   { label: "Feed", href: "/feed", icon: "Home" },
+  { label: "Cursos", href: "/courses", icon: "GraduationCap" },
   { label: "Comunidades", href: "/communities", icon: "Users" },
   { label: "Ranking", href: "/ranking", icon: "Trophy" },
   { label: "Perfil", href: "/profile", icon: "User" },

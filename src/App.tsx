@@ -29,6 +29,10 @@ import Settings from "./pages/Settings";
 import RedirectLink from "./pages/RedirectLink";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
+import Courses from "./pages/Courses";
+import CourseDetail from "./pages/CourseDetail";
+import CourseLearn from "./pages/CourseLearn";
+import CourseBuilder from "./pages/CourseBuilder";
 
 const queryClient = new QueryClient();
 
@@ -64,6 +68,10 @@ const App = () => (
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/create" element={<Feed />} />
+              <Route path="/courses" element={<Courses />} />
+              <Route path="/courses/:id" element={<CourseDetail />} />
+              <Route path="/courses/:id/learn" element={<CourseLearn />} />
+              <Route path="/courses/:id/builder" element={<CourseBuilder />} />
             </Route>
 
             {/* Catch-all */}
