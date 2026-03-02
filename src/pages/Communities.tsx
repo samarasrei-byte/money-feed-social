@@ -28,7 +28,7 @@ export default function Communities() {
 
   const fetchCommunities = useCallback(async () => {
     try {
-      const { data: communitiesData, error } = await supabase.from("communities").select("*").order("members_count", { ascending: false });
+      const { data: communitiesData, error } = await supabase.from("communities").select("*").order("members_count", { ascending: false }).is("course_id", null);
       if (error) throw error;
       if (!communitiesData) { setCommunities([]); return; }
       const creatorIds = [...new Set(communitiesData.map((c) => c.creator_id))];

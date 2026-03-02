@@ -22,6 +22,8 @@ import {
   MessageCircle,
   Share2,
   BookOpen,
+  Lock,
+  GraduationCap,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
@@ -63,9 +65,10 @@ export default function CommunityDetail() {
   const [newPost, setNewPost] = useState("");
   const [posting, setPosting] = useState(false);
   const [showRules, setShowRules] = useState(false);
+  const [accessDenied, setAccessDenied] = useState(false);
   const cursorRef = useRef<string | null>(null);
 
-  // Fetch community info
+  // Fetch community info and check access for course-linked communities
   useEffect(() => {
     if (!id) return;
     (async () => {
@@ -83,7 +86,38 @@ export default function CommunityDetail() {
           .eq("user_id", data.creator_id)
           .single();
 
-        setCommunity({ ...data, creator: profile });
+        const communityData = { ...data, creator: profile } as any;
+        setCommunity(communityData);
+
+        // If course-linked and private, check enrollment
+        if (communityData.course_id && communityData.is_private && user) {
+          const { data: enrollment } = await supabase
+            .from("course_enrollments")
+            .select("id")
+            .eq("course_id", communityData.course_id)
+            .eq("user_id", user.id)
+            .maybeSingle();
+
+          if (!enrollment && communityData.creator_id !== user.id) {
+            setAccessDenied(true);
+          } else {
+            // Auto-join member if enrolled but not a member
+            const { data: membership } = await supabase
+              .from("community_members")
+              .select("id")
+              .eq("community_id", id)
+              .eq("user_id", user.id)
+              .maybeSingle();
+            if (!membership) {
+              await supabase.from("community_members").insert({
+                community_id: id,
+                user_id: user.id,
+              });
+            }
+          }
+        } else if (communityData.course_id && communityData.is_private && !user) {
+          setAccessDenied(true);
+        }
       } catch {
         toast({ variant: "destructive", title: "Comunidade não encontrada" });
         navigate("/communities");
@@ -91,7 +125,7 @@ export default function CommunityDetail() {
         setLoading(false);
       }
     })();
-  }, [id, navigate, toast]);
+  }, [id, navigate, toast, user]);
 
   const enrichPosts = useCallback(
     async (postsData: any[]) => {
@@ -242,6 +276,31 @@ export default function CommunityDetail() {
     );
   }
 
+  if (accessDenied) {
+    return (
+      <div className="max-w-lg mx-auto flex flex-col items-center justify-center min-h-[60vh] px-6 text-center">
+        <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4">
+          <Lock className="h-7 w-7 text-muted-foreground" />
+        </div>
+        <h2 className="font-bold text-lg">Comunidade Exclusiva</h2>
+        <p className="text-sm text-muted-foreground mt-2 max-w-xs">
+          Esta comunidade é exclusiva para alunos matriculados no curso. Matricule-se para ter acesso.
+        </p>
+        {community?.course_id && (
+          <Button
+            className="mt-6 bg-gradient-primary border-0 text-primary-foreground rounded-full px-6"
+            onClick={() => navigate(`/courses/${community.course_id}`)}
+          >
+            <GraduationCap className="h-4 w-4 mr-2" /> Ver Curso
+          </Button>
+        )}
+        <Button variant="ghost" className="mt-2 text-xs" onClick={() => navigate("/communities")}>
+          Voltar para comunidades
+        </Button>
+      </div>
+    );
+  }
+
   return (
     <div ref={containerRef} className="max-w-lg mx-auto pb-20 overflow-auto">
       {/* Pull to refresh */}
@@ -257,12 +316,22 @@ export default function CommunityDetail() {
 
       {/* Top Bar */}
       <div className="sticky top-0 z-20 bg-background/95 backdrop-blur-sm border-b border-border px-4 py-3 flex items-center gap-3">
-        <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0" onClick={() => navigate("/communities")}>
+        <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0" onClick={() => {
+          if (community?.course_id) navigate(`/courses/${community.course_id}`);
+          else navigate("/communities");
+        }}>
           <ArrowLeft className="h-5 w-5" />
         </Button>
         <div className="flex-1 min-w-0">
           <h1 className="font-semibold text-[15px] truncate">{community?.name}</h1>
-          <p className="text-[11px] text-muted-foreground">{community?.members_count} membros</p>
+          <div className="flex items-center gap-2">
+            <p className="text-[11px] text-muted-foreground">{community?.members_count} membros</p>
+            {community?.course_id && (
+              <span className="text-[10px] text-primary flex items-center gap-0.5">
+                <GraduationCap className="h-3 w-3" /> Curso
+              </span>
+            )}
+          </div>
         </div>
         {(community as any)?.rules && (
           <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0" onClick={() => setShowRules(true)}>

@@ -235,6 +235,23 @@ export function useStudentCourse(courseId: string | undefined) {
       .single();
     if (error) throw error;
     setEnrollment(data as any as CourseEnrollment);
+
+    // Auto-join linked community if exists
+    const { data: community } = await supabase
+      .from("communities")
+      .select("id")
+      .eq("course_id", courseId)
+      .maybeSingle();
+    if (community) {
+      try {
+        await supabase.from("community_members").insert({
+          community_id: community.id,
+          user_id: user.id,
+        });
+      } catch {
+        // ignore if already a member
+      }
+    }
   };
 
   const markLessonComplete = async (lessonId: string) => {

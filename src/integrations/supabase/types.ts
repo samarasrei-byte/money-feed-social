@@ -321,11 +321,13 @@ export type Database = {
       }
       communities: {
         Row: {
+          course_id: string | null
           cover_url: string | null
           created_at: string
           creator_id: string
           description: string | null
           id: string
+          is_private: boolean
           members_count: number
           name: string
           pinned_post_id: string | null
@@ -333,11 +335,13 @@ export type Database = {
           theme: string | null
         }
         Insert: {
+          course_id?: string | null
           cover_url?: string | null
           created_at?: string
           creator_id: string
           description?: string | null
           id?: string
+          is_private?: boolean
           members_count?: number
           name: string
           pinned_post_id?: string | null
@@ -345,11 +349,13 @@ export type Database = {
           theme?: string | null
         }
         Update: {
+          course_id?: string | null
           cover_url?: string | null
           created_at?: string
           creator_id?: string
           description?: string | null
           id?: string
+          is_private?: boolean
           members_count?: number
           name?: string
           pinned_post_id?: string | null
@@ -357,6 +363,13 @@ export type Database = {
           theme?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "communities_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "communities_pinned_post_id_fkey"
             columns: ["pinned_post_id"]
@@ -1534,6 +1547,10 @@ export type Database = {
         Returns: boolean
       }
       is_affiliate_or_above: { Args: { _user_id: string }; Returns: boolean }
+      is_enrolled_in_course: {
+        Args: { _course_id: string; _user_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
       app_role:
