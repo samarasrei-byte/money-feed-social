@@ -9,7 +9,7 @@ import { LogIn } from "lucide-react";
 
 export default function BrandArea() {
   const { user, loading: authLoading } = useAuth();
-  const { brand, products, campaigns, loading, createBrand, createProduct, createCampaign, deleteProduct } = useBrand();
+  const { brand, products, campaigns, loading, createBrand, createProduct, createCampaign, deleteProduct, updateProduct } = useBrand();
 
   if (authLoading || loading) {
     return (
@@ -54,6 +54,7 @@ export default function BrandArea() {
       onCreateProduct={createProduct}
       onCreateCampaign={createCampaign}
       onDeleteProduct={deleteProduct}
+      onUpdateProduct={updateProduct}
     />
   );
 }

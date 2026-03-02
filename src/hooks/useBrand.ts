@@ -132,11 +132,23 @@ export function useBrand() {
     setProducts((prev) => prev.filter((p) => p.id !== id));
   };
 
+  const updateProduct = async (id: string, input: Partial<Product>) => {
+    const { data, error } = await supabase
+      .from("products")
+      .update(input as any)
+      .eq("id", id)
+      .select()
+      .single();
+    if (error) throw error;
+    setProducts((prev) => prev.map((p) => (p.id === id ? (data as Product) : p)));
+    return data;
+  };
+
   useEffect(() => { fetchBrand(); }, [user]);
 
   return {
     brand, products, campaigns, loading,
-    createBrand, createProduct, createCampaign, deleteProduct,
+    createBrand, createProduct, createCampaign, deleteProduct, updateProduct,
     refetch: fetchBrand,
   };
 }
