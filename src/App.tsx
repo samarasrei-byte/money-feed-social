@@ -33,6 +33,7 @@ import Courses from "./pages/Courses";
 import CourseDetail from "./pages/CourseDetail";
 import CourseLearn from "./pages/CourseLearn";
 import CourseBuilder from "./pages/CourseBuilder";
+import Opportunities from "./pages/Opportunities";
 
 const queryClient = new QueryClient();
 
@@ -63,6 +64,7 @@ const App = () => (
               <Route path="/admin" element={<Admin />} />
               <Route path="/brands" element={<BrandArea />} />
               <Route path="/products" element={<Products />} />
+              <Route path="/opportunities" element={<Opportunities />} />
               <Route path="/tiktok" element={<TikTok />} />
               <Route path="/chat" element={<Chat />} />
               <Route path="/checkout" element={<Checkout />} />
