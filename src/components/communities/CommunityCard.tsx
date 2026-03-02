@@ -69,7 +69,7 @@ export function CommunityCard({ community, onJoinLeave }: CommunityCardProps) {
     <div
       onClick={handleCardClick}
       className={cn(
-        "rounded-2xl border border-border overflow-hidden bg-card transition-all duration-200 animate-fade-in",
+        "rounded-2xl border border-border overflow-hidden bg-card dark:bg-white/[0.03] dark:backdrop-blur-2xl dark:border-white/[0.08] transition-all duration-200 animate-fade-in",
         community.isMember && "cursor-pointer active:scale-[0.98]"
       )}
     >

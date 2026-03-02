@@ -122,11 +122,11 @@ export default function Profile() {
       {/* Profile Card */}
       <div className="mx-4">
         {/* Cover */}
-        <div className="h-28 rounded-t-2xl bg-gradient-to-br from-primary/10 via-accent/5 to-primary/[0.02] relative overflow-hidden">
+        <div className="h-28 rounded-t-2xl bg-gradient-to-br from-primary/10 via-accent/5 to-primary/[0.02] dark:from-[hsl(330,81%,60%,0.15)] dark:via-[hsl(270,91%,65%,0.08)] dark:to-transparent relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background/20" />
         </div>
 
-        <div className="px-4 pb-5 bg-background border-x border-b border-border/20 rounded-b-2xl relative">
+        <div className="px-4 pb-5 bg-background dark:bg-white/[0.03] dark:backdrop-blur-2xl border-x border-b border-border/20 dark:border-white/[0.08] rounded-b-2xl relative">
           {/* Avatar */}
           <div className="absolute -top-10 left-4">
             <div className="relative">
