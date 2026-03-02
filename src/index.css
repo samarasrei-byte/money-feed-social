@@ -72,23 +72,23 @@
   }
 
   .dark {
-    --background: 240 10% 4%;
-    --foreground: 0 0% 98%;
+    --background: 240 12% 3%;
+    --foreground: 0 0% 96%;
 
-    --card: 240 10% 6%;
-    --card-foreground: 0 0% 98%;
+    --card: 240 10% 5%;
+    --card-foreground: 0 0% 96%;
 
-    --popover: 240 10% 6%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 240 10% 5%;
+    --popover-foreground: 0 0% 96%;
 
     --primary: 330 81% 60%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 240 5% 12%;
-    --secondary-foreground: 0 0% 90%;
+    --secondary: 240 8% 9%;
+    --secondary-foreground: 0 0% 85%;
 
-    --muted: 240 5% 12%;
-    --muted-foreground: 240 4% 55%;
+    --muted: 240 8% 9%;
+    --muted-foreground: 240 4% 50%;
 
     --accent: 25 95% 55%;
     --accent-foreground: 0 0% 100%;
@@ -102,17 +102,17 @@
     --warning: 45 80% 50%;
     --warning-foreground: 0 0% 100%;
 
-    --border: 240 5% 15%;
-    --input: 240 5% 15%;
+    --border: 0 0% 100% / 0.08;
+    --input: 0 0% 100% / 0.08;
     --ring: 330 81% 60%;
 
-    --sidebar-background: 240 10% 5%;
-    --sidebar-foreground: 240 4% 80%;
+    --sidebar-background: 240 12% 4%;
+    --sidebar-foreground: 240 4% 75%;
     --sidebar-primary: 330 81% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 5% 12%;
-    --sidebar-accent-foreground: 0 0% 90%;
-    --sidebar-border: 240 5% 15%;
+    --sidebar-accent: 240 8% 9%;
+    --sidebar-accent-foreground: 0 0% 85%;
+    --sidebar-border: 0 0% 100% / 0.08;
     --sidebar-ring: 330 81% 60%;
   }
 }
@@ -147,6 +147,10 @@
 
   .glass {
     @apply bg-background/70 backdrop-blur-2xl border border-border/30;
+  }
+
+  .dark .glass {
+    @apply bg-white/[0.04] backdrop-blur-2xl border border-white/[0.08];
   }
 
   .glass-dark {
