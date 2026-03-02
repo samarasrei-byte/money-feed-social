@@ -9,12 +9,14 @@ import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { usePullToRefresh } from "@/hooks/usePullToRefresh";
 import { Loader2, Sparkles } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useGamification } from "@/hooks/useGamification";
 
 const PAGE_SIZE = 15;
 
 export default function Feed() {
   const { user } = useAuth();
   const { toast } = useToast();
+  const { addPoints } = useGamification();
   const [posts, setPosts] = useState<PostData[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -150,6 +152,7 @@ export default function Feed() {
       } else {
         await supabase.from("likes").insert({ post_id: postId, user_id: user.id });
         if (post) createNotification(post.userId, "like", postId);
+        addPoints("like", { post_id: postId });
       }
     } catch {
       setPosts((prev) =>
@@ -176,6 +179,7 @@ export default function Feed() {
     const post = posts.find((p) => p.id === postId);
     setPosts((prev) => prev.map((p) => p.id === postId ? { ...p, commentsCount: p.commentsCount + 1 } : p));
     if (post) createNotification(post.userId, "comment", postId);
+    addPoints("comment", { post_id: postId });
   };
 
   const handleFollow = () => {
@@ -249,7 +253,7 @@ export default function Feed() {
       {/* FAB */}
       {user && (
         <div className="fixed bottom-20 right-4 z-30 md:bottom-6">
-          <CreatePostDialog onPostCreated={() => fetchPosts()} />
+          <CreatePostDialog onPostCreated={() => { fetchPosts(); addPoints("post"); }} />
         </div>
       )}
       <CommentsSheet
