@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import {
   Plus, Trash2, ChevronLeft, GripVertical, PlayCircle, FileText, Save,
-  GraduationCap, Eye,
+  GraduationCap, Eye, Users, Loader2,
 } from "lucide-react";
 import { useCourseStructure } from "@/hooks/useCourses";
 import { useToast } from "@/hooks/use-toast";
@@ -28,6 +28,9 @@ export default function CourseBuilder() {
   const [newModuleTitle, setNewModuleTitle] = useState("");
   const [addingLessonTo, setAddingLessonTo] = useState<string | null>(null);
   const [lessonForm, setLessonForm] = useState({ title: "", lesson_type: "video" as const, video_url: "", content: "" });
+  const [communityEnabled, setCommunityEnabled] = useState(false);
+  const [communityId, setCommunityId] = useState<string | null>(null);
+  const [togglingCommunity, setTogglingCommunity] = useState(false);
 
   useEffect(() => {
     if (!id) return;
@@ -37,6 +40,14 @@ export default function CourseBuilder() {
           const c = data as any as Course;
           setCourse(c);
           setForm({ title: c.title, description: c.description || "", cover_url: c.cover_url || "", published: c.published });
+        }
+      });
+    // Check if course has a linked community
+    supabase.from("communities").select("id").eq("course_id", id).maybeSingle()
+      .then(({ data }) => {
+        if (data) {
+          setCommunityEnabled(true);
+          setCommunityId(data.id);
         }
       });
   }, [id]);
@@ -56,6 +67,44 @@ export default function CourseBuilder() {
       toast({ variant: "destructive", title: "Erro", description: err.message });
     } finally {
       setSaving(false);
+    }
+  };
+
+  const toggleCommunity = async () => {
+    if (!id || !course) return;
+    setTogglingCommunity(true);
+    try {
+      if (communityEnabled && communityId) {
+        // Delete linked community
+        await supabase.from("communities").delete().eq("id", communityId);
+        setCommunityEnabled(false);
+        setCommunityId(null);
+        toast({ title: "Comunidade desativada" });
+      } else {
+        // Create linked community
+        const { data: userData } = await supabase.auth.getUser();
+        if (!userData.user) throw new Error("Não autenticado");
+        const { data, error } = await supabase.from("communities").insert({
+          name: `Comunidade: ${form.title || course.title}`,
+          description: `Comunidade exclusiva dos alunos de ${form.title || course.title}`,
+          creator_id: userData.user.id,
+          course_id: id,
+          is_private: true,
+        } as any).select().single();
+        if (error) throw error;
+        // Auto-join creator
+        await supabase.from("community_members").insert({
+          community_id: data.id,
+          user_id: userData.user.id,
+        });
+        setCommunityEnabled(true);
+        setCommunityId(data.id);
+        toast({ title: "Comunidade ativada! 🎉", description: "Alunos terão acesso automaticamente." });
+      }
+    } catch (err: any) {
+      toast({ variant: "destructive", title: "Erro", description: err.message });
+    } finally {
+      setTogglingCommunity(false);
     }
   };
 
@@ -138,6 +187,31 @@ export default function CourseBuilder() {
               <Label className="text-xs">Publicado</Label>
               <Switch checked={form.published} onCheckedChange={(v) => setForm((p) => ({ ...p, published: v }))} />
             </div>
+            {/* Community toggle */}
+            <div className="flex items-center justify-between p-3 rounded-xl bg-muted/20 border border-border/30">
+              <div className="flex items-center gap-2">
+                <Users className="h-4 w-4 text-primary" />
+                <div>
+                  <Label className="text-xs font-medium">Comunidade de Alunos</Label>
+                  <p className="text-[10px] text-muted-foreground">Crie uma comunidade exclusiva para matriculados</p>
+                </div>
+              </div>
+              {togglingCommunity ? (
+                <Loader2 className="h-4 w-4 animate-spin text-primary" />
+              ) : (
+                <Switch checked={communityEnabled} onCheckedChange={toggleCommunity} />
+              )}
+            </div>
+            {communityEnabled && communityId && (
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-full text-xs"
+                onClick={() => navigate(`/communities/${communityId}`)}
+              >
+                <Users className="h-3.5 w-3.5 mr-1" /> Ver Comunidade
+              </Button>
+            )}
           </CardContent>
         </Card>
 

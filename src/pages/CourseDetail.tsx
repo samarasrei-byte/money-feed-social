@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { GraduationCap, Users, Clock, PlayCircle, FileText, ChevronRight, Lock } from "lucide-react";
+import { GraduationCap, Users, Clock, PlayCircle, FileText, ChevronRight, Lock, MessageCircle } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useStudentCourse, useCourseStructure } from "@/hooks/useCourses";
 import { useToast } from "@/hooks/use-toast";
@@ -17,6 +17,7 @@ export default function CourseDetail() {
   const { toast } = useToast();
   const [course, setCourse] = useState<(Course & { brand_name?: string }) | null>(null);
   const [loading, setLoading] = useState(true);
+  const [communityId, setCommunityId] = useState<string | null>(null);
   const { modules } = useCourseStructure(id);
   const { enrollment, enroll } = useStudentCourse(id);
 
@@ -30,6 +31,11 @@ export default function CourseDetail() {
       .then(({ data }) => {
         if (data) setCourse({ ...(data as any), brand_name: (data as any).brands?.name });
         setLoading(false);
+      });
+    // Check for linked community
+    supabase.from("communities").select("id").eq("course_id", id).maybeSingle()
+      .then(({ data }) => {
+        if (data) setCommunityId(data.id);
       });
   }, [id]);
 
@@ -103,6 +109,29 @@ export default function CourseDetail() {
       {course.description && (
         <div className="px-4 mt-4">
           <p className="text-sm text-muted-foreground">{course.description}</p>
+        </div>
+      )}
+
+      {/* Community Link */}
+      {communityId && enrollment && (
+        <div className="px-4 mt-4">
+          <Button
+            variant="outline"
+            className="w-full rounded-xl h-12 gap-2 border-border/30"
+            onClick={() => navigate(`/communities/${communityId}`)}
+          >
+            <MessageCircle className="h-4 w-4 text-primary" />
+            <span className="text-sm font-medium">Acessar Comunidade do Curso</span>
+            <ChevronRight className="h-4 w-4 ml-auto text-muted-foreground" />
+          </Button>
+        </div>
+      )}
+      {communityId && !enrollment && (
+        <div className="px-4 mt-4">
+          <div className="flex items-center gap-2 p-3 rounded-xl bg-muted/20 border border-border/30 text-xs text-muted-foreground">
+            <Lock className="h-3.5 w-3.5" />
+            Matricule-se para acessar a comunidade exclusiva
+          </div>
         </div>
       )}
 
