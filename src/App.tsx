@@ -26,6 +26,7 @@ import Chat from "./pages/Chat";
 import Checkout from "./pages/Checkout";
 import NotFound from "./pages/NotFound";
 import Settings from "./pages/Settings";
+import RedirectLink from "./pages/RedirectLink";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 
@@ -45,6 +46,7 @@ const App = () => (
             <Route path="/install" element={<Install />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/privacy" element={<Privacy />} />
+            <Route path="/r/:code" element={<RedirectLink />} />
             
             {/* App routes with layout */}
             <Route element={<AppLayout />}>
