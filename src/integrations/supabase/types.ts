@@ -764,6 +764,33 @@ export type Database = {
         }
         Relationships: []
       }
+      gamification_points: {
+        Row: {
+          action: string
+          created_at: string
+          id: string
+          metadata: Json | null
+          points: number
+          user_id: string
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          points?: number
+          user_id: string
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          points?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
       likes: {
         Row: {
           created_at: string
@@ -1476,6 +1503,48 @@ export type Database = {
           },
         ]
       }
+      user_levels: {
+        Row: {
+          id: string
+          level: string
+          month_start: string | null
+          monthly_xp: number
+          streak_days: number
+          streak_last_date: string | null
+          total_xp: number
+          updated_at: string
+          user_id: string
+          week_start: string | null
+          weekly_xp: number
+        }
+        Insert: {
+          id?: string
+          level?: string
+          month_start?: string | null
+          monthly_xp?: number
+          streak_days?: number
+          streak_last_date?: string | null
+          total_xp?: number
+          updated_at?: string
+          user_id: string
+          week_start?: string | null
+          weekly_xp?: number
+        }
+        Update: {
+          id?: string
+          level?: string
+          month_start?: string | null
+          monthly_xp?: number
+          streak_days?: number
+          streak_last_date?: string | null
+          total_xp?: number
+          updated_at?: string
+          user_id?: string
+          week_start?: string | null
+          weekly_xp?: number
+        }
+        Relationships: []
+      }
       user_missions: {
         Row: {
           completed_at: string | null
@@ -1534,6 +1603,15 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      add_gamification_points: {
+        Args: {
+          _action: string
+          _metadata?: Json
+          _points: number
+          _user_id: string
+        }
+        Returns: undefined
+      }
       get_user_role: {
         Args: { _user_id: string }
         Returns: Database["public"]["Enums"]["app_role"]
