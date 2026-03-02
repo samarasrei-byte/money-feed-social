@@ -1,15 +1,18 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Brand, Product, Campaign } from "@/hooks/useBrand";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ProductCard } from "./ProductCard";
 import { CreateProductSheet } from "./CreateProductSheet";
 import { CreateCampaignSheet } from "./CreateCampaignSheet";
 import { EditProductSheet } from "./EditProductSheet";
 import { CampaignAffiliatesSheet } from "./CampaignAffiliatesSheet";
-import { Package, Megaphone, Users, TrendingUp, Building2, Globe, CheckCircle2, Clock, DollarSign, ShoppingCart } from "lucide-react";
+import { useCreatorCourses } from "@/hooks/useCourses";
+import { Package, Megaphone, Users, TrendingUp, Building2, Globe, CheckCircle2, Clock, DollarSign, ShoppingCart, GraduationCap, Plus, Eye } from "lucide-react";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
 interface Props {
@@ -33,6 +36,8 @@ export function BrandDashboard({ brand, products, campaigns, onCreateProduct, on
   const [stats, setStats] = useState<BrandStats>({ totalSales: 0, totalRevenue: 0, totalAffiliates: 0, activeProducts: 0 });
   const [salesChart, setSalesChart] = useState<{ date: string; vendas: number; receita: number }[]>([]);
   const [editProduct, setEditProduct] = useState<Product | null>(null);
+  const navigate = useNavigate();
+  const { courses, createCourse } = useCreatorCourses(brand.id);
 
   const activeCampaigns = campaigns.filter((c) => c.status === "active");
   const activeProducts = products.filter((p) => p.active);
@@ -176,6 +181,7 @@ export function BrandDashboard({ brand, products, campaigns, onCreateProduct, on
       <Tabs defaultValue="products">
         <TabsList className="w-full">
           <TabsTrigger value="products" className="flex-1">Produtos ({products.length})</TabsTrigger>
+          <TabsTrigger value="courses" className="flex-1">Cursos ({courses.length})</TabsTrigger>
           <TabsTrigger value="campaigns" className="flex-1">Campanhas ({campaigns.length})</TabsTrigger>
         </TabsList>
 
@@ -193,6 +199,48 @@ export function BrandDashboard({ brand, products, campaigns, onCreateProduct, on
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {products.map((p) => (
                 <ProductCard key={p.id} product={p} onDelete={onDeleteProduct} onEdit={setEditProduct} />
+              ))}
+            </div>
+          )}
+        </TabsContent>
+
+        <TabsContent value="courses" className="space-y-4 mt-4">
+          <div className="flex justify-end">
+            <Button
+              className="bg-gradient-primary border-0 text-primary-foreground"
+              onClick={async () => {
+                try {
+                  const data = await createCourse({ title: "Novo Curso", published: false });
+                  if (data) navigate(`/courses/${(data as any).id}/builder`);
+                } catch {}
+              }}
+            >
+              <Plus className="h-4 w-4 mr-1" /> Novo Curso
+            </Button>
+          </div>
+          {courses.length === 0 ? (
+            <div className="text-center py-12 text-muted-foreground">
+              <GraduationCap className="h-12 w-12 mx-auto mb-3 opacity-30" />
+              <p className="font-medium">Nenhum curso criado</p>
+              <p className="text-sm">Crie seu primeiro curso digital</p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {courses.map((c) => (
+                <Card key={c.id} className="border-border/50 cursor-pointer hover:border-primary/30 transition-colors" onClick={() => navigate(`/courses/${c.id}/builder`)}>
+                  <CardContent className="p-4 flex items-center gap-3">
+                    <div className="h-12 w-12 rounded-xl bg-gradient-primary/10 flex items-center justify-center flex-shrink-0">
+                      <GraduationCap className="h-6 w-6 text-primary" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-medium text-sm truncate">{c.title}</p>
+                      <p className="text-xs text-muted-foreground">{c.students_count} alunos</p>
+                    </div>
+                    <Badge variant={c.published ? "default" : "secondary"} className={c.published ? "bg-success text-success-foreground border-0" : ""}>
+                      {c.published ? "Publicado" : "Rascunho"}
+                    </Badge>
+                  </CardContent>
+                </Card>
               ))}
             </div>
           )}
