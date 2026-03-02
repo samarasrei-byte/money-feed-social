@@ -2,15 +2,20 @@ import { Product } from "@/hooks/useBrand";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Package, Trash2, Percent, DollarSign } from "lucide-react";
+import { Package, Trash2, Percent, DollarSign, Pencil } from "lucide-react";
+import {
+  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
+  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 interface Props {
   product: Product;
   onDelete?: (id: string) => void;
+  onEdit?: (product: Product) => void;
   readonly?: boolean;
 }
 
-export function ProductCard({ product, onDelete, readonly }: Props) {
+export function ProductCard({ product, onDelete, onEdit, readonly }: Props) {
   return (
     <Card className="overflow-hidden card-hover border-border/50">
       <div className="aspect-[4/3] bg-muted relative">
@@ -43,10 +48,37 @@ export function ProductCard({ product, onDelete, readonly }: Props) {
             {Number(product.commission_value)}{product.commission_type === "percentage" ? "%" : ""}
           </span>
         </div>
-        {!readonly && onDelete && (
-          <Button variant="ghost" size="sm" className="w-full text-destructive hover:text-destructive" onClick={() => onDelete(product.id)}>
-            <Trash2 className="h-3.5 w-3.5 mr-1" /> Remover
-          </Button>
+        {!readonly && (
+          <div className="flex gap-1.5">
+            {onEdit && (
+              <Button variant="ghost" size="sm" className="flex-1 text-muted-foreground" onClick={() => onEdit(product)}>
+                <Pencil className="h-3.5 w-3.5 mr-1" /> Editar
+              </Button>
+            )}
+            {onDelete && (
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="ghost" size="sm" className="flex-1 text-destructive hover:text-destructive">
+                    <Trash2 className="h-3.5 w-3.5 mr-1" /> Remover
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Remover produto?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      "{product.name}" será removido permanentemente. Esta ação não pode ser desfeita.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                    <AlertDialogAction onClick={() => onDelete(product.id)} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+                      Remover
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            )}
+          </div>
         )}
       </CardContent>
     </Card>

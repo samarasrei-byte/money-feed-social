@@ -6,9 +6,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Building2, Globe, Sparkles } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { ImageUpload } from "./ImageUpload";
 
 interface Props {
-  onRegister: (data: { name: string; slug: string; description?: string; website?: string }) => Promise<any>;
+  onRegister: (data: { name: string; slug: string; description?: string; logo_url?: string; website?: string }) => Promise<any>;
 }
 
 export function BrandRegistration({ onRegister }: Props) {
@@ -16,6 +17,7 @@ export function BrandRegistration({ onRegister }: Props) {
   const [slug, setSlug] = useState("");
   const [description, setDescription] = useState("");
   const [website, setWebsite] = useState("");
+  const [logoUrl, setLogoUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
@@ -29,7 +31,13 @@ export function BrandRegistration({ onRegister }: Props) {
     if (!name.trim() || !slug.trim()) return;
     setLoading(true);
     try {
-      await onRegister({ name, slug, description: description || undefined, website: website || undefined });
+      await onRegister({
+        name,
+        slug,
+        description: description || undefined,
+        logo_url: logoUrl || undefined,
+        website: website || undefined,
+      });
       toast({ title: "Marca cadastrada!", description: "Sua marca foi criada com sucesso." });
     } catch (err: any) {
       toast({ variant: "destructive", title: "Erro", description: err.message });
@@ -50,6 +58,16 @@ export function BrandRegistration({ onRegister }: Props) {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="flex justify-center">
+              <ImageUpload
+                value={logoUrl}
+                onChange={setLogoUrl}
+                folder="logos"
+                aspectRatio="aspect-square"
+                className="w-28"
+                placeholder="Logo"
+              />
+            </div>
             <div className="space-y-2">
               <Label>Nome da Marca *</Label>
               <Input placeholder="Ex: Minha Marca" value={name} onChange={(e) => handleNameChange(e.target.value)} required />
