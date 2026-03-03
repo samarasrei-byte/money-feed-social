@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, memo } from "react";
+import ReactMarkdown from "react-markdown";
 import { useAuth } from "@/hooks/useAuth";
 import {
   Brain, Send, Sparkles, PenLine, TrendingDown, Clock,
@@ -234,8 +235,8 @@ export default function AICopilot() {
                 )}
               >
                 {m.role === "assistant" ? (
-                  <div className="prose prose-sm dark:prose-invert max-w-none [&_p]:mb-2 [&_ul]:mb-2 [&_ol]:mb-2 [&_h1]:text-base [&_h2]:text-sm [&_h3]:text-xs [&_li]:text-sm whitespace-pre-wrap">
-                    {m.content}
+                  <div className="prose prose-sm dark:prose-invert max-w-none [&_p]:mb-2 [&_ul]:mb-2 [&_ol]:mb-2 [&_h1]:text-base [&_h2]:text-sm [&_h3]:text-xs [&_li]:text-sm [&_table]:text-xs [&_th]:px-2 [&_td]:px-2 [&_th]:py-1 [&_td]:py-1">
+                    <ReactMarkdown>{m.content}</ReactMarkdown>
                   </div>
                 ) : (
                   <p>{m.content}</p>
