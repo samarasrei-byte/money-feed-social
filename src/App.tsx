@@ -37,6 +37,7 @@ import Opportunities from "./pages/Opportunities";
 import Reels from "./pages/Reels";
 import Live from "./pages/Live";
 import Analytics from "./pages/Analytics";
+import AICopilot from "./pages/AICopilot";
 
 const queryClient = new QueryClient();
 
@@ -76,6 +77,7 @@ const App = () => (
               <Route path="/reels" element={<Reels />} />
               <Route path="/live" element={<Live />} />
               <Route path="/analytics" element={<Analytics />} />
+              <Route path="/ai" element={<AICopilot />} />
               <Route path="/courses" element={<Courses />} />
               <Route path="/courses/:id" element={<CourseDetail />} />
               <Route path="/courses/:id/learn" element={<CourseLearn />} />
