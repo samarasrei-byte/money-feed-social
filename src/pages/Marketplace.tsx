@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import {
   Search, Star, Users, TrendingUp, Crown, Sparkles, Filter,
-  Instagram, Play, Radio, MessageCircle, Heart, Zap,
-  Eye, ShoppingBag, ArrowRight, Bot, Verified
+  Radio, MessageCircle, Zap, ShoppingBag, ArrowRight, Verified,
+  Trophy, Flame, Target, BarChart3
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -15,7 +14,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 
 // --- Types ---
-interface Influencer {
+interface TopAffiliate {
   id: string;
   name: string;
   username: string;
@@ -23,102 +22,103 @@ interface Influencer {
   bio: string;
   followers: number;
   engagement: number;
-  avgViews: number;
   categories: string[];
-  platforms: string[];
   priceRange: string;
   rating: number;
   isVerified: boolean;
-  isVirtual: boolean;
   livesCount: number;
   salesCount: number;
   conversionRate: number;
+  totalRevenue: number;
+  level: string;
 }
 
-// --- Mock Data ---
-const MOCK_INFLUENCERS: Influencer[] = [
+// --- Mock Data (afiliados reais) ---
+const MOCK_AFFILIATES: TopAffiliate[] = [
   {
-    id: "1", name: "Camila Beauty", username: "@camilabeauty", bio: "Especialista em skincare e maquiagem. +5 anos criando conteúdo.",
-    followers: 458000, engagement: 4.8, avgViews: 125000, categories: ["Beleza", "Skincare"],
-    platforms: ["instagram", "tiktok"], priceRange: "R$ 2K-5K", rating: 4.9, isVerified: true,
-    isVirtual: false, livesCount: 87, salesCount: 12400, conversionRate: 8.2,
+    id: "1", name: "Camila Beauty", username: "@camilabeauty", bio: "Especialista em skincare e maquiagem. +5 anos criando conteúdo e vendendo ao vivo.",
+    followers: 458000, engagement: 4.8, categories: ["Beleza", "Skincare"],
+    priceRange: "R$ 2K-5K", rating: 4.9, isVerified: true,
+    livesCount: 87, salesCount: 12400, conversionRate: 8.2, totalRevenue: 485000, level: "Diamante",
   },
   {
-    id: "2", name: "Tech Rafael", username: "@techrafael", bio: "Reviews honestos de tecnologia e gadgets.",
-    followers: 312000, engagement: 5.1, avgViews: 89000, categories: ["Tech", "Gadgets"],
-    platforms: ["tiktok", "youtube"], priceRange: "R$ 1.5K-4K", rating: 4.7, isVerified: true,
-    isVirtual: false, livesCount: 54, salesCount: 8900, conversionRate: 6.5,
+    id: "2", name: "Tech Rafael", username: "@techrafael", bio: "Reviews honestos de tecnologia e gadgets. Foco em live commerce.",
+    followers: 312000, engagement: 5.1, categories: ["Tech", "Gadgets"],
+    priceRange: "R$ 1.5K-4K", rating: 4.7, isVerified: true,
+    livesCount: 54, salesCount: 8900, conversionRate: 6.5, totalRevenue: 312000, level: "Ouro",
   },
   {
-    id: "3", name: "Luna AI", username: "@luna.virtual", bio: "Influenciadora virtual criada com IA. Especialista em moda.",
-    followers: 189000, engagement: 7.2, avgViews: 210000, categories: ["Moda", "Lifestyle"],
-    platforms: ["instagram", "tiktok"], priceRange: "R$ 500-2K", rating: 4.5, isVerified: false,
-    isVirtual: true, livesCount: 120, salesCount: 15600, conversionRate: 11.3,
+    id: "3", name: "Fitness Maria", username: "@fitnessmaria", bio: "Personal trainer e nutricionista. Resultados reais, vendas reais.",
+    followers: 890000, engagement: 3.9, categories: ["Saúde", "Fitness"],
+    priceRange: "R$ 5K-15K", rating: 4.8, isVerified: true,
+    livesCount: 42, salesCount: 23000, conversionRate: 5.8, totalRevenue: 890000, level: "Diamante",
   },
   {
-    id: "4", name: "Fitness Maria", username: "@fitnessmaria", bio: "Personal trainer e nutricionista. Transformando vidas.",
-    followers: 890000, engagement: 3.9, avgViews: 200000, categories: ["Saúde", "Fitness"],
-    platforms: ["instagram", "youtube"], priceRange: "R$ 5K-15K", rating: 4.8, isVerified: true,
-    isVirtual: false, livesCount: 42, salesCount: 23000, conversionRate: 5.8,
+    id: "4", name: "Chef João", username: "@chefjao", bio: "Receitas fáceis e deliciosas. Foco em utensílios de cozinha e lives de vendas.",
+    followers: 245000, engagement: 6.3, categories: ["Gastronomia", "Casa"],
+    priceRange: "R$ 1K-3K", rating: 4.6, isVerified: true,
+    livesCount: 65, salesCount: 7800, conversionRate: 7.1, totalRevenue: 198000, level: "Ouro",
   },
   {
-    id: "5", name: "Chef João", username: "@chefjao", bio: "Receitas fáceis e deliciosas. Foco em utensílios de cozinha.",
-    followers: 245000, engagement: 6.3, avgViews: 95000, categories: ["Gastronomia", "Casa"],
-    platforms: ["tiktok", "instagram"], priceRange: "R$ 1K-3K", rating: 4.6, isVerified: true,
-    isVirtual: false, livesCount: 65, salesCount: 7800, conversionRate: 7.1,
+    id: "5", name: "Ana Moda", username: "@anamoda", bio: "Estilista e consultora de moda. Criadora de looks acessíveis e vendáveis.",
+    followers: 567000, engagement: 5.5, categories: ["Moda", "Lifestyle"],
+    priceRange: "R$ 3K-8K", rating: 4.8, isVerified: true,
+    livesCount: 96, salesCount: 18200, conversionRate: 9.4, totalRevenue: 720000, level: "Diamante",
   },
   {
-    id: "6", name: "Nova Digital", username: "@novadigital", bio: "Avatar IA especializado em eletrônicos e smart home.",
-    followers: 95000, engagement: 8.5, avgViews: 180000, categories: ["Tech", "Smart Home"],
-    platforms: ["tiktok"], priceRange: "R$ 300-1K", rating: 4.3, isVerified: false,
-    isVirtual: true, livesCount: 200, salesCount: 9200, conversionRate: 14.7,
+    id: "6", name: "Lucas Tech", username: "@lucastech", bio: "Especialista em smart home e eletrônicos. Reviews e lives de unboxing.",
+    followers: 195000, engagement: 4.2, categories: ["Tech", "Casa"],
+    priceRange: "R$ 800-2K", rating: 4.4, isVerified: false,
+    livesCount: 38, salesCount: 4500, conversionRate: 5.1, totalRevenue: 95000, level: "Prata",
   },
 ];
 
 const CATEGORIES = ["Todos", "Beleza", "Tech", "Moda", "Saúde", "Gastronomia", "Casa", "Fitness"];
 
-function formatFollowers(n: number): string {
+function formatNumber(n: number): string {
   if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
   if (n >= 1_000) return `${(n / 1_000).toFixed(0)}K`;
   return n.toString();
 }
 
-// --- Influencer Card ---
-function InfluencerCard({ influencer, onInvite }: { influencer: Influencer; onInvite: () => void }) {
+function formatRevenue(n: number): string {
+  if (n >= 1_000_000) return `R$ ${(n / 1_000_000).toFixed(1)}M`;
+  if (n >= 1_000) return `R$ ${(n / 1_000).toFixed(0)}K`;
+  return `R$ ${n}`;
+}
+
+const LEVEL_COLORS: Record<string, string> = {
+  Diamante: "text-primary",
+  Ouro: "text-yellow-500",
+  Prata: "text-muted-foreground",
+};
+
+// --- Affiliate Card ---
+function AffiliateCard({ affiliate, onInvite }: { affiliate: TopAffiliate; onInvite: () => void }) {
   return (
     <Card className="overflow-hidden border-0 bg-card/50 ring-1 ring-border/20 hover:ring-primary/30 transition-all">
       <CardContent className="p-0">
         {/* Header gradient */}
-        <div className={cn(
-          "h-16 relative",
-          influencer.isVirtual
-            ? "bg-gradient-to-r from-violet-500/20 via-primary/10 to-cyan-500/20"
-            : "bg-gradient-to-r from-primary/10 via-accent/10 to-primary/5"
-        )}>
-          {influencer.isVirtual && (
-            <Badge className="absolute top-2 right-2 bg-violet-500/80 text-white border-0 text-[8px] gap-0.5">
-              <Bot className="h-2.5 w-2.5" /> IA Virtual
-            </Badge>
-          )}
-          {influencer.isVerified && !influencer.isVirtual && (
+        <div className="h-16 relative bg-gradient-to-r from-primary/10 via-accent/10 to-primary/5">
+          {affiliate.isVerified && (
             <Badge className="absolute top-2 right-2 bg-primary/80 text-white border-0 text-[8px] gap-0.5">
               <Verified className="h-2.5 w-2.5" /> Verificado
             </Badge>
           )}
+          <Badge className={cn(
+            "absolute top-2 left-2 border-0 text-[8px] gap-0.5 bg-background/80",
+            LEVEL_COLORS[affiliate.level] || "text-muted-foreground"
+          )}>
+            <Trophy className="h-2.5 w-2.5" /> {affiliate.level}
+          </Badge>
         </div>
 
         {/* Avatar */}
         <div className="px-3 -mt-8 relative z-10">
-          <Avatar className={cn(
-            "h-14 w-14 ring-3 ring-background",
-            influencer.isVirtual && "ring-violet-500/30"
-          )}>
-            <AvatarImage src={influencer.avatar} />
-            <AvatarFallback className={cn(
-              "text-sm font-bold",
-              influencer.isVirtual ? "bg-violet-500/20 text-violet-400" : "bg-primary/10 text-primary"
-            )}>
-              {influencer.name.split(" ").map((n) => n[0]).join("").slice(0, 2)}
+          <Avatar className="h-14 w-14 ring-3 ring-background">
+            <AvatarImage src={affiliate.avatar} />
+            <AvatarFallback className="text-sm font-bold bg-primary/10 text-primary">
+              {affiliate.name.split(" ").map((n) => n[0]).join("").slice(0, 2)}
             </AvatarFallback>
           </Avatar>
         </div>
@@ -126,48 +126,40 @@ function InfluencerCard({ influencer, onInvite }: { influencer: Influencer; onIn
         {/* Info */}
         <div className="px-3 pt-2 pb-3">
           <div className="flex items-center gap-1 mb-0.5">
-            <h3 className="text-sm font-bold truncate">{influencer.name}</h3>
-            {influencer.rating >= 4.8 && <Crown className="h-3 w-3 text-yellow-500 shrink-0" />}
+            <h3 className="text-sm font-bold truncate">{affiliate.name}</h3>
+            {affiliate.rating >= 4.8 && <Crown className="h-3 w-3 text-yellow-500 shrink-0" />}
           </div>
-          <p className="text-[10px] text-muted-foreground">{influencer.username}</p>
-          <p className="text-[10px] text-muted-foreground/60 mt-1 line-clamp-2">{influencer.bio}</p>
+          <p className="text-[10px] text-muted-foreground">{affiliate.username}</p>
+          <p className="text-[10px] text-muted-foreground/60 mt-1 line-clamp-2">{affiliate.bio}</p>
 
           {/* Stats */}
           <div className="grid grid-cols-3 gap-2 mt-3 mb-3">
             <div className="text-center">
-              <p className="text-xs font-black">{formatFollowers(influencer.followers)}</p>
+              <p className="text-xs font-black">{formatNumber(affiliate.followers)}</p>
               <p className="text-[8px] text-muted-foreground">Seguidores</p>
             </div>
             <div className="text-center">
-              <p className="text-xs font-black text-primary">{influencer.engagement}%</p>
-              <p className="text-[8px] text-muted-foreground">Engajamento</p>
+              <p className="text-xs font-black text-primary">{affiliate.conversionRate}%</p>
+              <p className="text-[8px] text-muted-foreground">Conversão</p>
             </div>
             <div className="text-center">
-              <p className="text-xs font-black text-accent">{influencer.conversionRate}%</p>
-              <p className="text-[8px] text-muted-foreground">Conversão</p>
+              <p className="text-xs font-black text-accent">{formatRevenue(affiliate.totalRevenue)}</p>
+              <p className="text-[8px] text-muted-foreground">Faturado</p>
             </div>
           </div>
 
           {/* Categories */}
           <div className="flex flex-wrap gap-1 mb-3">
-            {influencer.categories.map((cat) => (
+            {affiliate.categories.map((cat) => (
               <Badge key={cat} variant="outline" className="text-[8px] px-1.5 py-0 border-border/30">{cat}</Badge>
             ))}
           </div>
 
-          {/* Platforms */}
-          <div className="flex items-center gap-3 mb-3 text-muted-foreground/40">
-            {influencer.platforms.includes("instagram") && <Instagram className="h-3.5 w-3.5" />}
-            {influencer.platforms.includes("tiktok") && <Play className="h-3.5 w-3.5" />}
-            {influencer.platforms.includes("youtube") && <Eye className="h-3.5 w-3.5" />}
-            <span className="text-[9px] ml-auto">{influencer.priceRange}</span>
-          </div>
-
           {/* Bottom stats */}
           <div className="flex items-center justify-between text-[9px] text-muted-foreground/50 mb-3">
-            <span className="flex items-center gap-0.5"><Radio className="h-2.5 w-2.5" /> {influencer.livesCount} lives</span>
-            <span className="flex items-center gap-0.5"><ShoppingBag className="h-2.5 w-2.5" /> {formatFollowers(influencer.salesCount)} vendas</span>
-            <span className="flex items-center gap-0.5"><Star className="h-2.5 w-2.5 text-yellow-500" /> {influencer.rating}</span>
+            <span className="flex items-center gap-0.5"><Radio className="h-2.5 w-2.5" /> {affiliate.livesCount} lives</span>
+            <span className="flex items-center gap-0.5"><ShoppingBag className="h-2.5 w-2.5" /> {formatNumber(affiliate.salesCount)} vendas</span>
+            <span className="flex items-center gap-0.5"><Star className="h-2.5 w-2.5 text-yellow-500" /> {affiliate.rating}</span>
           </div>
 
           {/* Actions */}
@@ -175,8 +167,10 @@ function InfluencerCard({ influencer, onInvite }: { influencer: Influencer; onIn
             <Button size="sm" className="flex-1 h-8 text-[10px] rounded-xl bg-foreground text-background" onClick={onInvite}>
               Convidar
             </Button>
-            <Button size="sm" variant="outline" className="h-8 px-3 text-[10px] rounded-xl border-border/30">
-              <MessageCircle className="h-3 w-3" />
+            <Button size="sm" variant="outline" className="h-8 px-3 text-[10px] rounded-xl border-border/30" asChild>
+              <Link to="/chat">
+                <MessageCircle className="h-3 w-3" />
+              </Link>
             </Button>
           </div>
         </div>
@@ -185,34 +179,38 @@ function InfluencerCard({ influencer, onInvite }: { influencer: Influencer; onIn
   );
 }
 
-// --- Main Marketplace Page ---
+// --- Main Page ---
 export default function Marketplace() {
   const { toast } = useToast();
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("Todos");
-  const [showVirtual, setShowVirtual] = useState<"all" | "human" | "virtual">("all");
+  const [sortBy, setSortBy] = useState<"conversion" | "sales" | "revenue">("conversion");
 
-  const filtered = MOCK_INFLUENCERS.filter((inf) => {
-    if (search && !inf.name.toLowerCase().includes(search.toLowerCase()) && !inf.username.toLowerCase().includes(search.toLowerCase())) return false;
-    if (category !== "Todos" && !inf.categories.includes(category)) return false;
-    if (showVirtual === "human" && inf.isVirtual) return false;
-    if (showVirtual === "virtual" && !inf.isVirtual) return false;
-    return true;
-  });
+  const filtered = MOCK_AFFILIATES
+    .filter((a) => {
+      if (search && !a.name.toLowerCase().includes(search.toLowerCase()) && !a.username.toLowerCase().includes(search.toLowerCase())) return false;
+      if (category !== "Todos" && !a.categories.includes(category)) return false;
+      return true;
+    })
+    .sort((a, b) => {
+      if (sortBy === "conversion") return b.conversionRate - a.conversionRate;
+      if (sortBy === "sales") return b.salesCount - a.salesCount;
+      return b.totalRevenue - a.totalRevenue;
+    });
 
-  const topCreators = MOCK_INFLUENCERS.sort((a, b) => b.conversionRate - a.conversionRate).slice(0, 3);
+  const topCreators = [...MOCK_AFFILIATES].sort((a, b) => b.conversionRate - a.conversionRate).slice(0, 3);
 
   return (
     <div className="max-w-2xl mx-auto pb-20">
       {/* Hero */}
       <div className="relative overflow-hidden rounded-b-3xl mb-4">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/15 via-background to-violet-500/10" />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/15 via-background to-accent/10" />
         <div className="relative px-4 pt-4 pb-5">
           <h1 className="text-xl font-black flex items-center gap-2">
-            <Sparkles className="h-5 w-5 text-primary" />
-            Marketplace
+            <Trophy className="h-5 w-5 text-primary" />
+            Vitrine de Afiliados
           </h1>
-          <p className="text-xs text-muted-foreground mt-0.5">Encontre criadores perfeitos para sua marca</p>
+          <p className="text-xs text-muted-foreground mt-0.5">Os melhores criadores com resultados verificados</p>
 
           {/* Search */}
           <div className="relative mt-3">
@@ -220,34 +218,38 @@ export default function Marketplace() {
             <Input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Buscar criadores..."
+              placeholder="Buscar afiliados..."
               className="pl-9 h-10 rounded-xl bg-muted/30 border-border/20 text-sm"
             />
           </div>
 
-          {/* Stats */}
+          {/* Summary stats */}
           <div className="flex gap-3 mt-3">
             <div className="flex items-center gap-1.5 bg-primary/10 rounded-full px-3 py-1">
               <Users className="h-3 w-3 text-primary" />
-              <span className="text-[10px] font-bold text-primary">{MOCK_INFLUENCERS.filter(i => !i.isVirtual).length} Criadores</span>
+              <span className="text-[10px] font-bold text-primary">{MOCK_AFFILIATES.length} Afiliados Top</span>
             </div>
-            <div className="flex items-center gap-1.5 bg-violet-500/10 rounded-full px-3 py-1">
-              <Bot className="h-3 w-3 text-violet-500" />
-              <span className="text-[10px] font-bold text-violet-500">{MOCK_INFLUENCERS.filter(i => i.isVirtual).length} Virtuais</span>
+            <div className="flex items-center gap-1.5 bg-accent/10 rounded-full px-3 py-1">
+              <Flame className="h-3 w-3 text-accent" />
+              <span className="text-[10px] font-bold text-accent">Métricas Reais</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Type filter */}
+      {/* Sort */}
       <div className="flex gap-2 px-4 mb-3">
-        {([["all", "Todos"], ["human", "👤 Humanos"], ["virtual", "🤖 Virtuais"]] as const).map(([key, label]) => (
+        {([
+          ["conversion", "🎯 Conversão"],
+          ["sales", "🛒 Vendas"],
+          ["revenue", "💰 Faturamento"],
+        ] as const).map(([key, label]) => (
           <button
             key={key}
-            onClick={() => setShowVirtual(key)}
+            onClick={() => setSortBy(key)}
             className={cn(
               "px-3 py-1.5 rounded-full text-[11px] font-semibold transition-all",
-              showVirtual === key ? "bg-foreground text-background" : "bg-muted/30 text-muted-foreground hover:bg-muted/50"
+              sortBy === key ? "bg-foreground text-background" : "bg-muted/30 text-muted-foreground hover:bg-muted/50"
             )}
           >
             {label}
@@ -278,15 +280,12 @@ export default function Marketplace() {
           <span className="text-xs font-bold">Top Conversão</span>
         </div>
         <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-1">
-          {topCreators.map((inf, i) => (
-            <div key={inf.id} className="flex items-center gap-2 bg-muted/20 rounded-2xl px-3 py-2 shrink-0 min-w-[180px]">
+          {topCreators.map((a, i) => (
+            <div key={a.id} className="flex items-center gap-2 bg-muted/20 rounded-2xl px-3 py-2 shrink-0 min-w-[180px]">
               <div className="relative">
                 <Avatar className="h-10 w-10">
-                  <AvatarFallback className={cn(
-                    "text-xs font-bold",
-                    inf.isVirtual ? "bg-violet-500/20 text-violet-400" : "bg-primary/10 text-primary"
-                  )}>
-                    {inf.name[0]}
+                  <AvatarFallback className="text-xs font-bold bg-primary/10 text-primary">
+                    {a.name[0]}
                   </AvatarFallback>
                 </Avatar>
                 <span className="absolute -top-1 -left-1 h-4 w-4 rounded-full bg-accent text-[8px] font-black text-white flex items-center justify-center">
@@ -294,8 +293,8 @@ export default function Marketplace() {
                 </span>
               </div>
               <div>
-                <p className="text-[11px] font-bold truncate">{inf.name}</p>
-                <p className="text-[9px] text-accent font-bold">{inf.conversionRate}% conversão</p>
+                <p className="text-[11px] font-bold truncate">{a.name}</p>
+                <p className="text-[9px] text-accent font-bold">{a.conversionRate}% conversão</p>
               </div>
             </div>
           ))}
@@ -305,35 +304,37 @@ export default function Marketplace() {
       {/* Grid */}
       <div className="px-4">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-xs font-bold">{filtered.length} criadores encontrados</span>
+          <span className="text-xs font-bold">{filtered.length} afiliados encontrados</span>
         </div>
         <div className="grid grid-cols-2 gap-3">
-          {filtered.map((inf) => (
-            <InfluencerCard
-              key={inf.id}
-              influencer={inf}
-              onInvite={() => toast({ title: "Convite enviado! 🎉", description: `${inf.name} receberá seu convite.` })}
+          {filtered.map((a) => (
+            <AffiliateCard
+              key={a.id}
+              affiliate={a}
+              onInvite={() => toast({ title: "Convite enviado! 🎉", description: `${a.name} receberá seu convite.` })}
             />
           ))}
         </div>
         {filtered.length === 0 && (
           <div className="text-center py-12 text-muted-foreground">
             <Search className="h-8 w-8 mx-auto mb-2 opacity-30" />
-            <p className="text-sm">Nenhum criador encontrado</p>
+            <p className="text-sm">Nenhum afiliado encontrado</p>
           </div>
         )}
       </div>
 
-      {/* CTA */}
+      {/* CTA — Become an affiliate */}
       <div className="px-4 mt-6">
-        <Card className="border-0 bg-gradient-to-r from-primary/10 via-violet-500/10 to-accent/10 ring-1 ring-primary/20">
+        <Card className="border-0 bg-gradient-to-r from-primary/10 via-accent/10 to-primary/5 ring-1 ring-primary/20">
           <CardContent className="p-4 text-center">
-            <Bot className="h-8 w-8 mx-auto mb-2 text-violet-500" />
-            <h3 className="text-sm font-bold mb-1">Crie seu Influenciador Virtual</h3>
-            <p className="text-[10px] text-muted-foreground mb-3">Use IA para criar um avatar que apresenta seus produtos 24/7</p>
-            <Button size="sm" className="rounded-full text-[11px] bg-violet-500 hover:bg-violet-600 text-white">
-              <Sparkles className="h-3 w-3 mr-1" />
-              Criar Avatar IA
+            <Target className="h-8 w-8 mx-auto mb-2 text-primary" />
+            <h3 className="text-sm font-bold mb-1">Quer aparecer aqui?</h3>
+            <p className="text-[10px] text-muted-foreground mb-3">Faça upgrade para Partner e comece a vender. Seus resultados te colocam no ranking.</p>
+            <Button size="sm" className="rounded-full text-[11px]" asChild>
+              <Link to="/affiliate">
+                <Zap className="h-3 w-3 mr-1" />
+                Ver Planos de Afiliado
+              </Link>
             </Button>
           </CardContent>
         </Card>
