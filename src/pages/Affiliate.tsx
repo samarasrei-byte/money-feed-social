@@ -179,31 +179,39 @@ export default function Affiliate() {
         <p className="text-[11px] text-muted-foreground/40">Links, performance e comissões</p>
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-2 gap-2">
-        {[
-          { icon: MousePointer, label: "Cliques", value: stats.totalClicks.toString(), color: "text-primary" },
-          { icon: ShoppingCart, label: "Conversões", value: stats.totalConversions.toString(), color: "text-success" },
-          { icon: DollarSign, label: "Recebido", value: fmt(stats.totalEarnings), color: "text-success" },
-          { icon: Clock, label: "Pendente", value: fmt(stats.pendingEarnings), color: "text-warning" },
-        ].map((s) => (
-          <div key={s.label} className="p-4 rounded-2xl bg-muted/20 border border-border/15">
-            <div className="flex items-center gap-1.5 mb-2">
-              <s.icon className={cn("h-3.5 w-3.5", s.color)} />
-              <span className="text-[9px] text-muted-foreground/30 uppercase tracking-widest font-semibold">{s.label}</span>
-            </div>
-            <p className="text-lg font-bold">{s.value}</p>
+      {/* Wallet Card */}
+      <div className="p-5 rounded-2xl bg-gradient-to-br from-primary/10 via-accent/5 to-background border border-primary/20">
+        <div className="flex items-center justify-between mb-3">
+          <div>
+            <p className="text-[9px] text-muted-foreground/40 uppercase tracking-widest font-semibold">Saldo disponível</p>
+            <p className="text-2xl font-black mt-0.5">{fmt(stats.totalEarnings)}</p>
           </div>
-        ))}
+          <Button size="sm" className="rounded-full text-[10px] h-8 gap-1.5" disabled={stats.totalEarnings <= 0}
+            onClick={() => toast({ title: "Saque solicitado! 💰", description: "Em breve você receberá via PIX. Funcionalidade em desenvolvimento." })}>
+            <DollarSign className="h-3 w-3" />
+            Sacar via PIX
+          </Button>
+        </div>
+        <div className="flex gap-4 text-[10px]">
+          <span className="text-muted-foreground/50">Pendente: <strong className="text-warning">{fmt(stats.pendingEarnings)}</strong></span>
+          <span className="text-muted-foreground/50">Conversão: <strong className="text-primary">{stats.conversionRate.toFixed(1)}%</strong></span>
+        </div>
       </div>
 
-      {/* Conversion */}
-      <div className="p-4 rounded-2xl bg-muted/20 border border-border/15">
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-xs font-medium">Conversão</span>
-          <span className="text-xs font-bold">{stats.conversionRate.toFixed(1)}%</span>
-        </div>
-        <Progress value={stats.conversionRate} className="h-1" />
+      {/* Stats */}
+      <div className="grid grid-cols-4 gap-2">
+        {[
+          { icon: MousePointer, label: "Cliques", value: stats.totalClicks.toString(), color: "text-primary" },
+          { icon: ShoppingCart, label: "Conversões", value: stats.totalConversions.toString(), color: "text-accent" },
+          { icon: DollarSign, label: "Recebido", value: fmt(stats.totalEarnings), color: "text-primary" },
+          { icon: Clock, label: "Pendente", value: fmt(stats.pendingEarnings), color: "text-warning" },
+        ].map((s) => (
+          <div key={s.label} className="p-3 rounded-2xl bg-muted/20 border border-border/15 text-center">
+            <s.icon className={cn("h-3.5 w-3.5 mx-auto mb-1", s.color)} />
+            <p className="text-sm font-bold">{s.value}</p>
+            <span className="text-[8px] text-muted-foreground/30 uppercase tracking-wider font-semibold">{s.label}</span>
+          </div>
+        ))}
       </div>
 
       {/* Performance Chart */}
@@ -217,12 +225,17 @@ export default function Affiliate() {
                   <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.3} />
                   <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0} />
                 </linearGradient>
+                <linearGradient id="affConv" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="hsl(var(--accent))" stopOpacity={0.3} />
+                  <stop offset="95%" stopColor="hsl(var(--accent))" stopOpacity={0} />
+                </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
               <XAxis dataKey="date" tick={{ fontSize: 8 }} stroke="hsl(var(--muted-foreground))" />
               <YAxis tick={{ fontSize: 8 }} stroke="hsl(var(--muted-foreground))" />
               <Tooltip contentStyle={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: 12, fontSize: 11 }} />
               <Area type="monotone" dataKey="cliques" stroke="hsl(var(--primary))" fill="url(#affClicks)" strokeWidth={2} />
+              <Area type="monotone" dataKey="conversões" stroke="hsl(var(--accent))" fill="url(#affConv)" strokeWidth={2} />
             </AreaChart>
           </ResponsiveContainer>
         </div>
