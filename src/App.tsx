@@ -40,6 +40,7 @@ import LiveShop from "./pages/LiveShop";
 import Marketplace from "./pages/Marketplace";
 import Analytics from "./pages/Analytics";
 import AICopilot from "./pages/AICopilot";
+import Wallet from "./pages/Wallet";
 
 const queryClient = new QueryClient();
 
@@ -67,6 +68,7 @@ const App = () => (
               <Route path="/communities/:id" element={<CommunityDetail />} />
               <Route path="/ranking" element={<Ranking />} />
               <Route path="/affiliate" element={<Affiliate />} />
+              <Route path="/wallet" element={<Wallet />} />
               <Route path="/admin" element={<Admin />} />
               <Route path="/brands" element={<BrandArea />} />
               <Route path="/products" element={<Products />} />
