@@ -36,6 +36,8 @@ import CourseBuilder from "./pages/CourseBuilder";
 import Opportunities from "./pages/Opportunities";
 import Reels from "./pages/Reels";
 import Live from "./pages/Live";
+import LiveShop from "./pages/LiveShop";
+import Marketplace from "./pages/Marketplace";
 import Analytics from "./pages/Analytics";
 import AICopilot from "./pages/AICopilot";
 
@@ -76,6 +78,8 @@ const App = () => (
               <Route path="/create" element={<Feed />} />
               <Route path="/reels" element={<Reels />} />
               <Route path="/live" element={<Live />} />
+              <Route path="/live/:id" element={<LiveShop />} />
+              <Route path="/marketplace" element={<Marketplace />} />
               <Route path="/analytics" element={<Analytics />} />
               <Route path="/ai" element={<AICopilot />} />
               <Route path="/courses" element={<Courses />} />

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { Radio, Users, ShoppingBag, Eye, Clock, Play, Crown, Sparkles, Flame } from "lucide-react";
@@ -32,6 +33,7 @@ const MOCK_LIVES: LiveStream[] = [
 
 function LiveCard({ stream }: { stream: LiveStream }) {
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   return (
     <Card
@@ -41,7 +43,7 @@ function LiveCard({ stream }: { stream: LiveStream }) {
           ? "bg-gradient-to-br from-red-500/10 via-background to-background ring-1 ring-red-500/20"
           : "bg-muted/30 ring-1 ring-border/20"
       )}
-      onClick={() => toast({ title: stream.isLive ? "Entrando na live..." : "Lembrete ativado!", description: stream.isLive ? stream.title : `Você será notificado quando ${stream.hostName} iniciar.` })}
+      onClick={() => stream.isLive ? navigate(`/live/${stream.id}`) : toast({ title: "Lembrete ativado!", description: `Você será notificado quando ${stream.hostName} iniciar.` })}
     >
       <CardContent className="p-0">
         {/* Thumbnail area */}
@@ -95,6 +97,7 @@ function LiveCard({ stream }: { stream: LiveStream }) {
 export default function Live() {
   const { user } = useAuth();
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [filter, setFilter] = useState<"all" | "live" | "scheduled">("all");
 
   const filtered = MOCK_LIVES.filter((s) => {
@@ -171,7 +174,7 @@ export default function Live() {
           </div>
           <Card
             className="overflow-hidden border-0 bg-gradient-to-br from-red-500/10 to-primary/5 ring-1 ring-red-500/20 cursor-pointer"
-            onClick={() => toast({ title: "Entrando na live em destaque..." })}
+            onClick={() => navigate("/live/3")}
           >
             <CardContent className="p-0">
               <div className="relative aspect-[16/9] bg-gradient-to-br from-red-500/20 via-muted/30 to-primary/10 flex items-center justify-center">
