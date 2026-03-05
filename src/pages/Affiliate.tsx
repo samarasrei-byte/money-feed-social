@@ -186,10 +186,11 @@ export default function Affiliate() {
             <p className="text-[9px] text-muted-foreground/40 uppercase tracking-widest font-semibold">Saldo disponível</p>
             <p className="text-2xl font-black mt-0.5">{fmt(stats.totalEarnings)}</p>
           </div>
-          <Button size="sm" className="rounded-full text-[10px] h-8 gap-1.5" disabled={stats.totalEarnings <= 0}
-            onClick={() => toast({ title: "Saque solicitado! 💰", description: "Em breve você receberá via PIX. Funcionalidade em desenvolvimento." })}>
-            <DollarSign className="h-3 w-3" />
-            Sacar via PIX
+          <Button asChild size="sm" className="rounded-full text-[10px] h-8 gap-1.5">
+            <Link to="/wallet">
+              <DollarSign className="h-3 w-3" />
+              Wallet
+            </Link>
           </Button>
         </div>
         <div className="flex gap-4 text-[10px]">
