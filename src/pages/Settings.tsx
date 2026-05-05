@@ -11,6 +11,7 @@ import { Separator } from "@/components/ui/separator";
 import { Lock, Moon, Sun, Bell, Shield, Loader2, ArrowLeft, LogOut } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
+import { LocationNichesCard } from "@/components/profile/LocationNichesCard";
 
 export default function Settings() {
   const { user, loading, signOut } = useAuth();
@@ -91,7 +92,9 @@ export default function Settings() {
         </CardContent>
       </Card>
 
-      {/* Password */}
+      {/* Location & niches */}
+      <LocationNichesCard />
+
       <Card className="border-border/30">
         <CardHeader className="pb-3">
           <CardTitle className="text-sm flex items-center gap-2">
