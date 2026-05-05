@@ -242,6 +242,35 @@ export default function PublicProfile() {
           </Card>
         )}
 
+        {hotProducts.length > 0 && (
+          <div>
+            <h3 className="font-bold mb-3 flex items-center gap-2">
+              🔥 Produtos mais hypados
+              <span className="text-xs font-normal text-muted-foreground">por @{profile.username}</span>
+            </h3>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+              {hotProducts.map((hp) => (
+                <Card key={hp.product_id} className="overflow-hidden bg-card/40 backdrop-blur-2xl border-white/10">
+                  {hp.product?.image_url && (
+                    <div className="aspect-square bg-muted">
+                      <img src={hp.product.image_url} className="w-full h-full object-cover" />
+                    </div>
+                  )}
+                  <div className="p-3">
+                    <p className="text-sm font-semibold line-clamp-2">{hp.name}</p>
+                    <div className="flex items-center justify-between mt-2">
+                      <Badge variant="secondary" className="text-[10px]">🔥 {hp.sales} vendas</Badge>
+                      {hp.product?.price && (
+                        <p className="text-xs font-bold text-primary">R$ {Number(hp.product.price).toFixed(2)}</p>
+                      )}
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </div>
+        )}
+
         <div>
           <h3 className="font-bold mb-3">Publicações recentes</h3>
           {posts.length === 0 ? (
