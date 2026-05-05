@@ -94,6 +94,35 @@ export default function Discover() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tab, myBrandId, user, isBrand]);
 
+  const [invited, setInvited] = useState<Set<string>>(new Set());
+  const [inviting, setInviting] = useState<string | null>(null);
+
+  const handleInvite = async (affiliateUserId: string) => {
+    if (!myBrandId || !user) return;
+    setInviting(affiliateUserId);
+    try {
+      const { error } = await supabase.from("affiliate_invites").insert({
+        brand_id: myBrandId,
+        affiliate_user_id: affiliateUserId,
+        message: "Queremos você na nossa campanha!",
+      } as any);
+      if (error && !error.message.includes("duplicate")) throw error;
+      // notification
+      await supabase.from("notifications").insert({
+        user_id: affiliateUserId,
+        actor_id: user.id,
+        type: "brand_invite",
+      });
+      setInvited((prev) => new Set(prev).add(affiliateUserId));
+      toast({ title: "Convite enviado!" });
+    } catch (e: any) {
+      toast({ variant: "destructive", title: "Erro", description: e.message });
+    } finally {
+      setInviting(null);
+    }
+  };
+
+
   if (authLoading) {
     return <div className="flex items-center justify-center min-h-[50vh]"><Loader2 className="h-4 w-4 animate-spin text-muted-foreground/30" /></div>;
   }
@@ -196,7 +225,15 @@ export default function Discover() {
                   </div>
                   <div className="flex flex-col items-end gap-1">
                     <Badge className="text-[10px] gap-1"><TrendingUp className="h-2.5 w-2.5" />{Math.round(a.match_score)}</Badge>
-                    <Button size="sm" variant="outline" className="h-6 text-[10px] rounded-full px-2">Convidar</Button>
+                    <Button
+                      size="sm"
+                      variant={invited.has(a.user_id) ? "secondary" : "outline"}
+                      className="h-6 text-[10px] rounded-full px-2"
+                      onClick={() => handleInvite(a.user_id)}
+                      disabled={inviting === a.user_id || invited.has(a.user_id)}
+                    >
+                      {inviting === a.user_id ? <Loader2 className="h-3 w-3 animate-spin" /> : invited.has(a.user_id) ? "Enviado" : "Convidar"}
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
