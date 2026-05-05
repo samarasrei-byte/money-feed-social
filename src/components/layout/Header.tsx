@@ -42,9 +42,8 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full glass safe-area-inset-top">
       <div className="flex h-12 items-center justify-between px-4 max-w-2xl mx-auto">
         {/* Logo */}
-        <Link to="/feed" className="flex items-center gap-2">
+        <Link to="/feed" className="flex items-center">
           <img src={logoImg} alt={APP_NAME} className="h-7 w-7 rounded-lg object-cover" />
-          <span className="font-bold text-sm hidden sm:block tracking-tight">{APP_NAME}</span>
         </Link>
 
         {/* Search - Desktop */}
@@ -149,6 +148,9 @@ export function Header() {
                 </div>
                 <DropdownMenuSeparator className="bg-border/30" />
                 <DropdownMenuItem asChild className="text-xs"><Link to="/profile">Meu Perfil</Link></DropdownMenuItem>
+                <DropdownMenuItem asChild className="text-xs"><Link to="/invites">Convites de marcas</Link></DropdownMenuItem>
+                <DropdownMenuItem asChild className="text-xs"><Link to="/discover">Descobrir (Smart Match)</Link></DropdownMenuItem>
+                <DropdownMenuItem asChild className="text-xs"><Link to="/trending">🔥 Em Alta</Link></DropdownMenuItem>
                 <DropdownMenuItem asChild className="text-xs"><Link to="/affiliate">Painel Afiliados</Link></DropdownMenuItem>
                 <DropdownMenuItem asChild className="text-xs"><Link to="/brands">Área de Marcas</Link></DropdownMenuItem>
                 <DropdownMenuItem asChild className="text-xs"><Link to="/products">Produtos</Link></DropdownMenuItem>
