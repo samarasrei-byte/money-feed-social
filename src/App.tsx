@@ -43,6 +43,8 @@ import AICopilot from "./pages/AICopilot";
 import Wallet from "./pages/Wallet";
 import Discover from "./pages/Discover";
 import Trending from "./pages/Trending";
+import PublicProfile from "./pages/PublicProfile";
+import Invites from "./pages/Invites";
 
 const queryClient = new QueryClient();
 
@@ -77,6 +79,8 @@ const App = () => (
               <Route path="/opportunities" element={<Opportunities />} />
               <Route path="/discover" element={<Discover />} />
               <Route path="/trending" element={<Trending />} />
+              <Route path="/invites" element={<Invites />} />
+              <Route path="/u/:username" element={<PublicProfile />} />
               <Route path="/tiktok" element={<TikTok />} />
               <Route path="/chat" element={<Chat />} />
               <Route path="/checkout" element={<Checkout />} />
