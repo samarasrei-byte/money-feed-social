@@ -76,39 +76,57 @@ export type Database = {
       }
       brands: {
         Row: {
+          city: string | null
           created_at: string
           description: string | null
           id: string
+          latitude: number | null
           logo_url: string | null
+          longitude: number | null
           name: string
+          niches: string[] | null
           slug: string
+          state: string | null
           status: string
+          target_categories: string[] | null
           updated_at: string
           user_id: string
           verified: boolean
           website: string | null
         }
         Insert: {
+          city?: string | null
           created_at?: string
           description?: string | null
           id?: string
+          latitude?: number | null
           logo_url?: string | null
+          longitude?: number | null
           name: string
+          niches?: string[] | null
           slug: string
+          state?: string | null
           status?: string
+          target_categories?: string[] | null
           updated_at?: string
           user_id: string
           verified?: boolean
           website?: string | null
         }
         Update: {
+          city?: string | null
           created_at?: string
           description?: string | null
           id?: string
+          latitude?: number | null
           logo_url?: string | null
+          longitude?: number | null
           name?: string
+          niches?: string[] | null
           slug?: string
+          state?: string | null
           status?: string
+          target_categories?: string[] | null
           updated_at?: string
           user_id?: string
           verified?: boolean
@@ -1184,9 +1202,20 @@ export type Database = {
         Row: {
           avatar_url: string | null
           bio: string | null
+          categories: string[] | null
+          city: string | null
+          conversion_rate: number
           created_at: string
           display_name: string | null
+          followers_count: number
           id: string
+          latitude: number | null
+          longitude: number | null
+          niches: string[] | null
+          performance_score: number
+          state: string | null
+          total_revenue: number
+          total_sales: number
           updated_at: string
           user_id: string
           username: string | null
@@ -1195,9 +1224,20 @@ export type Database = {
         Insert: {
           avatar_url?: string | null
           bio?: string | null
+          categories?: string[] | null
+          city?: string | null
+          conversion_rate?: number
           created_at?: string
           display_name?: string | null
+          followers_count?: number
           id?: string
+          latitude?: number | null
+          longitude?: number | null
+          niches?: string[] | null
+          performance_score?: number
+          state?: string | null
+          total_revenue?: number
+          total_sales?: number
           updated_at?: string
           user_id: string
           username?: string | null
@@ -1206,9 +1246,20 @@ export type Database = {
         Update: {
           avatar_url?: string | null
           bio?: string | null
+          categories?: string[] | null
+          city?: string | null
+          conversion_rate?: number
           created_at?: string
           display_name?: string | null
+          followers_count?: number
           id?: string
+          latitude?: number | null
+          longitude?: number | null
+          niches?: string[] | null
+          performance_score?: number
+          state?: string | null
+          total_revenue?: number
+          total_sales?: number
           updated_at?: string
           user_id?: string
           username?: string | null
@@ -1666,10 +1717,51 @@ export type Database = {
         }
         Returns: boolean
       }
+      haversine_km: {
+        Args: { lat1: number; lat2: number; lon1: number; lon2: number }
+        Returns: number
+      }
       is_affiliate_or_above: { Args: { _user_id: string }; Returns: boolean }
       is_enrolled_in_course: {
         Args: { _course_id: string; _user_id: string }
         Returns: boolean
+      }
+      match_affiliates_for_brand: {
+        Args: { _brand_id: string; _limit?: number }
+        Returns: {
+          avatar_url: string
+          categories: string[]
+          city: string
+          conversion_rate: number
+          display_name: string
+          distance_km: number
+          followers_count: number
+          match_score: number
+          niche_overlap: number
+          niches: string[]
+          performance_score: number
+          state: string
+          total_revenue: number
+          total_sales: number
+          user_id: string
+          username: string
+        }[]
+      }
+      match_brands_for_affiliate: {
+        Args: { _limit?: number; _user_id: string }
+        Returns: {
+          brand_id: string
+          city: string
+          distance_km: number
+          logo_url: string
+          match_score: number
+          name: string
+          niche_overlap: number
+          niches: string[]
+          slug: string
+          state: string
+          verified: boolean
+        }[]
       }
     }
     Enums: {
