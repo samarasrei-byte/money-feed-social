@@ -82,6 +82,7 @@ const App = () => (
               <Route path="/trending" element={<Trending />} />
               <Route path="/invites" element={<Invites />} />
               <Route path="/u/:username" element={<PublicProfile />} />
+              <Route path="/post/:id" element={<PostDetail />} />
               <Route path="/tiktok" element={<TikTok />} />
               <Route path="/chat" element={<Chat />} />
               <Route path="/checkout" element={<Checkout />} />
