@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      affiliate_invites: {
+        Row: {
+          affiliate_user_id: string
+          brand_id: string
+          campaign_id: string | null
+          created_at: string
+          id: string
+          message: string | null
+          responded_at: string | null
+          status: string
+        }
+        Insert: {
+          affiliate_user_id: string
+          brand_id: string
+          campaign_id?: string | null
+          created_at?: string
+          id?: string
+          message?: string | null
+          responded_at?: string | null
+          status?: string
+        }
+        Update: {
+          affiliate_user_id?: string
+          brand_id?: string
+          campaign_id?: string | null
+          created_at?: string
+          id?: string
+          message?: string | null
+          responded_at?: string | null
+          status?: string
+        }
+        Relationships: []
+      }
       affiliate_links: {
         Row: {
           clicks_count: number
@@ -1704,6 +1737,32 @@ export type Database = {
           _user_id: string
         }
         Returns: undefined
+      }
+      get_trending_products: {
+        Args: {
+          _category?: string
+          _limit?: number
+          _period_days?: number
+          _state?: string
+        }
+        Returns: {
+          brand_id: string
+          brand_logo: string
+          brand_name: string
+          brand_state: string
+          category: string
+          commission_type: string
+          commission_value: number
+          currency: string
+          description: string
+          image_url: string
+          name: string
+          price: number
+          product_id: string
+          recent_clicks: number
+          recent_sales: number
+          trend_score: number
+        }[]
       }
       get_user_role: {
         Args: { _user_id: string }
