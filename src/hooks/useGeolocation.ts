@@ -61,10 +61,10 @@ export function useGeolocation() {
         if (loc.state) payload.state = loc.state;
 
         if (target === "brand" && loc.brand_id) {
-          const { error } = await supabase.from("brands").update(payload).eq("id", loc.brand_id);
+          const { error } = await supabase.from("brands").update(payload as any).eq("id", loc.brand_id);
           if (error) throw error;
         } else {
-          const { error } = await supabase.from("profiles").update(payload).eq("user_id", user.id);
+          const { error } = await supabase.from("profiles").update(payload as any).eq("user_id", user.id);
           if (error) throw error;
         }
         toast({ title: "Localização salva!" });
