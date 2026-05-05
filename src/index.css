@@ -25,7 +25,7 @@
     --secondary-foreground: 240 6% 10%;
 
     --muted: 240 5% 96%;
-    --muted-foreground: 240 4% 46%;
+    --muted-foreground: 240 5% 38%;
 
     --accent: 25 95% 53%;
     --accent-foreground: 0 0% 100%;
@@ -169,7 +169,34 @@
     @apply bg-clip-text text-transparent;
     background-image: var(--gradient-warm);
   }
+
+  /* Global microinteractions */
+  .interactive {
+    @apply transition-all duration-200 ease-out will-change-transform hover:scale-[1.02] active:scale-[0.98] active:transition-transform active:duration-75;
+  }
+  .card-interactive {
+    @apply transition-all duration-200 ease-out will-change-transform hover:-translate-y-0.5 hover:shadow-lg hover:border-foreground/20 active:translate-y-0 active:scale-[0.99];
+  }
+  .tap {
+    @apply transition-transform duration-150 active:scale-[0.94];
+  }
 }
+
+/* Apply tactile feedback to ALL native buttons + role=button + anchor links inside app */
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    @apply transition-transform duration-150 ease-out;
+    -webkit-tap-highlight-color: transparent;
+  }
+  button:not(:disabled):active,
+  [role="button"]:not([aria-disabled="true"]):active {
+    transform: scale(0.96);
+  }
+  /* Card hover lift when used as link */
+  a > [class*="border"][class*="rounded"]:hover {
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+  }
 
 @layer utilities {
   .animate-float {
