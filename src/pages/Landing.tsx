@@ -197,6 +197,47 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* ═══ NOVIDADES — features lançadas hoje ═══ */}
+      <section className="py-16 sm:py-20 relative z-10">
+        <div className="max-w-6xl mx-auto px-5">
+          <div className="text-center mb-10">
+            <Badge className="mb-3 bg-[hsl(346,100%,58%)]/10 text-[hsl(346,100%,68%)] border-[hsl(346,100%,58%)]/30 rounded-full px-3 py-1 text-[10px] font-semibold tracking-wider uppercase">
+              <Sparkles className="h-3 w-3 mr-1 inline" /> Novo · Recém-lançado
+            </Badge>
+            <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white mt-3">
+              Inteligência que <span className="text-gradient-primary">conecta sozinha</span>
+            </h2>
+            <p className="mt-3 text-sm text-white/50 max-w-xl mx-auto">
+              Pare de procurar marcas ou afiliados. A Only Shop faz o match automaticamente baseado em nicho, performance e localização.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3">
+            {[
+              { icon: Sparkles, title: "Smart Match", desc: "IA cruza nicho + geo + performance e devolve top matches.", href: "/discover", color: "from-[hsl(346,100%,58%)] to-[hsl(330,81%,60%)]" },
+              { icon: Flame, title: "Em Alta", desc: "Produtos hypados ranqueados por vendas reais das últimas 24h-30d.", href: "/trending", color: "from-[hsl(25,95%,53%)] to-[hsl(346,100%,58%)]" },
+              { icon: Globe, title: "Geolocalização", desc: "Encontre criadores e marcas próximos para entregas e parcerias locais.", href: "/discover", color: "from-[hsl(174,100%,47%)] to-[hsl(200,100%,55%)]" },
+              { icon: MessageCircle, title: "Convites Diretos", desc: "Marcas convidam afiliados em 1 clique. Inbox dedicada para responder.", href: "/invites", color: "from-[hsl(270,91%,65%)] to-[hsl(346,100%,58%)]" },
+            ].map((f) => (
+              <Link key={f.title} to={f.href} className="group relative overflow-hidden rounded-3xl border border-white/[0.08] bg-white/[0.02] p-5 hover:bg-white/[0.04] transition-all hover:scale-[1.02]">
+                <div className={`h-10 w-10 rounded-2xl bg-gradient-to-br ${f.color} flex items-center justify-center mb-3 shadow-lg`}>
+                  <f.icon className="h-5 w-5 text-white" />
+                </div>
+                <p className="text-sm font-bold text-white">{f.title}</p>
+                <p className="text-xs text-white/50 mt-1 leading-relaxed">{f.desc}</p>
+                <ChevronRight className="absolute top-5 right-5 h-4 w-4 text-white/20 group-hover:text-white/60 group-hover:translate-x-1 transition-all" />
+              </Link>
+            ))}
+          </div>
+
+          <div className="mt-6 text-center">
+            <Button asChild size="sm" className="rounded-full bg-white text-black hover:bg-white/90 text-xs h-9 px-5">
+              <Link to="/discover">Testar Smart Match agora <ArrowRight className="ml-1 h-3 w-3" /></Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
       {/* ═══ PARA QUEM ═══ (light) */}
       <section className="py-20 sm:py-28 relative z-10 bg-white text-[hsl(240,10%,4%)]">
         <div className="max-w-5xl mx-auto px-5">
