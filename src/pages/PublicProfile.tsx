@@ -32,6 +32,7 @@ export default function PublicProfile() {
   const [profile, setProfile] = useState<PublicProfileData | null>(null);
   const [level, setLevel] = useState<UserLevel | null>(null);
   const [posts, setPosts] = useState<any[]>([]);
+  const [hotProducts, setHotProducts] = useState<any[]>([]);
   const [isFollowing, setIsFollowing] = useState(false);
   const [followLoading, setFollowLoading] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -44,14 +45,37 @@ export default function PublicProfile() {
     if (!p) { setLoading(false); return; }
     setProfile(p as PublicProfileData);
 
-    const [{ data: lvl }, { data: pst }] = await Promise.all([
+    const [{ data: lvl }, { data: pst }, { data: ords }] = await Promise.all([
       supabase.from("user_levels").select("total_xp, level").eq("user_id", p.user_id).maybeSingle(),
       supabase.from("posts")
         .select("id, content, media_url, post_type, likes_count, comments_count, created_at")
         .eq("user_id", p.user_id).order("created_at", { ascending: false }).limit(12),
+      supabase.from("orders").select("id").eq("affiliate_id", p.user_id).in("status", ["paid", "completed"]).limit(200),
     ]);
     setLevel(lvl as any);
     setPosts(pst || []);
+
+    // Hot products vendidos pelo afiliado
+    if (ords?.length) {
+      const orderIds = ords.map(o => o.id);
+      const { data: items } = await supabase.from("order_items")
+        .select("product_id, product_name, quantity, unit_price").in("order_id", orderIds);
+      if (items?.length) {
+        const map = new Map<string, { product_id: string; name: string; sales: number; revenue: number }>();
+        items.forEach(it => {
+          const cur = map.get(it.product_id) || { product_id: it.product_id, name: it.product_name, sales: 0, revenue: 0 };
+          cur.sales += it.quantity;
+          cur.revenue += Number(it.unit_price) * it.quantity;
+          map.set(it.product_id, cur);
+        });
+        const top = [...map.values()].sort((a, b) => b.sales - a.sales).slice(0, 6);
+        if (top.length) {
+          const { data: prods } = await supabase.from("products")
+            .select("id, name, image_url, price").in("id", top.map(t => t.product_id));
+          setHotProducts(top.map(t => ({ ...t, product: prods?.find(pr => pr.id === t.product_id) })));
+        }
+      }
+    }
 
     if (user && user.id !== p.user_id) {
       const { data: f } = await supabase.from("follows").select("id")
