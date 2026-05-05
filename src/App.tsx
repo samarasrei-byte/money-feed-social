@@ -45,6 +45,7 @@ import Discover from "./pages/Discover";
 import Trending from "./pages/Trending";
 import PublicProfile from "./pages/PublicProfile";
 import Invites from "./pages/Invites";
+import PostDetail from "./pages/PostDetail";
 
 const queryClient = new QueryClient();
 

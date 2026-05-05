@@ -59,6 +59,7 @@ export default function Invites() {
   };
 
   const respond = async (id: string, status: "accepted" | "declined") => {
+    const inv = invites.find((i) => i.id === id);
     const { error } = await supabase
       .from("affiliate_invites")
       .update({ status, responded_at: new Date().toISOString() })
@@ -69,9 +70,24 @@ export default function Invites() {
       return;
     }
 
+    // Notificar a marca (dono da brand)
+    if (inv?.brand_id && user) {
+      const { data: brand } = await supabase.from("brands")
+        .select("user_id").eq("id", inv.brand_id).maybeSingle();
+      if (brand?.user_id && brand.user_id !== user.id) {
+        await supabase.from("notifications").insert({
+          user_id: brand.user_id,
+          actor_id: user.id,
+          type: status === "accepted" ? "invite_accepted" : "invite_declined",
+        });
+      }
+    }
+
     toast({
       title: status === "accepted" ? "Convite aceito! 🎉" : "Convite recusado",
-      description: status === "accepted" ? "A marca foi notificada." : undefined,
+      description: status === "accepted"
+        ? "A marca foi notificada e já pode te chamar para a campanha."
+        : "A marca foi notificada da sua resposta.",
     });
     load();
   };
