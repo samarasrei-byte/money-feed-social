@@ -41,6 +41,7 @@ import Marketplace from "./pages/Marketplace";
 import Analytics from "./pages/Analytics";
 import AICopilot from "./pages/AICopilot";
 import Wallet from "./pages/Wallet";
+import Discover from "./pages/Discover";
 
 const queryClient = new QueryClient();
 
@@ -73,6 +74,7 @@ const App = () => (
               <Route path="/brands" element={<BrandArea />} />
               <Route path="/products" element={<Products />} />
               <Route path="/opportunities" element={<Opportunities />} />
+              <Route path="/discover" element={<Discover />} />
               <Route path="/tiktok" element={<TikTok />} />
               <Route path="/chat" element={<Chat />} />
               <Route path="/checkout" element={<Checkout />} />
