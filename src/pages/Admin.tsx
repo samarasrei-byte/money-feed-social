@@ -91,8 +91,77 @@ export default function Admin() {
       fetchPlans();
       fetchStats();
       fetchGrowthData();
+      fetchVSLSettings();
+      fetchVSLAnalytics();
     }
   }, [userRole]);
+
+  const fetchVSLSettings = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("vsl_settings")
+        .select("*")
+        .eq("is_active", true)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      
+      if (error) throw error;
+      setVslSettings(data || {
+        headline: "",
+        subheadline: "",
+        video_url: "",
+        cta_text: "Quero Começar Agora",
+        cta_delay_seconds: 0,
+        autoplay: true
+      });
+    } catch (error) {
+      console.error("Error fetching VSL settings:", error);
+    } finally {
+      setVslLoading(false);
+    }
+  };
+
+  const fetchVSLAnalytics = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("vsl_analytics")
+        .select("*")
+        .order("created_at", { ascending: false })
+        .limit(100);
+      if (error) throw error;
+      setVslAnalytics(data || []);
+    } catch (error) {
+      console.error("Error fetching VSL analytics:", error);
+    }
+  };
+
+  const handleSaveVSL = async () => {
+    try {
+      setVslLoading(true);
+      const { id, created_at, updated_at, ...settingsToSave } = vslSettings;
+      
+      let error;
+      if (id) {
+        ({ error } = await supabase
+          .from("vsl_settings")
+          .update(settingsToSave)
+          .eq("id", id));
+      } else {
+        ({ error } = await supabase
+          .from("vsl_settings")
+          .insert([settingsToSave]));
+      }
+
+      if (error) throw error;
+      toast({ title: "Configurações da VSL salvas!" });
+      fetchVSLSettings();
+    } catch (error: any) {
+      toast({ variant: "destructive", title: "Erro ao salvar", description: error.message });
+    } finally {
+      setVslLoading(false);
+    }
+  };
 
   const fetchUsers = async () => {
     try {
