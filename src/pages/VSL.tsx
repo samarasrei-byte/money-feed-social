@@ -138,7 +138,7 @@ export default function VSL() {
 
         {/* Video Player Container */}
         <div className="w-full relative aspect-video rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] border border-white/10 bg-zinc-900 group">
-          <ReactPlayer
+          <Player
             ref={playerRef}
             url={settings.video_url}
             width="100%"
