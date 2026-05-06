@@ -76,6 +76,11 @@ export default function Admin() {
   // Growth chart data
   const [growthData, setGrowthData] = useState<any[]>([]);
 
+  // VSL settings
+  const [vslSettings, setVslSettings] = useState<any>(null);
+  const [vslLoading, setVslLoading] = useState(true);
+  const [vslAnalytics, setVslAnalytics] = useState<any[]>([]);
+
   // Role change confirmation
   const [roleChangeDialog, setRoleChangeDialog] = useState<{ userId: string; newRole: string; displayName: string } | null>(null);
 
