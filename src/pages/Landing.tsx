@@ -633,6 +633,7 @@ export default function Landing() {
               <div className="space-y-2">
                 <Link to="/auth" className="block text-[11px] text-white/25 hover:text-white transition-colors">Criar conta</Link>
                 <Link to="/auth" className="block text-[11px] text-white/25 hover:text-white transition-colors">Login</Link>
+                <Link to="/vsl" className="block text-[11px] text-[hsl(330,81%,60%)] font-bold hover:opacity-80 transition-opacity">Apresentação VSL</Link>
               </div>
             </div>
           </div>

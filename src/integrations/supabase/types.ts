@@ -1682,6 +1682,80 @@ export type Database = {
         }
         Relationships: []
       }
+      vsl_analytics: {
+        Row: {
+          created_at: string
+          event_type: string
+          id: string
+          metadata: Json | null
+          session_id: string
+          vsl_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          event_type: string
+          id?: string
+          metadata?: Json | null
+          session_id: string
+          vsl_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          event_type?: string
+          id?: string
+          metadata?: Json | null
+          session_id?: string
+          vsl_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vsl_analytics_vsl_id_fkey"
+            columns: ["vsl_id"]
+            isOneToOne: false
+            referencedRelation: "vsl_settings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      vsl_settings: {
+        Row: {
+          autoplay: boolean | null
+          created_at: string
+          cta_delay_seconds: number | null
+          cta_text: string | null
+          headline: string
+          id: string
+          is_active: boolean | null
+          subheadline: string | null
+          updated_at: string
+          video_url: string
+        }
+        Insert: {
+          autoplay?: boolean | null
+          created_at?: string
+          cta_delay_seconds?: number | null
+          cta_text?: string | null
+          headline: string
+          id?: string
+          is_active?: boolean | null
+          subheadline?: string | null
+          updated_at?: string
+          video_url: string
+        }
+        Update: {
+          autoplay?: boolean | null
+          created_at?: string
+          cta_delay_seconds?: number | null
+          cta_text?: string | null
+          headline?: string
+          id?: string
+          is_active?: boolean | null
+          subheadline?: string | null
+          updated_at?: string
+          video_url?: string
+        }
+        Relationships: []
+      }
       wallet_transactions: {
         Row: {
           amount: number
@@ -1780,6 +1854,7 @@ export type Database = {
         Args: { lat1: number; lat2: number; lon1: number; lon2: number }
         Returns: number
       }
+      is_admin: { Args: never; Returns: boolean }
       is_affiliate_or_above: { Args: { _user_id: string }; Returns: boolean }
       is_enrolled_in_course: {
         Args: { _course_id: string; _user_id: string }

@@ -21,7 +21,8 @@ import {
 import {
   Users, CreditCard, Flag, BarChart3, Loader2, Search, Shield,
   Crown, TrendingUp, DollarSign, MessageSquare, Heart,
-  ChevronLeft, ChevronRight, Download, Package
+  ChevronLeft, ChevronRight, Download, Package, Video,
+  PlayCircle, Save, Clock, Type, MousePointer2
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { formatDistanceToNow } from "date-fns";
@@ -75,6 +76,11 @@ export default function Admin() {
   // Growth chart data
   const [growthData, setGrowthData] = useState<any[]>([]);
 
+  // VSL settings
+  const [vslSettings, setVslSettings] = useState<any>(null);
+  const [vslLoading, setVslLoading] = useState(true);
+  const [vslAnalytics, setVslAnalytics] = useState<any[]>([]);
+
   // Role change confirmation
   const [roleChangeDialog, setRoleChangeDialog] = useState<{ userId: string; newRole: string; displayName: string } | null>(null);
 
@@ -85,8 +91,77 @@ export default function Admin() {
       fetchPlans();
       fetchStats();
       fetchGrowthData();
+      fetchVSLSettings();
+      fetchVSLAnalytics();
     }
   }, [userRole]);
+
+  const fetchVSLSettings = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("vsl_settings")
+        .select("*")
+        .eq("is_active", true)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      
+      if (error) throw error;
+      setVslSettings(data || {
+        headline: "",
+        subheadline: "",
+        video_url: "",
+        cta_text: "Quero Começar Agora",
+        cta_delay_seconds: 0,
+        autoplay: true
+      });
+    } catch (error) {
+      console.error("Error fetching VSL settings:", error);
+    } finally {
+      setVslLoading(false);
+    }
+  };
+
+  const fetchVSLAnalytics = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("vsl_analytics")
+        .select("*")
+        .order("created_at", { ascending: false })
+        .limit(100);
+      if (error) throw error;
+      setVslAnalytics(data || []);
+    } catch (error) {
+      console.error("Error fetching VSL analytics:", error);
+    }
+  };
+
+  const handleSaveVSL = async () => {
+    try {
+      setVslLoading(true);
+      const { id, created_at, updated_at, ...settingsToSave } = vslSettings;
+      
+      let error;
+      if (id) {
+        ({ error } = await supabase
+          .from("vsl_settings")
+          .update(settingsToSave)
+          .eq("id", id));
+      } else {
+        ({ error } = await supabase
+          .from("vsl_settings")
+          .insert([settingsToSave]));
+      }
+
+      if (error) throw error;
+      toast({ title: "Configurações da VSL salvas!" });
+      fetchVSLSettings();
+    } catch (error: any) {
+      toast({ variant: "destructive", title: "Erro ao salvar", description: error.message });
+    } finally {
+      setVslLoading(false);
+    }
+  };
 
   const fetchUsers = async () => {
     try {
@@ -298,6 +373,9 @@ export default function Admin() {
           </TabsTrigger>
           <TabsTrigger value="features" className="gap-2">
             <Flag className="h-4 w-4" /><span className="hidden sm:inline">Features</span>
+          </TabsTrigger>
+          <TabsTrigger value="vsl" className="gap-2">
+            <Video className="h-4 w-4" /><span className="hidden sm:inline">VSL</span>
           </TabsTrigger>
         </TabsList>
 
@@ -549,6 +627,126 @@ export default function Admin() {
               )}
             </CardContent>
           </Card>
+        </TabsContent>
+        {/* VSL Settings */}
+        <TabsContent value="vsl" className="space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <Card className="border-border/30">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <PlayCircle className="h-5 w-5 text-primary" />
+                  Configurações da VSL
+                </CardTitle>
+                <CardDescription>Configure sua página de vendas de alta conversão</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium flex items-center gap-2">
+                    <Type className="h-4 w-4" /> Headline Principal
+                  </label>
+                  <Input 
+                    value={vslSettings?.headline || ""} 
+                    onChange={(e) => setVslSettings({ ...vslSettings, headline: e.target.value })}
+                    placeholder="Ex: Como faturar 10k por mês..."
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Subheadline (Opcional)</label>
+                  <Input 
+                    value={vslSettings?.subheadline || ""} 
+                    onChange={(e) => setVslSettings({ ...vslSettings, subheadline: e.target.value })}
+                    placeholder="Ex: O método testado por mais de 5.000 pessoas..."
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium flex items-center gap-2">
+                    <Video className="h-4 w-4" /> URL do Vídeo (YouTube, Vimeo, etc)
+                  </label>
+                  <Input 
+                    value={vslSettings?.video_url || ""} 
+                    onChange={(e) => setVslSettings({ ...vslSettings, video_url: e.target.value })}
+                    placeholder="https://www.youtube.com/watch?v=..."
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium flex items-center gap-2">
+                      <Clock className="h-4 w-4" /> Delay CTA (Segundos)
+                    </label>
+                    <Input 
+                      type="number"
+                      value={vslSettings?.cta_delay_seconds || 0} 
+                      onChange={(e) => setVslSettings({ ...vslSettings, cta_delay_seconds: parseInt(e.target.value) || 0 })}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium flex items-center gap-2">
+                      <MousePointer2 className="h-4 w-4" /> Texto do Botão
+                    </label>
+                    <Input 
+                      value={vslSettings?.cta_text || ""} 
+                      onChange={(e) => setVslSettings({ ...vslSettings, cta_text: e.target.value })}
+                    />
+                  </div>
+                </div>
+                <div className="flex items-center justify-between p-3 rounded-lg border border-border/30 bg-muted/30">
+                  <div className="space-y-0.5">
+                    <label className="text-sm font-medium">Autoplay</label>
+                    <p className="text-[10px] text-muted-foreground">Inicia o vídeo automaticamente (sem som)</p>
+                  </div>
+                  <Switch 
+                    checked={vslSettings?.autoplay || false} 
+                    onCheckedChange={(v) => setVslSettings({ ...vslSettings, autoplay: v })}
+                  />
+                </div>
+                <Button className="w-full gap-2" onClick={handleSaveVSL} disabled={vslLoading}>
+                  {vslLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+                  Salvar Alterações
+                </Button>
+                <Button variant="outline" className="w-full gap-2" asChild>
+                  <a href="/vsl" target="_blank">Visualizar Página <Download className="h-4 w-4 rotate-[-90deg]" /></a>
+                </Button>
+              </CardContent>
+            </Card>
+
+            <div className="space-y-6">
+              <Card className="border-border/30">
+                <CardHeader>
+                  <CardTitle className="text-sm">Métricas Rápidas</CardTitle>
+                </CardHeader>
+                <CardContent className="grid grid-cols-2 gap-4">
+                  <div className="p-4 rounded-xl border border-border/30 bg-card text-center">
+                    <p className="text-2xl font-bold">{vslAnalytics.filter(a => a.event_type === 'view').length}</p>
+                    <p className="text-[10px] text-muted-foreground uppercase">Visualizações</p>
+                  </div>
+                  <div className="p-4 rounded-xl border border-border/30 bg-card text-center">
+                    <p className="text-2xl font-bold">{vslAnalytics.filter(a => a.event_type === 'cta_click').length}</p>
+                    <p className="text-[10px] text-muted-foreground uppercase">Cliques CTA</p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-border/30 overflow-hidden">
+                <CardHeader>
+                  <CardTitle className="text-sm">Log de Eventos Recentes</CardTitle>
+                </CardHeader>
+                <div className="max-h-[300px] overflow-y-auto">
+                  <Table>
+                    <TableBody>
+                      {vslAnalytics.length === 0 ? (
+                        <TableRow><TableCell className="text-center py-8 text-muted-foreground">Sem eventos</TableCell></TableRow>
+                      ) : vslAnalytics.map((a) => (
+                        <TableRow key={a.id} className="text-[10px]">
+                          <TableCell className="font-medium">{a.event_type}</TableCell>
+                          <TableCell>{formatDistanceToNow(new Date(a.created_at), { addSuffix: true, locale: ptBR })}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
+              </Card>
+            </div>
+          </div>
         </TabsContent>
       </Tabs>
 

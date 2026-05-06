@@ -46,6 +46,7 @@ import Trending from "./pages/Trending";
 import PublicProfile from "./pages/PublicProfile";
 import Invites from "./pages/Invites";
 import PostDetail from "./pages/PostDetail";
+import VSL from "./pages/VSL";
 
 const queryClient = new QueryClient();
 
@@ -64,6 +65,7 @@ const App = () => (
             <Route path="/terms" element={<Terms />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/r/:code" element={<RedirectLink />} />
+            <Route path="/vsl" element={<VSL />} />
             
             {/* App routes with layout */}
             <Route element={<AppLayout />}>
