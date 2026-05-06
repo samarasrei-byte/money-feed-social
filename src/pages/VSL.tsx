@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Loader2, Volume2, VolumeX, Play, Shield } from "lucide-react";
 import { toast } from "sonner";
 
+const Player = ReactPlayer as any;
+
 interface VSLSettings {
   id: string;
   headline: string;
