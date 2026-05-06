@@ -143,7 +143,7 @@ export default function VSL() {
             height="100%"
             playing={playing}
             muted={muted}
-            onProgress={handleProgress}
+            onProgress={handleProgress as any}
             onDuration={setDuration}
             playsinline
             config={{
