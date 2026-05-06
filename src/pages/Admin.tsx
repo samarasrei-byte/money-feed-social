@@ -21,7 +21,8 @@ import {
 import {
   Users, CreditCard, Flag, BarChart3, Loader2, Search, Shield,
   Crown, TrendingUp, DollarSign, MessageSquare, Heart,
-  ChevronLeft, ChevronRight, Download, Package
+  ChevronLeft, ChevronRight, Download, Package, Video,
+  PlayCircle, Save, Clock, Type, MousePointer2
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { formatDistanceToNow } from "date-fns";
