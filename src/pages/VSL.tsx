@@ -2,8 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import ReactPlayer from "react-player";
 import { Button } from "@/components/ui/button";
-import { Loader2, Volume2, VolumeX, Play } from "lucide-react";
-import { Progress } from "@/components/ui/progress";
+import { Loader2, Volume2, VolumeX, Play, Shield } from "lucide-react";
 import { toast } from "sonner";
 
 interface VSLSettings {
@@ -24,7 +23,7 @@ export default function VSL() {
   const [duration, setDuration] = useState(0);
   const [muted, setMuted] = useState(true);
   const [playing, setPlaying] = useState(false);
-  const playerRef = useRef<ReactPlayer>(null);
+  const playerRef = useRef<any>(null);
   const [sessionId] = useState(crypto.randomUUID());
 
   useEffect(() => {
@@ -40,12 +39,14 @@ export default function VSL() {
         .eq("is_active", true)
         .order("created_at", { ascending: false })
         .limit(1)
-        .single();
+        .maybeSingle();
 
       if (error) throw error;
-      setSettings(data);
-      if (data.autoplay) {
-        setPlaying(true);
+      if (data) {
+        setSettings(data);
+        if (data.autoplay) {
+          setPlaying(true);
+        }
       }
     } catch (error) {
       console.error("Error fetching VSL settings:", error);
@@ -72,14 +73,14 @@ export default function VSL() {
     }
   };
 
-  const handleProgress = (state: { playedSeconds: number }) => {
+  const handleProgress = (state: { playedSeconds: number; played: number; loadedSeconds: number; loaded: number }) => {
     setPlayedSeconds(state.playedSeconds);
     
     if (settings && state.playedSeconds >= settings.cta_delay_seconds && !showCTA) {
       setShowCTA(true);
     }
 
-    // Log progress at 25%, 50%, 75%, 100%
+    // Log progress at 25%, 50%, 75%, 95%
     if (duration > 0) {
       const percent = (state.playedSeconds / duration) * 100;
       const markers = [25, 50, 75, 95];
@@ -96,7 +97,6 @@ export default function VSL() {
 
   const handleCTAClick = () => {
     logEvent("cta_click");
-    // Redirect or perform action
     window.location.href = "/auth?redirect=/feed";
   };
 
@@ -111,13 +111,16 @@ export default function VSL() {
   if (!settings) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-black text-white">
-        <p>Nenhuma VSL ativa no momento.</p>
+        <div className="text-center space-y-4">
+          <p className="text-xl">Nenhuma VSL ativa no momento.</p>
+          <Button onClick={() => window.location.href = "/"} variant="outline">Voltar ao Início</Button>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-black text-white font-sans selection:bg-primary selection:text-white">
+    <div className="min-h-screen bg-black text-white font-sans selection:bg-primary selection:text-white overflow-x-hidden">
       {/* Hero Section */}
       <div className="max-w-4xl mx-auto pt-12 pb-20 px-4 flex flex-col items-center text-center space-y-8">
         <div className="space-y-4 animate-in fade-in slide-in-from-top-4 duration-1000">
@@ -144,9 +147,9 @@ export default function VSL() {
             onDuration={setDuration}
             playsinline
             config={{
-              youtube: { playerVars: { showinfo: 0, controls: 0, rel: 0 } },
-              vimeo: { playerOptions: { background: 1, transparent: 0 } }
-            }}
+              youtube: { playerVars: { rel: 0, showinfo: 0, controls: 0, modestbranding: 1 } },
+              vimeo: { playerOptions: { background: true, transparent: false } }
+            } as any}
             onEnded={() => logEvent("video_complete")}
           />
 
@@ -156,7 +159,7 @@ export default function VSL() {
               className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/40 backdrop-blur-[2px] cursor-pointer transition-all hover:bg-black/30"
               onClick={() => setMuted(false)}
             >
-              <div className="bg-primary p-6 rounded-full shadow-2xl animate-pulse scale-110">
+              <div className="bg-[#FE2C55] p-6 rounded-full shadow-2xl animate-pulse scale-110">
                 <VolumeX className="h-10 w-10 text-white fill-current" />
               </div>
               <p className="mt-6 text-xl font-bold uppercase tracking-widest text-white drop-shadow-md">
@@ -171,7 +174,7 @@ export default function VSL() {
               className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/60 cursor-pointer"
               onClick={() => { setPlaying(true); setMuted(false); }}
             >
-              <div className="bg-primary p-6 rounded-full shadow-2xl transition-transform hover:scale-110">
+              <div className="bg-[#FE2C55] p-6 rounded-full shadow-2xl transition-transform hover:scale-110">
                 <Play className="h-10 w-10 text-white fill-current" />
               </div>
               <p className="mt-6 text-xl font-bold uppercase tracking-widest text-white">
@@ -183,8 +186,8 @@ export default function VSL() {
           {/* Custom Progress Bar */}
           <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-white/10 z-20">
             <div 
-              className="h-full bg-primary transition-all duration-300 shadow-[0_0_10px_rgba(255,44,85,0.8)]"
-              style={{ width: `${(playedSeconds / duration) * 100}%` }}
+              className="h-full bg-[#FE2C55] transition-all duration-300 shadow-[0_0_10px_rgba(254,44,85,0.8)]"
+              style={{ width: duration > 0 ? `${(playedSeconds / duration) * 100}%` : '0%' }}
             />
           </div>
         </div>
@@ -216,9 +219,14 @@ export default function VSL() {
               { name: "Gabriel L.", text: "A facilidade de encontrar produtos hypados é o grande diferencial. Recomendo muito!" },
               { name: "Beatriz V.", text: "O suporte e a comunidade são incríveis. Nunca me senti tão amparada em um negócio." }
             ].map((testimonial, i) => (
-              <div key={i} className="bg-white/5 p-6 rounded-2xl border border-white/5 hover:border-white/10 transition-colors">
-                <p className="italic text-white/80 mb-4">"{testimonial.text}"</p>
-                <p className="font-bold text-primary">{testimonial.name}</p>
+              <div key={i} className="bg-white/5 p-8 rounded-2xl border border-white/5 hover:border-white/10 transition-colors group">
+                <p className="italic text-white/80 mb-6 text-lg">"{testimonial.text}"</p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center text-primary font-bold">
+                    {testimonial.name[0]}
+                  </div>
+                  <p className="font-bold text-primary">{testimonial.name}</p>
+                </div>
               </div>
             ))}
           </div>
@@ -228,41 +236,20 @@ export default function VSL() {
       {/* Final Offer / Section 3 */}
       <div className="py-24 px-4 text-center">
         <div className="max-w-2xl mx-auto bg-gradient-to-b from-zinc-900 to-black p-12 rounded-[2rem] border border-white/10 shadow-2xl">
-          <h3 className="text-3xl font-black mb-4 uppercase tracking-tight">Comece sua jornada hoje</h3>
+          <h3 className="text-4xl font-black mb-6 uppercase tracking-tight">Comece sua jornada hoje</h3>
           <p className="text-xl text-white/60 mb-10">Junte-se a milhares de empreendedores que já estão lucrando com o Only Shop.</p>
           <Button 
             size="lg"
-            variant="ghost"
             className="w-full h-16 text-xl font-black uppercase tracking-wider bg-white text-black hover:bg-white/90 hover:scale-105 active:scale-95 transition-all rounded-xl"
             onClick={handleCTAClick}
           >
             {settings.cta_text}
           </Button>
-          <p className="mt-6 text-xs text-white/30">
-            Ao clicar você concorda com nossos termos e política de privacidade.
+          <p className="mt-8 text-xs text-white/30 uppercase tracking-widest font-bold">
+            Garantia de satisfação incondicional
           </p>
         </div>
       </div>
     </div>
-  );
-}
-
-// Utility icon
-function Shield(props: any) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
-    </svg>
   );
 }
