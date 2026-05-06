@@ -374,6 +374,9 @@ export default function Admin() {
           <TabsTrigger value="features" className="gap-2">
             <Flag className="h-4 w-4" /><span className="hidden sm:inline">Features</span>
           </TabsTrigger>
+          <TabsTrigger value="vsl" className="gap-2">
+            <Video className="h-4 w-4" /><span className="hidden sm:inline">VSL</span>
+          </TabsTrigger>
         </TabsList>
 
         {/* Overview */}
