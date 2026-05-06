@@ -65,6 +65,7 @@ const App = () => (
             <Route path="/terms" element={<Terms />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/r/:code" element={<RedirectLink />} />
+            <Route path="/vsl" element={<VSL />} />
             
             {/* App routes with layout */}
             <Route element={<AppLayout />}>
