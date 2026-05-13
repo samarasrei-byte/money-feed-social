@@ -1,11 +1,12 @@
 import { Link, useLocation } from "react-router-dom";
-import { Home, Sparkles, User, PlusCircle, Flame } from "lucide-react";
+import { Home, Sparkles, User, PlusCircle, Flame, ShoppingBag } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { memo } from "react";
 
 const navItems = [
   { href: "/feed", icon: Home, label: "Feed" },
   { href: "/discover", icon: Sparkles, label: "Match" },
+  { href: "/unishop", icon: ShoppingBag, label: "Unishop" },
   { href: "/create", icon: PlusCircle, label: "", isAction: true },
   { href: "/trending", icon: Flame, label: "Em Alta" },
   { href: "/profile", icon: User, label: "Perfil" },
