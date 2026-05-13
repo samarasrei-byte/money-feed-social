@@ -2,16 +2,15 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
-  ArrowRight, Users, TrendingUp, DollarSign, Shield, Star, Check,
-  Sparkles, ChevronRight, Play, BarChart3, Globe, MessageCircle, Heart,
-  Clock, Rocket, Zap, Award, Target, Eye, X, ShieldCheck, Smartphone,
-  Headphones, Lock, CreditCard, RefreshCw, Gift, Crown, Flame, Instagram,
-  Youtube, Twitter
+  ArrowRight, Users, TrendingUp, DollarSign, Shield, Star,
+  Sparkles, Play, BarChart3, Globe, MessageCircle, Heart,
+  Clock, Rocket, Zap, Target, Eye, Crown, Flame
 } from "lucide-react";
 import { APP_NAME } from "@/lib/constants";
 import logoImg from "@/assets/color-palette-ref.png";
+import { memo } from "react";
+import { motion } from "framer-motion";
 
-/* ─── Data ─── */
 const stats = [
   { value: "10K+", label: "Criadores ativos", icon: Users },
   { value: "R$1M+", label: "Comissões pagas", icon: DollarSign },
@@ -19,83 +18,18 @@ const stats = [
   { value: "500+", label: "Marcas parceiras", icon: Target },
 ];
 
-const features = [
-  { icon: Globe, title: "Rede Social Integrada", desc: "Feed, stories, comunidades e chat em um só lugar." },
-  { icon: TrendingUp, title: "Sistema de Afiliados", desc: "Links rastreáveis com dashboard em tempo real." },
-  { icon: DollarSign, title: "Monetização Real", desc: "Comissões automáticas depositadas na sua conta." },
-  { icon: Shield, title: "Segurança Total", desc: "Dados criptografados e tracking transparente." },
-  { icon: BarChart3, title: "Analytics Avançado", desc: "CTR, conversões, ROI e métricas completas." },
-  { icon: MessageCircle, title: "Comunidade Ativa", desc: "Networking com os top criadores do Brasil." },
-];
-
 const testimonials = [
-  { name: "Marina Sales", role: "Top Afiliada · 3 meses", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face", text: "Em 3 meses fui de zero a R$12.400/mês em comissões. A plataforma mudou minha vida financeira.", earnings: "R$87.5K" },
-  { name: "Pedro Henrique", role: "Creator · 6 meses", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face", text: "O tracking transparente mudou completamente meu jogo. Sei exatamente de onde vem cada centavo.", earnings: "R$45.2K" },
-  { name: "Rafa Digital", role: "Influencer · 1 ano", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face", text: "Meu CTR subiu de 2% pra 8% com a prova social verificada. Resultados reais e mensuráveis.", earnings: "R$120K" },
-  { name: "Beatriz Nova", role: "Iniciante · 1 mês", avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face", text: "Primeiro mês e já fiz R$2.100! A comunidade ajuda demais. Recomendo pra qualquer iniciante.", earnings: "R$2.1K" },
-  { name: "Lucas Ferreira", role: "Agência · 8 meses", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face", text: "Gerencio 15 afiliados pela plataforma. O dashboard B2B é incomparável no mercado.", earnings: "R$230K" },
-  { name: "Ana Clara", role: "Creator · 4 meses", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face", text: "Saí do CLT pra viver de conteúdo. Hoje faturo 3x mais e tenho liberdade total.", earnings: "R$56K" },
+  { name: "Marina Sales", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face", earnings: "R$87.5K" },
+  { name: "Pedro Henrique", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face", earnings: "R$45.2K" },
+  { name: "Rafa Digital", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face", earnings: "R$120K" },
+  { name: "Beatriz Nova", avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face", earnings: "R$2.1K" },
 ];
-
-const plans = [
-  { name: "Free", price: "R$0", period: "para sempre", desc: "Explore a plataforma", features: ["Perfil público", "Feed social completo", "Comunidades ilimitadas", "Ranking de criadores"], highlight: false, cta: "Começar grátis" },
-  { name: "Starter", price: "R$65,90", period: "/mês", desc: "Aprenda a monetizar", features: ["Tudo do Free", "Treinamento gamificado", "Missões com recompensas", "Suporte prioritário"], highlight: false, cta: "Começar agora" },
-  { name: "Partner", price: "R$699", period: "/mês", desc: "Monetize de verdade", features: ["Tudo do Starter", "Links de afiliado ilimitados", "Painel de vendas completo", "Comissão turbinada", "Kit físico exclusivo"], highlight: true, cta: "Quero monetizar" },
-  { name: "Business", price: "R$998", period: "/mês", desc: "Escale seu negócio", features: ["Tudo do Partner", "Criar rede de afiliados", "Relatórios B2B", "API de integração"], highlight: false, cta: "Escalar negócio" },
-];
-
-const steps = [
-  { n: "01", title: "Crie sua conta", desc: "Cadastro em menos de 1 minuto.", icon: Rocket },
-  { n: "02", title: "Monte seu perfil", desc: "Conecte suas redes sociais.", icon: Users },
-  { n: "03", title: "Poste e engaje", desc: "Crie conteúdo e construa audiência.", icon: Heart },
-  { n: "04", title: "Monetize", desc: "Ative links e gere receita por post.", icon: DollarSign },
-];
-
-const faqs = [
-  { q: "Preciso pagar para começar?", a: "Não! O plano Free é gratuito para sempre. Você pode explorar toda a rede social sem pagar nada." },
-  { q: "Como funciona o sistema de afiliados?", a: "Faça upgrade para o plano Partner e receba links rastreáveis. Cada venda gera comissão automática depositada na sua conta." },
-  { q: "Quanto tempo leva para ter resultado?", a: "Alguns membros reportam ganhos na primeira semana. A maioria atinge resultados consistentes em 30-60 dias." },
-  { q: "Funciona em qualquer dispositivo?", a: "Sim! Navegador, celular, tablet. Também instala como app nativo (PWA) direto no seu celular." },
-  { q: "Posso cancelar a qualquer momento?", a: "Sim, sem burocracia. Cancele pelo painel em dois cliques. Sem multa, sem pegadinha." },
-  { q: "É seguro colocar meus dados?", a: "Totalmente. Usamos criptografia de ponta e nunca compartilhamos seus dados com terceiros." },
-  { q: "Qual a diferença pro Instagram/TikTok?", a: "Aqui você monetiza diretamente. Cada post tem potencial de gerar comissão via links de afiliado integrados." },
-];
-
-const beforeAfter = [
-  { before: "Postar sem retorno financeiro", after: "Cada post gera comissão rastreável" },
-  { before: "Não saber de onde vem as vendas", after: "Dashboard com analytics em tempo real" },
-  { before: "Depender de publi de marcas", after: "Monetização própria e automática" },
-  { before: "Trabalhar sozinho sem suporte", after: "Comunidade ativa com top creators" },
-  { before: "Links genéricos sem tracking", after: "Links personalizados com CTR otimizado" },
-];
-
-const trustBadges = [
-  { icon: ShieldCheck, label: "Dados criptografados" },
-  { icon: Lock, label: "Pagamentos seguros" },
-  { icon: CreditCard, label: "Checkout protegido" },
-  { icon: Headphones, label: "Suporte 24/7" },
-  { icon: RefreshCw, label: "Garantia 7 dias" },
-  { icon: Smartphone, label: "App nativo (PWA)" },
-];
-
-import { memo } from "react";
-
-/* ─── Reusable glass card ─── */
-const Glass = memo(({ children, className = "", glow = false }: { children: React.ReactNode; className?: string; glow?: boolean }) => (
-  <div className={`relative rounded-3xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl ${glow ? "shadow-[0_0_60px_-15px_hsl(330,81%,60%,0.25)]" : ""} ${className}`}>
-    <div className="absolute inset-0 rounded-3xl bg-gradient-to-b from-white/[0.06] to-transparent pointer-events-none" />
-    <div className="relative z-10">{children}</div>
-  </div>
-));
-
-Glass.displayName = "Glass";
 
 const MeshBackground = memo(() => (
-  <div className="fixed inset-0 pointer-events-none overflow-hidden">
-    <div className="absolute top-[-15%] left-[-5%] w-[60vw] h-[60vw] rounded-full bg-[hsl(330,81%,60%)] opacity-[0.05] blur-[150px] will-change-transform" />
-    <div className="absolute top-[25%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-[hsl(270,91%,65%)] opacity-[0.04] blur-[150px] will-change-transform" />
-    <div className="absolute bottom-[-5%] left-[15%] w-[40vw] h-[40vw] rounded-full bg-[hsl(25,95%,53%)] opacity-[0.04] blur-[130px] will-change-transform" />
-    <div className="absolute inset-0 opacity-[0.012] pointer-events-none" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E\")" }} />
+  <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+    <div className="absolute top-[-10%] left-[-10%] w-[70vw] h-[70vw] rounded-full bg-[hsl(346,100%,58%)] opacity-[0.03] blur-[120px] animate-float" />
+    <div className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] rounded-full bg-[hsl(174,100%,47%)] opacity-[0.02] blur-[120px] animate-float" style={{ animationDelay: '2s' }} />
+    <div className="absolute inset-0 opacity-[0.015]" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E\")" }} />
   </div>
 ));
 
@@ -103,559 +37,199 @@ MeshBackground.displayName = "MeshBackground";
 
 export default function Landing() {
   return (
-    <div className="min-h-screen bg-[hsl(240,12%,3%)] text-white overflow-x-hidden selection:bg-primary/30">
+    <div className="min-h-screen bg-[#050505] text-white overflow-x-hidden selection:bg-primary/30 font-sans">
       <MeshBackground />
 
-
-      {/* ═══ NAV ═══ */}
-      <nav className="relative z-50 w-full">
-        <div className="max-w-6xl mx-auto flex items-center justify-between px-5 py-5">
-          <Link to="/" className="flex items-center gap-2.5">
-            <img src={logoImg} alt={APP_NAME} className="h-10 w-10 rounded-xl object-cover" />
+      {/* NAV */}
+      <nav className="relative z-50 w-full border-b border-white/[0.03] backdrop-blur-md sticky top-0">
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+          <Link to="/" className="flex items-center gap-2 group">
+            <div className="h-9 w-9 rounded-xl bg-white flex items-center justify-center group-hover:rotate-12 transition-transform duration-500">
+              <img src={logoImg} alt={APP_NAME} className="h-6 w-6 rounded-lg object-cover" />
+            </div>
+            <span className="font-black italic text-xl tracking-tighter uppercase">Only Shop</span>
           </Link>
-          <div className="hidden sm:flex items-center gap-6 text-xs text-white/40">
-            <button onClick={() => document.getElementById("how-it-works")?.scrollIntoView({ behavior: "smooth" })} className="hover:text-white transition-colors">Como funciona</button>
-            <button onClick={() => document.getElementById("features")?.scrollIntoView({ behavior: "smooth" })} className="hover:text-white transition-colors">Recursos</button>
-            <button onClick={() => document.getElementById("plans")?.scrollIntoView({ behavior: "smooth" })} className="hover:text-white transition-colors">Planos</button>
-            <button onClick={() => document.getElementById("faq")?.scrollIntoView({ behavior: "smooth" })} className="hover:text-white transition-colors">FAQ</button>
+          
+          <div className="hidden md:flex items-center gap-8 text-[10px] uppercase font-bold tracking-[0.2em] text-white/40">
+            <button onClick={() => document.getElementById("features")?.scrollIntoView({ behavior: "smooth" })} className="hover:text-white transition-colors">Tecnologia</button>
+            <button onClick={() => document.getElementById("impact")?.scrollIntoView({ behavior: "smooth" })} className="hover:text-white transition-colors">Impacto</button>
             <Link to="/pitch" className="hover:text-white transition-colors">Pitch</Link>
           </div>
-          <div className="flex items-center gap-2">
-            <Button asChild variant="ghost" size="sm" className="text-white/40 hover:text-white hover:bg-white/5 text-xs h-9 rounded-full px-4">
+
+          <div className="flex items-center gap-4">
+            <Button asChild variant="ghost" size="sm" className="text-white/40 hover:text-white text-[10px] font-bold uppercase tracking-widest px-4">
               <Link to="/auth">Login</Link>
             </Button>
-            <Button asChild size="sm" className="bg-white/[0.08] backdrop-blur-xl border border-white/[0.12] hover:bg-white/[0.14] text-white text-xs h-9 px-5 rounded-full font-semibold shadow-[0_0_20px_hsl(330,81%,60%,0.15)]">
-              <Link to="/auth">Criar conta</Link>
+            <Button asChild size="sm" className="bg-white text-black hover:bg-[#00f2ff] hover:text-black text-[10px] font-black uppercase tracking-widest h-10 px-6 rounded-full transition-all">
+              <Link to="/auth">Join Now</Link>
             </Button>
           </div>
         </div>
       </nav>
 
-      {/* ═══ HERO ═══ */}
-      <section className="relative z-10 pt-8 sm:pt-16 pb-20 overflow-hidden">
-        <div className="max-w-6xl mx-auto px-5">
-          <div className="max-w-2xl mx-auto text-center sm:text-left sm:mx-0">
-            <Badge className="mb-6 bg-white/[0.04] backdrop-blur-2xl text-white/50 border-white/[0.06] text-[10px] font-bold px-5 py-2 rounded-full uppercase tracking-[0.2em] inline-flex items-center gap-2 group hover:border-white/20 transition-all">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[hsl(330,81%,60%)] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[hsl(330,81%,60%)]"></span>
-              </span>
-              Lançamento Oficial: Maio 2026
-            </Badge>
+      {/* HERO */}
+      <section className="relative z-10 pt-20 pb-32">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center max-w-4xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <Badge className="mb-8 bg-white/5 text-white/40 border-white/10 px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.3em] inline-flex items-center gap-3">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#ff2e68] animate-pulse" />
+                Next-Gen Social Ecommerce
+              </Badge>
 
-            <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-[10rem] font-black mb-8 leading-[0.85] tracking-tighter italic uppercase">
-              O futuro do <br />
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#ff2e68] via-[#ff4d4d] to-[#9d4eff] animate-gradient-x drop-shadow-[0_0_30px_rgba(255,46,104,0.3)]">Commerce</span>
-            </h1>
+              <h1 className="text-7xl md:text-[10rem] font-black leading-[0.8] tracking-tighter italic uppercase mb-12">
+                O Futuro do <br />
+                <span className="text-gradient-primary drop-shadow-[0_0_50px_rgba(255,46,104,0.2)]">Ecommerce</span>
+              </h1>
 
-            <p className="text-xl sm:text-2xl text-white/40 mb-12 max-w-xl leading-relaxed mx-auto sm:mx-0 font-bold tracking-tight">
-              A maior Startup de 2026. Uma rede social inteligente que converte influência em lucro real com automação total.
-            </p>
+              <p className="text-xl md:text-2xl text-white/30 mb-16 font-bold leading-relaxed tracking-tight max-w-2xl mx-auto">
+                Uma infraestrutura invisível que transforma influência em receita global através de IA e automação absoluta.
+              </p>
 
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mb-10">
-              <Button asChild size="lg" className="bg-gradient-to-r from-[hsl(330,81%,60%)] to-[hsl(270,91%,65%)] hover:opacity-90 text-white w-full sm:w-auto text-sm h-13 px-8 rounded-full font-bold border-0 shadow-[0_8px_40px_-8px_hsl(330,81%,60%,0.5)]">
-                <Link to="/auth">
-                  Começar grátis
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button
-                size="lg"
-                variant="ghost"
-                className="w-full sm:w-auto text-white/40 hover:text-white hover:bg-white/5 h-13 px-8 rounded-full text-sm"
-                onClick={() => document.getElementById("how-it-works")?.scrollIntoView({ behavior: "smooth" })}
-              >
-                <Play className="mr-2 h-3.5 w-3.5" />
-                Como funciona
-              </Button>
-            </div>
-
-            {/* Mini social proof under CTA */}
-            <div className="flex items-center gap-3 mb-16 justify-center sm:justify-start">
-              <div className="flex -space-x-2">
-                {testimonials.slice(0, 4).map((t) => (
-                  <img key={t.name} src={t.avatar} alt="" className="h-7 w-7 rounded-full border-2 border-[hsl(240,12%,3%)] object-cover" />
-                ))}
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
+                <Button asChild size="lg" className="h-16 px-10 rounded-full bg-white text-black hover:bg-[#00f2ff] font-black text-sm uppercase tracking-tighter italic w-full sm:w-auto shadow-2xl shadow-white/5">
+                  <Link to="/auth" className="flex items-center gap-2">
+                    Começar Agora <ArrowRight className="h-5 w-5" />
+                  </Link>
+                </Button>
+                <Button size="lg" variant="outline" className="h-16 px-10 rounded-full border-white/10 text-white/40 hover:text-white hover:bg-white/5 font-bold text-sm uppercase tracking-tighter w-full sm:w-auto transition-all">
+                  <Play className="mr-2 h-4 w-4 fill-current" /> Ver Demo
+                </Button>
               </div>
-              <div className="text-[11px] text-white/40">
-                <span className="text-white/70 font-semibold">+10.000</span> criadores ativos
-              </div>
-            </div>
-          </div>
 
-          {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 lg:gap-6">
-            {stats.map((stat) => (
-              <Glass key={stat.label} className="p-4 sm:p-5 text-center">
-                <stat.icon className="h-4 w-4 mx-auto mb-2 text-[hsl(330,81%,60%)]" />
-                <div className="text-xl sm:text-2xl font-bold">{stat.value}</div>
-                <div className="text-[10px] text-white/30 mt-0.5">{stat.label}</div>
-              </Glass>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ SOCIAL PROOF BAR ═══ */}
-      <section className="py-4 border-y border-white/[0.05]">
-        <div className="max-w-6xl mx-auto px-5">
-          <div className="flex items-center justify-center gap-6 sm:gap-12 flex-wrap text-[11px] text-white/40">
-            <div className="flex items-center gap-1.5"><Star className="h-3 w-3 text-amber-400 fill-amber-400" /><span className="font-bold text-white/70">4.9/5</span> avaliação</div>
-            <div className="flex items-center gap-1.5"><Users className="h-3 w-3 text-[hsl(330,81%,60%)]" /><span className="font-bold text-white/70">10K+</span> criadores</div>
-            <div className="flex items-center gap-1.5"><TrendingUp className="h-3 w-3 text-emerald-400" /><span className="font-bold text-white/70">R$1M+</span> pagos</div>
-            <div className="flex items-center gap-1.5"><Clock className="h-3 w-3 text-white/30" /><span className="font-bold text-white/70">&lt;1min</span> cadastro</div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ NOVIDADES — features lançadas hoje ═══ */}
-      <section className="py-16 sm:py-20 relative z-10">
-        <div className="max-w-6xl mx-auto px-5">
-          <div className="text-center mb-10">
-            <Badge className="mb-3 bg-[hsl(346,100%,58%)]/10 text-[hsl(346,100%,68%)] border-[hsl(346,100%,58%)]/30 rounded-full px-3 py-1 text-[10px] font-semibold tracking-wider uppercase">
-              <Sparkles className="h-3 w-3 mr-1 inline" /> Novo · Recém-lançado
-            </Badge>
-            <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white mt-3">
-              Inteligência que <span className="text-gradient-primary">conecta sozinha</span>
-            </h2>
-            <p className="mt-3 text-sm text-white/50 max-w-xl mx-auto">
-              Pare de procurar marcas ou afiliados. A Only Shop faz o match automaticamente baseado em nicho, performance e localização.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-4 grid-rows-2 gap-4 lg:gap-6 min-h-[500px]">
-            {[
-              { icon: Sparkles, title: "Smart Match", desc: "IA cruza nicho + geo + performance e devolve top matches.", href: "/discover", color: "from-[#ff2e68] to-[#9d4eff]", className: "md:col-span-2 md:row-span-2" },
-              { icon: Flame, title: "Em Alta", desc: "Produtos hypados ranqueados por vendas reais.", href: "/trending", color: "from-[#ff8c00] to-[#ff2e68]", className: "md:col-span-2" },
-              { icon: Globe, title: "Geolocalização", desc: "Encontre criadores locais.", href: "/discover", color: "from-[#00f2ff] to-[#0066ff]", className: "md:col-span-1" },
-              { icon: MessageCircle, title: "Convites Diretos", desc: "Marcas convidam em 1 clique.", href: "/invites", color: "from-[#9d4eff] to-[#ff2e68]", className: "md:col-span-1" },
-            ].map((f) => (
-              <Link key={f.title} to={f.href} className={`group bento-card p-8 ${f.className}`}>
-                <div className={`h-14 w-14 rounded-[1.5rem] bg-gradient-to-br ${f.color} flex items-center justify-center mb-6 shadow-2xl transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6`}>
-                  <f.icon className="h-7 w-7 text-white" />
+              {/* Social Proof */}
+              <div className="flex flex-col items-center gap-6">
+                <div className="flex -space-x-4">
+                  {testimonials.map((t) => (
+                    <img key={t.name} src={t.avatar} alt="" className="h-12 w-12 rounded-full border-4 border-[#050505] object-cover" />
+                  ))}
                 </div>
-                <h3 className="text-2xl font-black text-white italic uppercase tracking-tighter">{f.title}</h3>
-                <p className="text-sm text-white/40 mt-3 leading-relaxed font-bold">{f.desc}</p>
-                <div className="absolute bottom-8 right-8 h-10 w-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:translate-x-0 translate-x-4 transition-all duration-500">
-                  <ArrowRight className="h-4 w-4 text-white" />
-                </div>
-              </Link>
-            ))}
-          </div>
-
-          <div className="mt-6 text-center">
-            <Button asChild size="sm" className="rounded-full bg-white text-black hover:bg-white/90 text-xs h-9 px-5">
-              <Link to="/discover">Testar Smart Match agora <ArrowRight className="ml-1 h-3 w-3" /></Link>
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ PARA QUEM ═══ (light) */}
-      <section className="py-20 sm:py-28 relative z-10 bg-white text-[hsl(240,10%,4%)]">
-        <div className="max-w-5xl mx-auto px-5">
-          <div className="text-center mb-14">
-            <p className="text-[10px] font-bold text-[hsl(330,81%,60%)] uppercase tracking-[0.2em] mb-3">Para quem é</p>
-            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-[hsl(240,10%,4%)]">
-              Feito para quem quer <span className="bg-clip-text text-transparent bg-gradient-to-r from-[hsl(25,95%,53%)] to-[hsl(330,81%,60%)]">crescer</span>
-            </h2>
-          </div>
-          <div className="grid sm:grid-cols-3 gap-4">
-            {[
-              { icon: Heart, title: "Criadores de Conteúdo", desc: "Monetize seus posts com links de afiliado rastreáveis. Cada conteúdo vira uma fonte de receita." },
-              { icon: Award, title: "Afiliados Profissionais", desc: "Painel completo de vendas, comissões automáticas e ferramentas profissionais de tracking." },
-              { icon: Target, title: "Marcas & Agências", desc: "Acesse os top criadores do Brasil e escale suas vendas com social commerce." },
-            ].map((item) => (
-              <div key={item.title} className="p-6 rounded-3xl border border-[hsl(240,6%,90%)] bg-[hsl(240,5%,97%)] group hover:border-[hsl(330,81%,60%,0.3)] hover:shadow-[0_8px_30px_-10px_hsl(330,81%,60%,0.12)] transition-all duration-500">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[hsl(330,81%,60%,0.12)] to-[hsl(270,91%,65%,0.06)] border border-[hsl(330,81%,60%,0.1)] flex items-center justify-center mb-4">
-                  <item.icon className="h-5 w-5 text-[hsl(330,81%,60%)]" />
-                </div>
-                <h3 className="font-bold text-sm mb-2 text-[hsl(240,10%,4%)]">{item.title}</h3>
-                <p className="text-xs text-[hsl(240,4%,46%)] leading-relaxed">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ HOW IT WORKS ═══ (dark) */}
-      <section id="how-it-works" className="py-20 sm:py-28 relative z-10">
-        <div className="max-w-5xl mx-auto px-5">
-          <div className="text-center mb-16">
-            <p className="text-[10px] font-bold text-[hsl(330,81%,60%)] uppercase tracking-[0.2em] mb-3">Como funciona</p>
-            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight">
-              Quatro passos para <span className="bg-clip-text text-transparent bg-gradient-to-r from-[hsl(330,81%,60%)] to-[hsl(270,91%,65%)]">começar a lucrar</span>
-            </h2>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {steps.map((s) => (
-              <div key={s.n} className="relative text-center group">
-                <div className="text-6xl font-black bg-clip-text text-transparent bg-gradient-to-b from-white/[0.06] to-transparent mb-1 select-none">{s.n}</div>
-                <Glass className="p-5 mx-auto group-hover:border-[hsl(330,81%,60%,0.3)] transition-all duration-500">
-                  <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-[hsl(330,81%,60%,0.15)] to-transparent border border-white/[0.06] flex items-center justify-center mx-auto mb-3">
-                    <s.icon className="h-5 w-5 text-[hsl(330,81%,60%)]" />
-                  </div>
-                  <h3 className="font-bold text-sm mb-1">{s.title}</h3>
-                  <p className="text-[11px] text-white/30 leading-relaxed">{s.desc}</p>
-                </Glass>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ BEFORE/AFTER ═══ (dark) */}
-      <section className="py-20 sm:py-28 relative z-10">
-        <div className="max-w-4xl mx-auto px-5">
-          <div className="text-center mb-14">
-            <p className="text-[10px] font-bold text-[hsl(330,81%,60%)] uppercase tracking-[0.2em] mb-3">Antes vs Depois</p>
-            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight">
-              O que muda com o <span className="bg-clip-text text-transparent bg-gradient-to-r from-[hsl(25,95%,53%)] to-[hsl(330,81%,60%)]">{APP_NAME}</span>
-            </h2>
-          </div>
-
-          <div className="space-y-3">
-            {beforeAfter.map((item, i) => (
-              <div key={i} className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 sm:gap-5">
-                <div className="p-4 rounded-2xl bg-red-500/[0.06] border border-red-500/[0.1] text-center">
-                  <X className="h-4 w-4 text-red-400 mx-auto mb-1.5" />
-                  <p className="text-xs text-white/40 leading-relaxed">{item.before}</p>
-                </div>
-                <ArrowRight className="h-4 w-4 text-[hsl(330,81%,60%)] shrink-0" />
-                <div className="p-4 rounded-2xl bg-emerald-500/[0.06] border border-emerald-500/[0.1] text-center">
-                  <Check className="h-4 w-4 text-emerald-400 mx-auto mb-1.5" />
-                  <p className="text-xs text-white/70 leading-relaxed font-medium">{item.after}</p>
+                <div className="text-[10px] font-black uppercase tracking-[0.4em] text-white/20">
+                  Join <span className="text-white/60">10,000+</span> Elite Creators
                 </div>
               </div>
-            ))}
+            </motion.div>
           </div>
         </div>
-      </section>
 
-      {/* ═══ FEATURES ═══ (dark) */}
-      <section id="features" className="py-20 sm:py-28 relative z-10">
-        <div className="max-w-5xl mx-auto px-5">
-          <div className="text-center mb-14">
-            <p className="text-[10px] font-bold text-[hsl(330,81%,60%)] uppercase tracking-[0.2em] mb-3">Recursos</p>
-            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight">
-              Tudo para <span className="bg-clip-text text-transparent bg-gradient-to-r from-[hsl(25,95%,53%)] via-[hsl(330,81%,60%)] to-[hsl(270,91%,65%)]">crescer e monetizar</span>
-            </h2>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {features.map((f) => (
-              <Glass key={f.title} className="p-5 group hover:border-[hsl(330,81%,60%,0.3)] transition-all duration-500">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[hsl(330,81%,60%,0.15)] to-transparent border border-white/[0.06] flex items-center justify-center mb-4">
-                  <f.icon className="h-5 w-5 text-[hsl(330,81%,60%)] group-hover:text-[hsl(25,95%,53%)] transition-colors" />
-                </div>
-                <h3 className="font-bold text-sm mb-1.5">{f.title}</h3>
-                <p className="text-xs text-white/35 leading-relaxed">{f.desc}</p>
-              </Glass>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ RESULTS BANNER ═══ (dark) */}
-      <section className="py-16 relative z-10">
-        <div className="max-w-4xl mx-auto px-5">
-          <Glass glow className="p-8 sm:p-10 overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-[hsl(330,81%,60%,0.08)] via-transparent to-[hsl(270,91%,65%,0.08)] pointer-events-none" />
-            <div className="grid grid-cols-3 gap-4 text-center relative z-10">
-              {[
-                { v: "R$12.400", l: "Maior ganho mensal", icon: DollarSign },
-                { v: "8.2%", l: "CTR médio top creators", icon: Eye },
-                { v: "145K", l: "Views em um único post", icon: Zap },
-              ].map((s) => (
-                <div key={s.l}>
-                  <s.icon className="h-5 w-5 mx-auto mb-2 text-[hsl(330,81%,60%)]" />
-                  <div className="text-xl sm:text-3xl md:text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/70">{s.v}</div>
-                  <p className="text-[10px] sm:text-xs text-white/35 mt-1">{s.l}</p>
+        {/* Stats Strip */}
+        <div className="mt-32 border-y border-white/5 bg-white/[0.01] backdrop-blur-sm">
+          <div className="max-w-7xl mx-auto px-6 py-10">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
+              {stats.map((stat) => (
+                <div key={stat.label} className="text-center group">
+                  <p className="text-4xl font-black italic tracking-tighter mb-2 group-hover:text-primary transition-colors">{stat.value}</p>
+                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/20">{stat.label}</p>
                 </div>
               ))}
             </div>
-          </Glass>
-        </div>
-      </section>
-
-      {/* ═══ INTEGRATIONS / PLATFORMS ═══ (dark) */}
-      <section className="py-16 sm:py-20 relative z-10">
-        <div className="max-w-4xl mx-auto px-5 text-center">
-          <p className="text-[10px] font-bold text-[hsl(330,81%,60%)] uppercase tracking-[0.2em] mb-3">Integrações</p>
-          <h2 className="text-xl sm:text-3xl font-bold tracking-tight mb-4">
-            Funciona com as redes que você já usa
-          </h2>
-          <p className="text-xs text-white/35 mb-10 max-w-md mx-auto">Conecte suas redes sociais e centralize tudo em um único painel de controle.</p>
-          <div className="flex items-center justify-center gap-6 sm:gap-10 flex-wrap">
-            {[
-              { icon: Instagram, name: "Instagram", color: "from-pink-500 to-purple-500" },
-              { icon: Youtube, name: "YouTube", color: "from-red-500 to-red-600" },
-              { icon: Twitter, name: "X / Twitter", color: "from-gray-700 to-gray-900" },
-              { icon: Globe, name: "TikTok", color: "from-cyan-400 to-pink-500" },
-            ].map((p) => (
-              <div key={p.name} className="flex flex-col items-center gap-2 group">
-                <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${p.color} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform`}>
-                  <p.icon className="h-6 w-6 text-white" />
-                </div>
-                <span className="text-[10px] text-white/40 font-medium">{p.name}</span>
-              </div>
-            ))}
           </div>
         </div>
       </section>
 
-      {/* ═══ TESTIMONIALS ═══ (dark) */}
-      <section className="py-20 sm:py-28 relative z-10">
-        <div className="max-w-5xl mx-auto px-5">
-          <div className="text-center mb-14">
-            <p className="text-[10px] font-bold text-[hsl(330,81%,60%)] uppercase tracking-[0.2em] mb-3">Depoimentos</p>
-            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight">
-              Resultados <span className="bg-clip-text text-transparent bg-gradient-to-r from-[hsl(330,81%,60%)] to-[hsl(270,91%,65%)]">reais</span>
-            </h2>
-            <p className="text-xs text-white/30 mt-3 max-w-md mx-auto">Veja o que nossos membros estão dizendo sobre a plataforma.</p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {testimonials.map((t) => (
-              <Glass key={t.name} className="p-5 flex flex-col">
-                <div className="flex items-center gap-0.5 mb-3">
-                  {[...Array(5)].map((_, i) => <Star key={i} className="h-3 w-3 text-amber-400 fill-amber-400" />)}
-                </div>
-                <p className="text-xs text-white/45 leading-relaxed flex-1 mb-4">"{t.text}"</p>
-                <div className="flex items-center gap-3 pt-3 border-t border-white/[0.06]">
-                  <img src={t.avatar} alt={t.name} className="h-9 w-9 rounded-full object-cover ring-2 ring-[hsl(330,81%,60%,0.3)]" />
-                  <div className="flex-1 min-w-0">
-                    <div className="text-xs font-bold">{t.name}</div>
-                    <div className="text-[10px] text-white/30">{t.role}</div>
+      {/* TECH / FEATURES SECTION */}
+      <section id="features" className="py-32 relative">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+            <div className="space-y-12">
+              <Badge className="bg-primary/10 text-primary border-primary/20 px-4 py-1 text-[10px] font-black uppercase tracking-widest">
+                Engine Proprietária
+              </Badge>
+              <h2 className="text-5xl md:text-7xl font-black italic uppercase tracking-tighter leading-[0.9]">
+                Inteligência <br /> que <span className="text-white/20 text-glow">Cria Valor</span>
+              </h2>
+              <p className="text-lg text-white/30 font-medium leading-relaxed max-w-lg">
+                Nossa IA processa bilhões de pontos de dados para conectar marcas a audiências reais, eliminando o desperdício de marketing.
+              </p>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                {[
+                  { icon: Sparkles, title: "Smart Match", desc: "Conexão instantânea via Big Data." },
+                  { icon: Zap, title: "Real-time ROI", desc: "Métricas de conversão em tempo real." },
+                  { icon: Globe, title: "Global Scale", desc: "Infraestrutura pronta para o mundo." },
+                  { icon: Shield, title: "Iron Security", desc: "Blockchain para tracking de vendas." },
+                ].map((f) => (
+                  <div key={f.title} className="space-y-4">
+                    <div className="h-10 w-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center">
+                      <f.icon className="h-5 w-5 text-primary" />
+                    </div>
+                    <h4 className="font-black italic uppercase tracking-tight text-sm">{f.title}</h4>
+                    <p className="text-xs text-white/20 leading-relaxed font-bold">{f.desc}</p>
                   </div>
-                  <span className="text-[10px] font-bold text-emerald-400 bg-emerald-400/10 backdrop-blur px-2.5 py-1 rounded-full">{t.earnings}</span>
-                </div>
-              </Glass>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ TRUST BADGES ═══ (dark) */}
-      <section className="py-14 sm:py-16 relative z-10 border-y border-white/[0.05]">
-        <div className="max-w-4xl mx-auto px-5">
-          <div className="text-center mb-10">
-            <h3 className="text-lg sm:text-xl font-bold">Sua segurança é prioridade</h3>
-          </div>
-          <div className="grid grid-cols-3 sm:grid-cols-6 gap-4">
-            {trustBadges.map((b) => (
-              <div key={b.label} className="flex flex-col items-center gap-2 text-center">
-                <div className="w-11 h-11 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center">
-                  <b.icon className="h-5 w-5 text-[hsl(330,81%,60%)]" />
-                </div>
-                <span className="text-[9px] text-white/30 font-medium leading-tight">{b.label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ PRICING ═══ (dark) */}
-      <section id="plans" className="py-20 sm:py-28 relative z-10">
-        <div className="max-w-5xl mx-auto px-5">
-          <div className="text-center mb-14">
-            <p className="text-[10px] font-bold text-[hsl(330,81%,60%)] uppercase tracking-[0.2em] mb-3">Planos</p>
-            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight">
-              Escolha seu <span className="bg-clip-text text-transparent bg-gradient-to-r from-[hsl(25,95%,53%)] to-[hsl(330,81%,60%)]">plano</span>
-            </h2>
-            <p className="text-xs text-white/30 mt-3 max-w-md mx-auto">Comece grátis e faça upgrade quando quiser. Sem compromisso.</p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {plans.map((plan) => (
-              <Glass key={plan.name} glow={plan.highlight} className={`p-5 flex flex-col transition-all duration-500 ${plan.highlight ? "border-[hsl(330,81%,60%,0.3)] scale-[1.02]" : "hover:border-white/[0.12]"}`}>
-                {plan.highlight && (
-                  <Badge className="absolute -top-2.5 left-1/2 -translate-x-1/2 z-20 bg-gradient-to-r from-[hsl(330,81%,60%)] to-[hsl(270,91%,65%)] text-white border-0 text-[9px] font-bold px-3 rounded-full shadow-[0_4px_20px_hsl(330,81%,60%,0.3)]">
-                    🔥 Popular
-                  </Badge>
-                )}
-                <h3 className="font-bold text-sm">{plan.name}</h3>
-                <p className="text-[10px] text-white/30 mt-0.5">{plan.desc}</p>
-                <div className="my-4">
-                  <span className="text-2xl font-extrabold">{plan.price}</span>
-                  <span className="text-xs ml-1 text-white/25">{plan.period}</span>
-                </div>
-                <ul className="space-y-2 mb-5 flex-1">
-                  {plan.features.map((f) => (
-                    <li key={f} className="flex items-center gap-2 text-xs">
-                      <Check className="h-3 w-3 shrink-0 text-[hsl(330,81%,60%)]" />
-                      <span className="text-white/45">{f}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Button asChild size="sm" className={`w-full rounded-full h-10 text-xs font-semibold ${
-                  plan.highlight
-                    ? "bg-gradient-to-r from-[hsl(330,81%,60%)] to-[hsl(270,91%,65%)] text-white hover:opacity-90 border-0 shadow-[0_4px_20px_hsl(330,81%,60%,0.3)]"
-                    : "bg-white/[0.06] backdrop-blur border border-white/[0.08] text-white hover:bg-white/[0.1]"
-                }`}>
-                  <Link to="/auth">{plan.cta}<ChevronRight className="h-3 w-3 ml-1" /></Link>
-                </Button>
-              </Glass>
-            ))}
-          </div>
-
-          {/* Enterprise */}
-          <div className="mt-8 max-w-2xl mx-auto">
-            <Glass className="p-6 sm:p-8 text-center">
-              <Badge className="bg-white/[0.06] backdrop-blur text-white/50 border-white/[0.06] text-[9px] mb-3 rounded-full">Enterprise</Badge>
-              <h3 className="text-base font-bold mb-1">Plano PRO para Marcas</h3>
-              <p className="text-xs text-white/30 mb-5">USD $9.999 + 3% · Setup completo e suporte dedicado.</p>
-              <Button asChild size="sm" className="rounded-full text-xs h-10 px-6 bg-gradient-to-r from-[hsl(330,81%,60%)] to-[hsl(270,91%,65%)] hover:opacity-90 text-white border-0 font-semibold shadow-[0_4px_20px_hsl(330,81%,60%,0.3)]">
-                <Link to="/auth">Falar com time comercial</Link>
-              </Button>
-            </Glass>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ GUARANTEE ═══ (light) */}
-      <section className="py-16 sm:py-20 relative z-10 bg-white text-[hsl(240,10%,4%)]">
-        <div className="max-w-3xl mx-auto px-5">
-          <div className="p-8 sm:p-10 rounded-3xl border border-[hsl(160,40%,88%)] bg-[hsl(160,50%,97%)] text-center">
-            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-500 flex items-center justify-center mx-auto mb-5 shadow-[0_8px_30px_-8px_hsl(160,84%,39%,0.4)]">
-              <ShieldCheck className="h-8 w-8 text-white" />
-            </div>
-            <h3 className="text-xl sm:text-2xl font-bold text-[hsl(240,10%,4%)] mb-3">Garantia de 7 dias</h3>
-            <p className="text-sm text-[hsl(240,4%,46%)] leading-relaxed max-w-lg mx-auto mb-4">
-              Experimente qualquer plano pago por 7 dias. Se não ficar satisfeito, devolvemos 100% do seu investimento. Sem perguntas, sem burocracia.
-            </p>
-            <div className="flex items-center justify-center gap-4 text-[11px] text-[hsl(240,4%,46%)]">
-              <span className="flex items-center gap-1"><Check className="h-3 w-3 text-emerald-500" />Sem multa</span>
-              <span className="flex items-center gap-1"><Check className="h-3 w-3 text-emerald-500" />Sem pegadinha</span>
-              <span className="flex items-center gap-1"><Check className="h-3 w-3 text-emerald-500" />Reembolso total</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ FAQ ═══ (dark) */}
-      <section id="faq" className="py-20 sm:py-28 relative z-10">
-        <div className="max-w-2xl mx-auto px-5">
-          <div className="text-center mb-14">
-            <p className="text-[10px] font-bold text-[hsl(330,81%,60%)] uppercase tracking-[0.2em] mb-3">FAQ</p>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Perguntas frequentes</h2>
-            <p className="text-xs text-white/30 mt-3">Tire suas dúvidas antes de começar.</p>
-          </div>
-          <div className="space-y-2">
-            {faqs.map((faq) => (
-              <div key={faq.q} className="rounded-2xl border border-white/[0.06] bg-white/[0.03] overflow-hidden">
-                <details className="group">
-                  <summary className="flex items-center justify-between text-sm font-medium px-5 py-4 list-none text-white/70 hover:text-white transition-colors cursor-pointer">
-                    {faq.q}
-                    <ChevronRight className="h-3.5 w-3.5 text-white/25 transition-transform group-open:rotate-90 shrink-0 ml-3" />
-                  </summary>
-                  <div className="px-5 pb-4">
-                    <p className="text-xs text-white/35 leading-relaxed">{faq.a}</p>
-                  </div>
-                </details>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ URGENCY BANNER ═══ (dark) */}
-      <section className="py-10 relative z-10 border-y border-white/[0.05]">
-        <div className="max-w-4xl mx-auto px-5">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[hsl(25,95%,53%)] to-[hsl(330,81%,60%)] flex items-center justify-center shrink-0">
-                <Flame className="h-5 w-5 text-white" />
-              </div>
-              <div>
-                <p className="text-sm font-bold">Vagas limitadas para o plano Partner</p>
-                <p className="text-[11px] text-white/35">Apenas 50 vagas disponíveis por mês. Garanta a sua.</p>
-              </div>
-            </div>
-            <Button asChild size="sm" className="bg-gradient-to-r from-[hsl(25,95%,53%)] to-[hsl(330,81%,60%)] text-white hover:opacity-90 rounded-full h-10 px-6 text-xs font-bold border-0 shadow-[0_4px_20px_hsl(25,95%,53%,0.3)] shrink-0">
-              <Link to="/auth">
-                Garantir vaga
-                <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ FINAL CTA ═══ (dark) */}
-      <section className="py-24 sm:py-32 relative z-10">
-        <div className="max-w-2xl mx-auto px-5 text-center">
-          <Glass glow className="p-10 sm:p-14">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[hsl(330,81%,60%)] to-[hsl(270,91%,65%)] flex items-center justify-center mx-auto mb-6 shadow-[0_8px_30px_-8px_hsl(330,81%,60%,0.4)]">
-              <Crown className="h-7 w-7 text-white" />
-            </div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">
-              Pronto para{" "}
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[hsl(25,95%,53%)] via-[hsl(330,81%,60%)] to-[hsl(270,91%,65%)]">começar?</span>
-            </h2>
-            <p className="text-sm text-white/30 mb-8 max-w-md mx-auto">
-              Junte-se a milhares de criadores que já monetizam seu conteúdo todos os dias.
-            </p>
-            <Button asChild size="lg" className="bg-gradient-to-r from-[hsl(330,81%,60%)] to-[hsl(270,91%,65%)] hover:opacity-90 text-white rounded-full h-13 px-10 text-sm font-bold border-0 shadow-[0_8px_40px_-8px_hsl(330,81%,60%,0.5)]">
-              <Link to="/auth">Criar conta grátis<ArrowRight className="ml-2 h-4 w-4" /></Link>
-            </Button>
-            <p className="text-[10px] text-white/15 mt-5">Sem cartão · Cancele quando quiser · Suporte em português</p>
-
-            {/* Mini avatars */}
-            <div className="flex items-center justify-center gap-2 mt-6">
-              <div className="flex -space-x-1.5">
-                {testimonials.slice(0, 5).map((t) => (
-                  <img key={t.name} src={t.avatar} alt="" className="h-6 w-6 rounded-full border border-white/10 object-cover" />
                 ))}
               </div>
-              <span className="text-[10px] text-white/25">+10K criadores ativos</span>
             </div>
-          </Glass>
+
+            {/* Visual Teaser */}
+            <div className="relative group">
+              <div className="absolute -inset-20 bg-gradient-to-tr from-primary/10 to-transparent blur-[100px] opacity-50 group-hover:opacity-100 transition-opacity" />
+              <div className="relative rounded-[3rem] border border-white/10 bg-white/[0.02] p-2 aspect-[4/5] overflow-hidden shadow-2xl">
+                 <div className="h-full w-full bg-[#0a0a0a] rounded-[2.5rem] flex items-center justify-center p-12 text-center">
+                    <div className="space-y-6">
+                       <div className="h-24 w-24 rounded-full bg-gradient-primary mx-auto flex items-center justify-center animate-float">
+                          <Rocket className="h-10 w-10 text-white" />
+                       </div>
+                       <p className="text-[10px] font-black uppercase tracking-[0.5em] text-white/10">UI Intelligence Interface</p>
+                       <div className="space-y-2">
+                          <div className="h-1 w-32 bg-white/5 rounded-full mx-auto" />
+                          <div className="h-1 w-24 bg-white/5 rounded-full mx-auto" />
+                       </div>
+                    </div>
+                 </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* ═══ FOOTER ═══ */}
-      <footer className="py-10 border-t border-white/[0.05] relative z-10">
-        <div className="max-w-6xl mx-auto px-5">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-8">
-            <div>
-              <div className="flex items-center gap-2 mb-4">
-                <img src={logoImg} alt={APP_NAME} className="h-7 w-7 rounded-lg object-cover" />
-                <span className="font-bold text-xs">{APP_NAME}</span>
-              </div>
-              <p className="text-[10px] text-white/20 leading-relaxed">A rede social de monetização #1 do Brasil.</p>
+      {/* CTA FOOTER */}
+      <section className="py-40">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="rounded-[4rem] bg-gradient-to-br from-white/5 to-transparent border border-white/10 p-12 md:p-24 text-center relative overflow-hidden group">
+            <div className="absolute top-0 right-0 p-12 opacity-5 group-hover:opacity-10 transition-opacity">
+               <TrendingUp className="h-64 w-64" />
             </div>
-            <div>
-              <p className="text-[10px] font-bold text-white/40 uppercase tracking-widest mb-3">Produto</p>
-              <div className="space-y-2">
-                <button onClick={() => document.getElementById("features")?.scrollIntoView({ behavior: "smooth" })} className="block text-[11px] text-white/25 hover:text-white transition-colors">Recursos</button>
-                <button onClick={() => document.getElementById("plans")?.scrollIntoView({ behavior: "smooth" })} className="block text-[11px] text-white/25 hover:text-white transition-colors">Planos</button>
-                <button onClick={() => document.getElementById("faq")?.scrollIntoView({ behavior: "smooth" })} className="block text-[11px] text-white/25 hover:text-white transition-colors">FAQ</button>
-              </div>
-            </div>
-            <div>
-              <p className="text-[10px] font-bold text-white/40 uppercase tracking-widest mb-3">Legal</p>
-              <div className="space-y-2">
-                <Link to="/terms" className="block text-[11px] text-white/25 hover:text-white transition-colors">Termos de Uso</Link>
-                <Link to="/privacy" className="block text-[11px] text-white/25 hover:text-white transition-colors">Privacidade</Link>
-              </div>
-            </div>
-            <div>
-              <p className="text-[10px] font-bold text-white/40 uppercase tracking-widest mb-3">Comunidade</p>
-              <div className="space-y-2">
-                <Link to="/auth" className="block text-[11px] text-white/25 hover:text-white transition-colors">Criar conta</Link>
-                <Link to="/auth" className="block text-[11px] text-white/25 hover:text-white transition-colors">Login</Link>
-                <Link to="/vsl" className="block text-[11px] text-[hsl(330,81%,60%)] font-bold hover:opacity-80 transition-opacity">Apresentação VSL</Link>
-              </div>
+            
+            <h2 className="text-5xl md:text-8xl font-black italic uppercase tracking-tighter mb-12 relative z-10 leading-none">
+              Pronto para o <br /> <span className="text-gradient-primary">Próximo Nível?</span>
+            </h2>
+            
+            <Button asChild size="lg" className="h-20 px-12 rounded-full bg-white text-black hover:bg-primary hover:text-white font-black text-xl uppercase tracking-tighter italic relative z-10 shadow-2xl transition-all">
+              <Link to="/auth">Criar Conta Grátis</Link>
+            </Button>
+            
+            <div className="mt-16 flex justify-center gap-12 text-white/10 font-black uppercase tracking-[0.3em] text-[10px] relative z-10">
+               <span>No Credit Card</span>
+               <span>•</span>
+               <span>Instant Access</span>
+               <span>•</span>
+               <span>2026 Ready</span>
             </div>
           </div>
-          <div className="pt-6 border-t border-white/[0.05] flex flex-col sm:flex-row items-center justify-between gap-3">
-            <p className="text-[10px] text-white/15">© 2026 {APP_NAME}. Todos os direitos reservados.</p>
-            <div className="flex items-center gap-4 text-[11px] text-white/20">
-              <span>🇧🇷 Feito no Brasil</span>
-            </div>
-          </div>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="py-12 border-t border-white/5 relative z-10">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+           <div className="flex items-center gap-3">
+              <span className="font-black italic text-lg uppercase tracking-tighter">Only Shop</span>
+              <span className="text-[8px] font-black text-white/10 uppercase tracking-[0.4em]">Proprietary OS</span>
+           </div>
+           
+           <div className="flex gap-10 text-[10px] font-bold uppercase tracking-[0.2em] text-white/20">
+              <Link to="/terms" className="hover:text-white transition-colors">Terms</Link>
+              <Link to="/privacy" className="hover:text-white transition-colors">Privacy</Link>
+              <a href="#" className="hover:text-white transition-colors">Contact</a>
+           </div>
+           
+           <p className="text-[10px] font-bold text-white/10 uppercase tracking-[0.2em]">
+              © 2026 ONLY SHOP CORE. ALL RIGHTS RESERVED.
+           </p>
         </div>
       </footer>
     </div>

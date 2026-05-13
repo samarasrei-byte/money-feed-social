@@ -137,7 +137,7 @@ function OnlyShopCard({
     : 0;
 
   return (
-    <div className="relative h-full w-full snap-start snap-always bg-black overflow-hidden flex items-center justify-center">
+    <div className="relative h-full w-full snap-start snap-always bg-[#050505] overflow-hidden flex items-center justify-center">
       {/* Video */}
       <video
         ref={videoRef}
@@ -168,7 +168,7 @@ function OnlyShopCard({
       </AnimatePresence>
 
       {/* Left Sidebar Info (Bottom) */}
-      <div className="absolute bottom-6 left-4 right-20 z-20 space-y-4 sm:max-w-[calc(theme(maxWidth.md)-5rem)] sm:ml-[calc(50%-theme(maxWidth.md)/2)]">
+      <div className="absolute bottom-6 left-4 right-20 z-20 space-y-4 sm:max-w-[calc(theme(maxWidth.md)-5rem)] sm:ml-[calc(50%-theme(maxWidth.md)/2)] animate-slide-up">
         {/* Brand */}
         <div className="flex items-center gap-2 group cursor-pointer">
           <div className="relative">
@@ -176,7 +176,7 @@ function OnlyShopCard({
               <AvatarImage src={video.brand.avatarUrl} />
               <AvatarFallback className="bg-muted text-[10px]">{video.brand.name[0]}</AvatarFallback>
             </Avatar>
-            <div className="absolute -bottom-1 -right-1 h-5 w-5 rounded-full bg-primary flex items-center justify-center border-2 border-black">
+            <div className="absolute -bottom-1 -right-1 h-5 w-5 rounded-full bg-primary flex items-center justify-center border-2 border-[#050505]">
               <Plus className="h-3 w-3 text-white" />
             </div>
           </div>
@@ -199,7 +199,7 @@ function OnlyShopCard({
 
         {/* Price & Action */}
         <div className="flex items-center gap-3">
-          <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl px-4 py-2 flex flex-col items-center">
+          <div className="bg-white/[0.03] backdrop-blur-3xl border border-white/[0.05] rounded-2xl px-4 py-2 flex flex-col items-center">
             <span className="text-[10px] text-white/40 font-bold uppercase tracking-wider">Preço</span>
             <div className="flex items-center gap-2">
               <span className="text-lg font-black text-white italic">R$ {video.price.toFixed(2)}</span>
@@ -218,7 +218,7 @@ function OnlyShopCard({
       {/* Right Sidebar Actions */}
       <div className="absolute right-4 bottom-24 flex flex-col items-center gap-6 z-20 sm:mr-[calc(50%-theme(maxWidth.md)/2)]">
         <button onClick={onLike} className="flex flex-col items-center gap-1 tap">
-          <div className="h-12 w-12 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center group active:scale-90 transition-all">
+          <div className="h-12 w-12 rounded-full bg-white/[0.02] backdrop-blur-xl border border-white/[0.05] flex items-center justify-center group active:scale-90 transition-all">
             <Heart className="h-6 w-6 text-white group-hover:text-primary transition-colors" />
           </div>
           <span className="text-[10px] text-white font-black tracking-tighter drop-shadow-md">{video.stats.likes >= 1000 ? `${(video.stats.likes / 1000).toFixed(1)}K` : video.stats.likes}</span>
@@ -294,7 +294,7 @@ export default function OnlyShop() {
   };
 
   return (
-    <div className="fixed inset-0 z-[60] bg-black">
+    <div className="fixed inset-0 z-[60] bg-[#050505]">
       {/* App Staircase Background (Investor Presentation Feel) */}
       <div className="hidden lg:block fixed inset-0 z-0 bg-[#050505]">
         <div className="absolute inset-0 opacity-20" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 30 L60 30 L60 60 L30 60 Z' fill='%23333' fill-opacity='0.4'/%3E%3C/svg%3E\")" }} />
@@ -323,7 +323,7 @@ export default function OnlyShop() {
         {/* Marketing Text for Investors */}
         <div className="absolute top-12 left-12 max-w-xs space-y-4">
           <Badge className="bg-primary/10 text-primary border-primary/20 uppercase tracking-[0.3em] font-black text-[10px]">Interface Proprietária</Badge>
-          <h2 className="text-4xl font-black italic uppercase tracking-tighter text-white/80">O Shopping <br /> Vertical</h2>
+          <h2 className="text-4xl font-black italic uppercase tracking-tighter text-white/80">O Shopping <br /> Vertical ecommerce</h2>
           <p className="text-sm text-white/30 font-bold leading-relaxed">
             Experiência imersiva otimizada para conversão instantânea. Onde o entretenimento encontra o lucro.
           </p>
@@ -349,7 +349,7 @@ export default function OnlyShop() {
         {/* Floating Home Link */}
         <button 
           onClick={() => window.history.back()}
-          className="fixed top-6 right-6 z-[70] h-10 w-10 rounded-full bg-black/40 backdrop-blur-xl border border-white/10 flex items-center justify-center text-white tap"
+          className="fixed top-6 right-6 z-[70] h-10 w-10 rounded-full bg-white/[0.02] backdrop-blur-xl border border-white/[0.05] flex items-center justify-center text-white/40 hover:text-white tap"
         >
           <Plus className="h-5 w-5 rotate-45" />
         </button>
