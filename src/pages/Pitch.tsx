@@ -128,6 +128,63 @@ const slides = [
     icon: Cpu
   },
   {
+    id: "match-preview",
+    title: "Smart Match IA",
+    subtitle: "O Tinder do B2B: Marcas e Criadores conectados por dados.",
+    content: (
+      <div className="space-y-6">
+        <div className="relative group p-6 rounded-[2.5rem] bg-gradient-to-br from-white/10 to-transparent border border-white/20 overflow-hidden shadow-2xl">
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center gap-3">
+              <Avatar className="h-14 w-14 ring-4 ring-primary/20">
+                <AvatarImage src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop" />
+                <AvatarFallback>CL</AvatarFallback>
+              </Avatar>
+              <div>
+                <p className="text-sm font-black italic">Camila Lopes</p>
+                <p className="text-[10px] text-white/40 uppercase font-bold tracking-widest">Nicho: Skincare</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="text-right">
+                <p className="text-sm font-black italic">Glow Beauty</p>
+                <p className="text-[10px] text-white/40 uppercase font-bold tracking-widest">PRO Marca</p>
+              </div>
+              <Avatar className="h-14 w-14 ring-4 ring-accent/20">
+                <AvatarImage src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=100&h=100&fit=crop" />
+                <AvatarFallback>GB</AvatarFallback>
+              </Avatar>
+            </div>
+          </div>
+          
+          <div className="relative h-24 flex items-center justify-center">
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent opacity-50" />
+            </div>
+            <motion.div 
+              animate={{ scale: [1, 1.2, 1], rotate: [0, 10, -10, 0] }}
+              transition={{ repeat: Infinity, duration: 3 }}
+              className="relative z-10 h-20 w-20 rounded-full bg-white flex items-center justify-center shadow-[0_0_50px_rgba(255,46,104,0.6)]"
+            >
+              <Sparkles className="h-10 w-10 text-primary" />
+            </motion.div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[40px] font-black italic text-white/5 tracking-tighter uppercase whitespace-nowrap select-none">
+              98% MATCH SCORE
+            </div>
+          </div>
+
+          <div className="mt-8 p-4 rounded-2xl bg-primary/10 border border-primary/20">
+            <p className="text-[11px] text-primary font-bold italic text-center uppercase tracking-widest">
+              Conexão automática via Big Data: Localização + Nicho + ROI
+            </p>
+          </div>
+        </div>
+      </div>
+    ),
+    gradient: "from-[#ff2e68] to-[#9d4eff]",
+    icon: Sparkles
+  },
+  {
     id: "projections",
     title: "Visão Financeira",
     subtitle: "Break-even projetado para o Mês 18.",
