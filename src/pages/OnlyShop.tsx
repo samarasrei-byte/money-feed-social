@@ -323,7 +323,7 @@ export default function OnlyShop() {
         {/* Marketing Text for Investors */}
         <div className="absolute top-12 left-12 max-w-xs space-y-4">
           <Badge className="bg-primary/10 text-primary border-primary/20 uppercase tracking-[0.3em] font-black text-[10px]">Interface Proprietária</Badge>
-          <h2 className="text-4xl font-black italic uppercase tracking-tighter text-white/80">O Shopping <br /> Vertical</h2>
+          <h2 className="text-4xl font-black italic uppercase tracking-tighter text-white/80">O Shopping <br /> Vertical ecommerce</h2>
           <p className="text-sm text-white/30 font-bold leading-relaxed">
             Experiência imersiva otimizada para conversão instantânea. Onde o entretenimento encontra o lucro.
           </p>

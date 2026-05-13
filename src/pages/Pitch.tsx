@@ -17,7 +17,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const slides = [
   {
     id: "intro",
-    title: "A Próxima Fronteira do Social Commerce",
+    title: "A Próxima Fronteira do Social ecommerce",
     subtitle: "Plataforma em desenvolvimento final. Lançamento em Maio 2026.",
     content: (
       <div className="space-y-6">
