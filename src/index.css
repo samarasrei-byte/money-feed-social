@@ -166,12 +166,20 @@
     background-image: var(--gradient-warm);
   }
 
+  .text-glow {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(0, 242, 255, 0.3);
+  }
+
+  .text-glow-primary {
+    text-shadow: 0 0 15px hsla(346, 100%, 58%, 0.4);
+  }
+
   /* Global microinteractions */
   .interactive {
-    @apply transition-all duration-200 ease-out will-change-transform hover:scale-[1.02] active:scale-[0.98] active:transition-transform active:duration-75;
+    @apply transition-all duration-300 ease-out will-change-transform hover:scale-[1.02] active:scale-[0.98] active:transition-transform active:duration-75;
   }
   .card-interactive {
-    @apply transition-all duration-200 ease-out will-change-transform hover:-translate-y-0.5 hover:shadow-lg hover:border-foreground/20 active:translate-y-0 active:scale-[0.99];
+    @apply transition-all duration-300 ease-out border border-white/5 will-change-transform hover:-translate-y-1 hover:shadow-2xl hover:border-white/20 hover:bg-white/[0.02] active:translate-y-0 active:scale-[0.99];
   }
   .tap {
     @apply transition-transform duration-150 active:scale-[0.94];
