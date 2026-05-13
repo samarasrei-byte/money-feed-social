@@ -52,6 +52,7 @@ const Invites = lazy(() => import("./pages/Invites"));
 const PostDetail = lazy(() => import("./pages/PostDetail"));
 const VSL = lazy(() => import("./pages/VSL"));
 const Pitch = lazy(() => import("./pages/Pitch"));
+const Unishop = lazy(() => import("./pages/Unishop"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -132,6 +133,7 @@ const AnimatedRoutes = () => {
             <Route path="/courses/:id" element={<Suspense fallback={<PageLoader />}><PageWrapper><CourseDetail /></PageWrapper></Suspense>} />
             <Route path="/courses/:id/learn" element={<Suspense fallback={<PageLoader />}><PageWrapper><CourseLearn /></PageWrapper></Suspense>} />
             <Route path="/courses/:id/builder" element={<Suspense fallback={<PageLoader />}><PageWrapper><CourseBuilder /></PageWrapper></Suspense>} />
+            <Route path="/unishop" element={<Suspense fallback={<PageLoader />}><PageWrapper><Unishop /></PageWrapper></Suspense>} />
           </Route>
         </Route>
 
