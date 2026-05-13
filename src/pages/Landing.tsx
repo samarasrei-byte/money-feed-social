@@ -78,24 +78,34 @@ const trustBadges = [
   { icon: Smartphone, label: "App nativo (PWA)" },
 ];
 
+import { memo } from "react";
+
 /* ─── Reusable glass card ─── */
-const Glass = ({ children, className = "", glow = false }: { children: React.ReactNode; className?: string; glow?: boolean }) => (
+const Glass = memo(({ children, className = "", glow = false }: { children: React.ReactNode; className?: string; glow?: boolean }) => (
   <div className={`relative rounded-3xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl ${glow ? "shadow-[0_0_60px_-15px_hsl(330,81%,60%,0.25)]" : ""} ${className}`}>
     <div className="absolute inset-0 rounded-3xl bg-gradient-to-b from-white/[0.06] to-transparent pointer-events-none" />
     <div className="relative z-10">{children}</div>
   </div>
-);
+));
+
+Glass.displayName = "Glass";
+
+const MeshBackground = memo(() => (
+  <div className="fixed inset-0 pointer-events-none overflow-hidden">
+    <div className="absolute top-[-15%] left-[-5%] w-[60vw] h-[60vw] rounded-full bg-[hsl(330,81%,60%)] opacity-[0.05] blur-[150px] will-change-transform" />
+    <div className="absolute top-[25%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-[hsl(270,91%,65%)] opacity-[0.04] blur-[150px] will-change-transform" />
+    <div className="absolute bottom-[-5%] left-[15%] w-[40vw] h-[40vw] rounded-full bg-[hsl(25,95%,53%)] opacity-[0.04] blur-[130px] will-change-transform" />
+    <div className="absolute inset-0 opacity-[0.012] pointer-events-none" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E\")" }} />
+  </div>
+));
+
+MeshBackground.displayName = "MeshBackground";
 
 export default function Landing() {
   return (
-    <div className="min-h-screen bg-[hsl(240,12%,3%)] text-white overflow-x-hidden">
-      {/* ── Mesh background ── */}
-      <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-[-20%] left-[-10%] w-[60vw] h-[60vw] rounded-full bg-[hsl(330,81%,60%)] opacity-[0.07] blur-[150px]" />
-        <div className="absolute top-[30%] right-[-15%] w-[50vw] h-[50vw] rounded-full bg-[hsl(270,91%,65%)] opacity-[0.05] blur-[150px]" />
-        <div className="absolute bottom-[-10%] left-[20%] w-[40vw] h-[40vw] rounded-full bg-[hsl(25,95%,53%)] opacity-[0.05] blur-[130px]" />
-        <div className="absolute inset-0 opacity-[0.015]" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E\")" }} />
-      </div>
+    <div className="min-h-screen bg-[hsl(240,12%,3%)] text-white overflow-x-hidden selection:bg-primary/30">
+      <MeshBackground />
+
 
       {/* ═══ NAV ═══ */}
       <nav className="relative z-50 w-full">
