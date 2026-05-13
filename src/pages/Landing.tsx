@@ -223,20 +223,22 @@ export default function Landing() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 grid-rows-2 gap-4 lg:gap-6 min-h-[500px]">
             {[
-              { icon: Sparkles, title: "Smart Match", desc: "IA cruza nicho + geo + performance e devolve top matches.", href: "/discover", color: "from-[hsl(346,100%,58%)] to-[hsl(330,81%,60%)]" },
-              { icon: Flame, title: "Em Alta", desc: "Produtos hypados ranqueados por vendas reais das últimas 24h-30d.", href: "/trending", color: "from-[hsl(25,95%,53%)] to-[hsl(346,100%,58%)]" },
-              { icon: Globe, title: "Geolocalização", desc: "Encontre criadores e marcas próximos para entregas e parcerias locais.", href: "/discover", color: "from-[hsl(174,100%,47%)] to-[hsl(200,100%,55%)]" },
-              { icon: MessageCircle, title: "Convites Diretos", desc: "Marcas convidam afiliados em 1 clique. Inbox dedicada para responder.", href: "/invites", color: "from-[hsl(270,91%,65%)] to-[hsl(346,100%,58%)]" },
+              { icon: Sparkles, title: "Smart Match", desc: "IA cruza nicho + geo + performance e devolve top matches.", href: "/discover", color: "from-[#ff2e68] to-[#9d4eff]", className: "md:col-span-2 md:row-span-2" },
+              { icon: Flame, title: "Em Alta", desc: "Produtos hypados ranqueados por vendas reais.", href: "/trending", color: "from-[#ff8c00] to-[#ff2e68]", className: "md:col-span-2" },
+              { icon: Globe, title: "Geolocalização", desc: "Encontre criadores locais.", href: "/discover", color: "from-[#00f2ff] to-[#0066ff]", className: "md:col-span-1" },
+              { icon: MessageCircle, title: "Convites Diretos", desc: "Marcas convidam em 1 clique.", href: "/invites", color: "from-[#9d4eff] to-[#ff2e68]", className: "md:col-span-1" },
             ].map((f) => (
-              <Link key={f.title} to={f.href} className="group relative overflow-hidden rounded-3xl border border-white/[0.08] bg-white/[0.02] p-5 hover:bg-white/[0.04] transition-all hover:scale-[1.02]">
-                <div className={`h-10 w-10 rounded-2xl bg-gradient-to-br ${f.color} flex items-center justify-center mb-3 shadow-lg`}>
-                  <f.icon className="h-5 w-5 text-white" />
+              <Link key={f.title} to={f.href} className={`group bento-card p-8 ${f.className}`}>
+                <div className={`h-14 w-14 rounded-[1.5rem] bg-gradient-to-br ${f.color} flex items-center justify-center mb-6 shadow-2xl transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6`}>
+                  <f.icon className="h-7 w-7 text-white" />
                 </div>
-                <p className="text-sm font-bold text-white">{f.title}</p>
-                <p className="text-xs text-white/50 mt-1 leading-relaxed">{f.desc}</p>
-                <ChevronRight className="absolute top-5 right-5 h-4 w-4 text-white/20 group-hover:text-white/60 group-hover:translate-x-1 transition-all" />
+                <h3 className="text-2xl font-black text-white italic uppercase tracking-tighter">{f.title}</h3>
+                <p className="text-sm text-white/40 mt-3 leading-relaxed font-bold">{f.desc}</p>
+                <div className="absolute bottom-8 right-8 h-10 w-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:translate-x-0 translate-x-4 transition-all duration-500">
+                  <ArrowRight className="h-4 w-4 text-white" />
+                </div>
               </Link>
             ))}
           </div>
