@@ -25,11 +25,29 @@ export default function Feed() {
   const [commentsPostId, setCommentsPostId] = useState<string | null>(null);
   const cursorRef = useRef<string | null>(null);
 
-  const mapPosts = useCallback(
-    (postsData: any[], profilesMap: Map<string, any>, likedPostIds: Set<string>): PostData[] =>
-      postsData.map((post) => {
-        const p = profilesMap.get(post.user_id);
-        return {
+  const fetchPosts = useCallback(
+    async (showRefresh = false) => {
+      if (showRefresh) setRefreshing(true);
+      try {
+        const { data: postsData, error } = await supabase
+          .from("posts")
+          .select(`
+            *,
+            profile:profiles(user_id, username, display_name, avatar_url),
+            likes(user_id)
+          `)
+          .order("created_at", { ascending: false })
+          .limit(PAGE_SIZE);
+
+        if (error) throw error;
+        
+        if (!postsData) {
+          setPosts([]);
+          setHasMore(false);
+          return;
+        }
+
+        const mappedPosts: PostData[] = postsData.map((post: any) => ({
           id: post.id,
           content: post.content,
           postType: post.post_type as "text" | "image" | "video",
@@ -38,52 +56,19 @@ export default function Feed() {
           commentsCount: post.comments_count,
           createdAt: post.created_at,
           userId: post.user_id,
-          isLiked: likedPostIds.has(post.id),
+          isLiked: user ? post.likes?.some((l: any) => l.user_id === user.id) : false,
           isSaved: false,
-          label: (post as any).label || null,
-          labelMetadata: (post as any).label_metadata || null,
-          profile: p
-            ? { username: p.username || "user", displayName: p.display_name || "Usuário", avatarUrl: p.avatar_url || undefined, isVerified: false }
-            : undefined,
-        };
-      }),
-    []
-  );
+          label: post.label || null,
+          labelMetadata: post.label_metadata || null,
+          profile: post.profile ? {
+            username: post.profile.username || "user",
+            displayName: post.profile.display_name || "Usuário",
+            avatarUrl: post.profile.avatar_url || undefined,
+            isVerified: false
+          } : undefined,
+        }));
 
-  const enrichPosts = useCallback(
-    async (postsData: any[]) => {
-      const userIds = [...new Set(postsData.map((p) => p.user_id))];
-      const { data: profilesData } = await supabase
-        .from("profiles")
-        .select("user_id, username, display_name, avatar_url")
-        .in("user_id", userIds);
-      const profilesMap = new Map(profilesData?.map((p) => [p.user_id, p]) || []);
-
-      let likedPostIds = new Set<string>();
-      if (user) {
-        const postIds = postsData.map((p) => p.id);
-        const { data: likes } = await supabase.from("likes").select("post_id").eq("user_id", user.id).in("post_id", postIds);
-        likedPostIds = new Set(likes?.map((l) => l.post_id) || []);
-      }
-      return mapPosts(postsData, profilesMap, likedPostIds);
-    },
-    [user, mapPosts]
-  );
-
-  const fetchPosts = useCallback(
-    async (showRefresh = false) => {
-      if (showRefresh) setRefreshing(true);
-      try {
-        const { data: postsData, error } = await supabase
-          .from("posts").select("*").order("created_at", { ascending: false }).limit(PAGE_SIZE);
-        if (error) throw error;
-        if (!postsData || postsData.length === 0) {
-          setPosts([]);
-          setHasMore(false);
-          return;
-        }
-        const enriched = await enrichPosts(postsData);
-        setPosts(enriched);
+        setPosts(mappedPosts);
         setHasMore(postsData.length === PAGE_SIZE);
         cursorRef.current = postsData[postsData.length - 1].created_at;
       } catch (error) {
@@ -95,7 +80,7 @@ export default function Feed() {
         setRefreshing(false);
       }
     },
-    [enrichPosts]
+    [user]
   );
 
   const loadMore = useCallback(async () => {
@@ -103,11 +88,45 @@ export default function Feed() {
     setLoadingMore(true);
     try {
       const { data: postsData, error } = await supabase
-        .from("posts").select("*").order("created_at", { ascending: false }).lt("created_at", cursorRef.current).limit(PAGE_SIZE);
+        .from("posts")
+        .select(`
+          *,
+          profile:profiles(user_id, username, display_name, avatar_url),
+          likes(user_id)
+        `)
+        .order("created_at", { ascending: false })
+        .lt("created_at", cursorRef.current)
+        .limit(PAGE_SIZE);
+
       if (error) throw error;
-      if (!postsData || postsData.length === 0) { setHasMore(false); return; }
-      const enriched = await enrichPosts(postsData);
-      setPosts((prev) => [...prev, ...enriched]);
+      
+      if (!postsData || postsData.length === 0) {
+        setHasMore(false);
+        return;
+      }
+
+      const mappedPosts: PostData[] = postsData.map((post: any) => ({
+        id: post.id,
+        content: post.content,
+        postType: post.post_type as "text" | "image" | "video",
+        mediaUrl: post.media_url || undefined,
+        likesCount: post.likes_count,
+        commentsCount: post.comments_count,
+        createdAt: post.created_at,
+        userId: post.user_id,
+        isLiked: user ? post.likes?.some((l: any) => l.user_id === user.id) : false,
+        isSaved: false,
+        label: post.label || null,
+        labelMetadata: post.label_metadata || null,
+        profile: post.profile ? {
+          username: post.profile.username || "user",
+          displayName: post.profile.display_name || "Usuário",
+          avatarUrl: post.profile.avatar_url || undefined,
+          isVerified: false
+        } : undefined,
+      }));
+
+      setPosts((prev) => [...prev, ...mappedPosts]);
       setHasMore(postsData.length === PAGE_SIZE);
       cursorRef.current = postsData[postsData.length - 1].created_at;
     } catch (error) {
@@ -115,7 +134,7 @@ export default function Feed() {
     } finally {
       setLoadingMore(false);
     }
-  }, [loadingMore, hasMore, enrichPosts]);
+  }, [loadingMore, hasMore, user]);
 
   const sentinelRef = useInfiniteScroll(loadMore, { enabled: hasMore && !loadingMore });
 
