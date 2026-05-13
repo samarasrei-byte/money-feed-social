@@ -70,39 +70,41 @@ const App = () => (
             <Route path="/vsl" element={<VSL />} />
             <Route path="/pitch" element={<Pitch />} />
             
-            {/* App routes with layout */}
-            <Route element={<AppLayout />}>
-              <Route path="/feed" element={<Feed />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/communities" element={<Communities />} />
-              <Route path="/communities/:id" element={<CommunityDetail />} />
-              <Route path="/ranking" element={<Ranking />} />
-              <Route path="/affiliate" element={<Affiliate />} />
-              <Route path="/wallet" element={<Wallet />} />
-              <Route path="/admin" element={<Admin />} />
-              <Route path="/brands" element={<BrandArea />} />
-              <Route path="/products" element={<Products />} />
-              <Route path="/opportunities" element={<Opportunities />} />
-              <Route path="/discover" element={<Discover />} />
-              <Route path="/trending" element={<Trending />} />
-              <Route path="/invites" element={<Invites />} />
-              <Route path="/u/:username" element={<PublicProfile />} />
-              <Route path="/post/:id" element={<PostDetail />} />
-              <Route path="/tiktok" element={<TikTok />} />
-              <Route path="/chat" element={<Chat />} />
-              <Route path="/checkout" element={<Checkout />} />
-              <Route path="/settings" element={<Settings />} />
-              <Route path="/create" element={<Feed />} />
-              <Route path="/reels" element={<Reels />} />
-              <Route path="/live" element={<Live />} />
-              <Route path="/live/:id" element={<LiveShop />} />
-              <Route path="/marketplace" element={<Marketplace />} />
-              <Route path="/analytics" element={<Analytics />} />
-              <Route path="/ai" element={<AICopilot />} />
-              <Route path="/courses" element={<Courses />} />
-              <Route path="/courses/:id" element={<CourseDetail />} />
-              <Route path="/courses/:id/learn" element={<CourseLearn />} />
-              <Route path="/courses/:id/builder" element={<CourseBuilder />} />
+            {/* App routes with layout and protection */}
+            <Route element={<ProtectedRoute />}>
+              <Route element={<AppLayout />}>
+                <Route path="/feed" element={<Feed />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/communities" element={<Communities />} />
+                <Route path="/communities/:id" element={<CommunityDetail />} />
+                <Route path="/ranking" element={<Ranking />} />
+                <Route path="/affiliate" element={<Affiliate />} />
+                <Route path="/wallet" element={<Wallet />} />
+                <Route path="/admin" element={<Admin />} />
+                <Route path="/brands" element={<BrandArea />} />
+                <Route path="/products" element={<Products />} />
+                <Route path="/opportunities" element={<Opportunities />} />
+                <Route path="/discover" element={<Discover />} />
+                <Route path="/trending" element={<Trending />} />
+                <Route path="/invites" element={<Invites />} />
+                <Route path="/u/:username" element={<PublicProfile />} />
+                <Route path="/post/:id" element={<PostDetail />} />
+                <Route path="/tiktok" element={<TikTok />} />
+                <Route path="/chat" element={<Chat />} />
+                <Route path="/checkout" element={<Checkout />} />
+                <Route path="/settings" element={<Settings />} />
+                <Route path="/create" element={<Feed />} />
+                <Route path="/reels" element={<Reels />} />
+                <Route path="/live" element={<Live />} />
+                <Route path="/live/:id" element={<LiveShop />} />
+                <Route path="/marketplace" element={<Marketplace />} />
+                <Route path="/analytics" element={<Analytics />} />
+                <Route path="/ai" element={<AICopilot />} />
+                <Route path="/courses" element={<Courses />} />
+                <Route path="/courses/:id" element={<CourseDetail />} />
+                <Route path="/courses/:id/learn" element={<CourseLearn />} />
+                <Route path="/courses/:id/builder" element={<CourseBuilder />} />
+              </Route>
             </Route>
 
             {/* Catch-all */}
