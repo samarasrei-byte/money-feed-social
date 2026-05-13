@@ -135,7 +135,7 @@ export default function PublicProfile() {
         convId = newC.id;
       }
     }
-    window.location.href = `/chat?c=${convId}`;
+    navigate(`/chat?c=${convId}`);
   };
 
   if (loading) {
