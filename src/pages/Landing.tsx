@@ -147,17 +147,14 @@ export default function Landing() {
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                 {[
-                  { icon: Sparkles, title: "Smart Match", desc: "Conexão instantânea via Big Data." },
-                  { icon: Zap, title: "Real-time ROI", desc: "Métricas de conversão em tempo real." },
-                  { icon: Globe, title: "Global Scale", desc: "Infraestrutura pronta para o mundo." },
-                  { icon: Shield, title: "Iron Security", desc: "Blockchain para tracking de vendas." },
+                  { title: "SMART MATCH", desc: "Deep-learning connection engine." },
+                  { title: "REAL-TIME ROI", desc: "Live yield monitoring." },
+                  { title: "GLOBAL SCALE", desc: "Zero-latency infrastructure." },
+                  { title: "IRON SECURITY", desc: "Encrypted transaction ledger." },
                 ].map((f) => (
-                  <div key={f.title} className="space-y-4">
-                    <div className="h-10 w-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center">
-                      <f.icon className="h-5 w-5 text-primary" />
-                    </div>
-                    <h4 className="font-black italic uppercase tracking-tight text-sm">{f.title}</h4>
-                    <p className="text-xs text-white/20 leading-relaxed font-bold">{f.desc}</p>
+                  <div key={f.title} className="space-y-2 border-t border-white/[0.02] pt-6">
+                    <h4 className="font-black italic uppercase tracking-tighter text-lg text-white/40">{f.title}</h4>
+                    <p className="text-[10px] text-white/[0.05] font-black uppercase tracking-[0.3em]">{f.desc}</p>
                   </div>
                 ))}
               </div>
