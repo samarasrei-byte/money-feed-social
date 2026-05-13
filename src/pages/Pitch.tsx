@@ -225,109 +225,153 @@ export default function Pitch() {
   const Icon = slide.icon;
 
   return (
-    <div className="min-h-screen bg-[hsl(240,12%,3%)] text-white overflow-hidden flex flex-col font-sans">
-      <div className="fixed inset-0 pointer-events-none">
+    <div className="min-h-screen bg-[#020205] text-white overflow-hidden flex flex-col font-sans selection:bg-[#00f2ff] selection:text-black">
+      {/* Cinematic Futuristic Background */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.div
             key={current}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.15 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1 }}
-            className={`absolute inset-0 bg-gradient-to-br ${slide.gradient} blur-[120px]`}
+            initial={{ opacity: 0, scale: 1.2 }}
+            animate={{ opacity: 0.3, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.1 }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
+            className={`absolute inset-0 bg-gradient-to-br ${slide.gradient} blur-[120px] mix-blend-screen`}
           />
         </AnimatePresence>
-        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")` }} />
+        
+        {/* Dynamic Grid Overlay */}
+        <div className="absolute inset-0 opacity-20" 
+             style={{ 
+               backgroundImage: `linear-gradient(#ffffff0a 1px, transparent 1px), linear-gradient(90deg, #ffffff0a 1px, transparent 1px)`,
+               backgroundSize: '40px 40px' 
+             }} 
+        />
+        
+        {/* Moving Scanline */}
+        <motion.div 
+          animate={{ translateY: ["0%", "100%"] }}
+          transition={{ repeat: Infinity, duration: 4, ease: "linear" }}
+          className="absolute inset-x-0 h-[20vh] bg-gradient-to-b from-transparent via-[#00f2ff05] to-transparent z-10"
+        />
+
+        {/* Noise Filter */}
+        <div className="absolute inset-0 opacity-[0.05] contrast-150 brightness-150" 
+             style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")` }} 
+        />
       </div>
 
-      <div className="relative z-50 flex gap-1.5 px-4 pt-4">
+      {/* Top Status Bar */}
+      <div className="relative z-50 flex gap-1 px-2 pt-2 sm:px-4 sm:pt-4">
         {slides.map((_, i) => (
-          <div key={i} className="h-1 flex-1 rounded-full bg-white/10 overflow-hidden">
-            {i <= current && (
-              <motion.div 
-                layoutId="progress"
-                className="h-full bg-white"
-                initial={i === current ? { width: "0%" } : { width: "100%" }}
-                animate={i === current ? { width: "100%" } : { width: "100%" }}
-                transition={{ duration: i === current ? 5 : 0 }}
-              />
-            )}
+          <div key={i} className="h-0.5 sm:h-1 flex-1 rounded-full bg-white/5 overflow-hidden">
+            <AnimatePresence>
+              {i <= current && (
+                <motion.div 
+                  layoutId="progress-bar"
+                  className={`h-full bg-gradient-to-r ${i === current ? 'from-[#00f2ff] to-white' : 'from-white/40 to-white/60'}`}
+                  initial={i === current ? { width: "0%" } : { width: "100%" }}
+                  animate={i === current ? { width: "100%" } : { width: "100%" }}
+                  transition={{ duration: i === current ? 5 : 0.3, ease: "linear" }}
+                />
+              )}
+            </AnimatePresence>
           </div>
         ))}
       </div>
 
-      <header className="relative z-50 px-6 py-8 flex justify-between items-center">
-        <Link to="/" className="flex items-center gap-2 group">
-          <div className="h-8 w-8 rounded-lg bg-white flex items-center justify-center group-hover:scale-110 transition-transform">
-            <Rocket className="h-5 w-5 text-black" />
+      <header className="relative z-50 px-6 py-6 sm:py-8 flex justify-between items-center">
+        <Link to="/" className="flex items-center gap-3 group">
+          <div className="h-10 w-10 rounded-xl bg-white flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+            <Rocket className="h-6 w-6 text-black" />
           </div>
-          <span className="font-bold tracking-tighter text-xl">Only Shop</span>
+          <div className="flex flex-col">
+            <span className="font-black tracking-tighter text-2xl leading-none italic uppercase">Only Shop</span>
+            <span className="text-[8px] font-black tracking-[0.4em] text-[#00f2ff] uppercase">V.2026.PRO</span>
+          </div>
         </Link>
-        <Badge className="bg-white/10 text-white/60 border-white/5 rounded-full px-4 py-1.5 text-[10px] font-bold tracking-widest uppercase">
-          Confidencial · Investor Pitch
+        <Badge className="hidden sm:flex bg-white/5 text-white/40 border-white/10 rounded-full px-5 py-2 text-[9px] font-black tracking-[0.2em] uppercase backdrop-blur-md">
+          <div className="h-1.5 w-1.5 rounded-full bg-[#00f2ff] animate-pulse mr-2" />
+          Protocolo Alfa Confidencial
         </Badge>
       </header>
 
-      <main className="relative z-40 flex-1 flex flex-col justify-center px-6 max-w-xl mx-auto w-full pb-20">
+      <main className="relative z-40 flex-1 flex flex-col justify-center px-6 max-w-xl mx-auto w-full pb-24">
         <AnimatePresence mode="wait" custom={direction}>
           <motion.div
             key={current}
             custom={direction}
-            initial={{ opacity: 0, x: direction * 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: direction * -100 }}
-            transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="space-y-10"
+            initial={{ opacity: 0, x: direction * 50, scale: 0.95 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: direction * -50, scale: 1.05 }}
+            transition={{ type: "spring", damping: 30, stiffness: 300 }}
+            className="space-y-8 sm:space-y-12"
           >
-            <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <div className={`p-3 rounded-2xl bg-gradient-to-br ${slide.gradient} shadow-lg`}>
-                  <Icon className="h-6 w-6 text-white" />
-                </div>
+            <div className="space-y-4 sm:space-y-6">
+              <div className="flex items-center gap-4">
+                <motion.div 
+                  initial={{ rotate: -20, scale: 0.8 }}
+                  animate={{ rotate: 0, scale: 1 }}
+                  className={`p-4 rounded-[1.5rem] bg-gradient-to-br ${slide.gradient} shadow-[0_0_30px_rgba(255,255,255,0.1)]`}
+                >
+                  <Icon className="h-8 w-8 text-white drop-shadow-md" />
+                </motion.div>
                 {slide.badge && (
-                  <Badge className="bg-[hsl(330,81%,60%)]/20 text-[hsl(330,81%,60%)] border-[hsl(330,81%,60%)]/20 px-3 py-1 text-[10px] font-bold">
+                  <Badge className="bg-white/10 text-white border-white/20 px-4 py-1.5 text-[10px] font-black uppercase tracking-widest backdrop-blur-xl">
                     {slide.badge}
                   </Badge>
                 )}
               </div>
-              <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight leading-[1.1]">
+              <h1 className="text-5xl sm:text-7xl font-black tracking-tighter leading-[0.9] italic uppercase">
                 {slide.title}
               </h1>
-              <p className="text-xl text-white/60 font-medium">
+              <p className="text-xl sm:text-2xl text-[#00f2ff] font-black uppercase tracking-tight opacity-80 italic">
                 {slide.subtitle}
               </p>
             </div>
 
-            <div className="text-lg text-white/90 leading-relaxed">
-              {typeof slide.content === "string" ? slide.content : slide.content}
+            <div className="relative">
+              <div className="absolute -inset-4 bg-white/[0.02] blur-2xl rounded-[3rem] -z-10" />
+              {typeof slide.content === "string" ? (
+                <p className="text-lg sm:text-xl text-white/70 leading-relaxed font-medium">
+                  {slide.content}
+                </p>
+              ) : slide.content}
             </div>
           </motion.div>
         </AnimatePresence>
       </main>
 
+      {/* Navigation Touch Zones */}
       <div className="absolute inset-y-0 left-0 w-1/4 z-30 cursor-pointer" onClick={prevSlide} />
       <div className="absolute inset-y-0 right-0 w-3/4 z-30 cursor-pointer" onClick={nextSlide} />
 
-      <footer className="relative z-50 p-8 flex justify-between items-center">
+      <footer className="relative z-50 p-6 sm:p-10 flex justify-between items-center mt-auto">
         <div className="flex gap-4">
           <button 
             onClick={prevSlide}
             disabled={current === 0}
-            className="h-12 w-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/5 disabled:opacity-30 transition-all"
+            className="h-14 w-14 rounded-2xl border border-white/10 flex items-center justify-center hover:bg-white/5 disabled:opacity-20 transition-all active:scale-90 group backdrop-blur-md"
           >
-            <ChevronLeft className="h-5 w-5" />
+            <ChevronLeft className="h-6 w-6 group-hover:-translate-x-1 transition-transform" />
           </button>
           <button 
             onClick={nextSlide}
             disabled={current === slides.length - 1}
-            className="h-12 w-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/5 disabled:opacity-30 transition-all"
+            className="h-14 w-14 rounded-2xl border border-white/10 flex items-center justify-center hover:bg-white/5 disabled:opacity-20 transition-all active:scale-90 group backdrop-blur-md"
           >
-            <ChevronRight className="h-5 w-5" />
+            <ChevronRight className="h-6 w-6 group-hover:translate-x-1 transition-transform" />
           </button>
         </div>
-        <div className="text-right">
-          <p className="text-[10px] text-white/30 uppercase font-bold tracking-widest">Slide</p>
-          <p className="text-lg font-bold">{current + 1} <span className="text-white/20">/ {slides.length}</span></p>
+        
+        <div className="flex flex-col items-end">
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-[10px] text-white/20 uppercase font-black tracking-[0.3em]">Status: Live</span>
+            <div className="h-1 w-1 rounded-full bg-[#00f2ff]" />
+          </div>
+          <p className="text-3xl font-black italic tracking-tighter">
+            {String(current + 1).padStart(2, '0')} 
+            <span className="text-white/10 ml-2">/ {String(slides.length).padStart(2, '0')}</span>
+          </p>
         </div>
       </footer>
     </div>
