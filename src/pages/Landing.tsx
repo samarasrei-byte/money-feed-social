@@ -138,8 +138,8 @@ export default function Landing() {
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-[hsl(25,95%,53%)] via-[hsl(330,81%,60%)] to-[hsl(270,91%,65%)] animate-gradient-x">Commerce</span>
             </h1>
 
-            <p className="text-sm sm:text-base text-white/35 mb-8 max-w-md leading-relaxed mx-auto sm:mx-0">
-              A rede social onde cada post pode gerar receita. Junte-se a mais de 10.000 criadores que já monetizam seu conteúdo diariamente.
+            <p className="text-lg sm:text-xl text-white/40 mb-10 max-w-xl leading-relaxed mx-auto sm:mx-0 font-medium">
+              A maior Startup de 2026. Uma rede social inteligente que converte influência em lucro real com automação total.
             </p>
 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mb-10">
