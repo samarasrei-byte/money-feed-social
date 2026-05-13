@@ -143,12 +143,12 @@ export default function Landing() {
               Lançamento Oficial: Maio 2026
             </Badge>
 
-            <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-black mb-8 leading-[0.9] tracking-tighter">
+            <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-[10rem] font-black mb-8 leading-[0.85] tracking-tighter italic uppercase">
               O futuro do <br />
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[hsl(25,95%,53%)] via-[hsl(330,81%,60%)] to-[hsl(270,91%,65%)] animate-gradient-x">Commerce</span>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#ff2e68] via-[#ff4d4d] to-[#9d4eff] animate-gradient-x drop-shadow-[0_0_30px_rgba(255,46,104,0.3)]">Commerce</span>
             </h1>
 
-            <p className="text-lg sm:text-xl text-white/40 mb-10 max-w-xl leading-relaxed mx-auto sm:mx-0 font-medium">
+            <p className="text-xl sm:text-2xl text-white/40 mb-12 max-w-xl leading-relaxed mx-auto sm:mx-0 font-bold tracking-tight">
               A maior Startup de 2026. Uma rede social inteligente que converte influência em lucro real com automação total.
             </p>
 
