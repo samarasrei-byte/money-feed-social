@@ -109,7 +109,7 @@ export default function Profile() {
   const role = userRole?.role || "viewer";
 
   return (
-    <div className="max-w-lg mx-auto py-6 space-y-5">
+    <div className="max-w-4xl mx-auto py-6 space-y-5">
       {/* Hidden file input */}
       <input
         ref={avatarInputRef}
