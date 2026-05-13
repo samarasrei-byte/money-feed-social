@@ -296,19 +296,37 @@ export default function Unishop() {
   return (
     <div className="fixed inset-0 z-[60] bg-black">
       {/* App Staircase Background (Investor Presentation Feel) */}
-      <div className="hidden lg:block fixed inset-0 z-0 bg-[radial-gradient(circle_at_50%_50%,_#1a1a1a_0%,_#000_100%)]">
+      <div className="hidden lg:block fixed inset-0 z-0 bg-[#050505]">
         <div className="absolute inset-0 opacity-20" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 30 L60 30 L60 60 L30 60 Z' fill='%23333' fill-opacity='0.4'/%3E%3C/svg%3E\")" }} />
         
-        {/* Decorative App Screens for Presentation */}
-        <div className="absolute top-1/2 left-20 -translate-y-1/2 -rotate-12 opacity-40 scale-75 blur-sm select-none pointer-events-none">
-          <div className="w-[300px] h-[600px] bg-card rounded-[3rem] border border-white/10 overflow-hidden">
-            <div className="h-full w-full bg-gradient-to-b from-primary/20 to-transparent" />
+        {/* Futuristic Grid */}
+        <div className="absolute inset-0 opacity-10" 
+             style={{ 
+               backgroundImage: `linear-gradient(#ffffff0a 1px, transparent 1px), linear-gradient(90deg, #ffffff0a 1px, transparent 1px)`,
+               backgroundSize: '80px 80px' 
+             }} 
+        />
+
+        {/* Floating Decorative App Screens */}
+        {[
+          { color: "from-primary/20", rotate: -15, x: "left-24", y: "top-1/2" },
+          { color: "from-accent/20", rotate: 15, x: "right-24", y: "top-1/3" },
+          { color: "from-purple-500/20", rotate: -5, x: "left-[20%]", y: "bottom-20" },
+        ].map((screen, i) => (
+          <div key={i} className={`absolute ${screen.y} ${screen.x} -translate-y-1/2 opacity-30 scale-75 blur-[2px] select-none pointer-events-none`} style={{ transform: `translateY(-50%) rotate(${screen.rotate}deg)` }}>
+            <div className={`w-[320px] h-[640px] bg-card rounded-[3.5rem] border border-white/10 overflow-hidden shadow-2xl`}>
+              <div className={`h-full w-full bg-gradient-to-b ${screen.color} to-transparent`} />
+            </div>
           </div>
-        </div>
-        <div className="absolute top-1/2 right-20 -translate-y-1/2 rotate-12 opacity-40 scale-75 blur-sm select-none pointer-events-none">
-          <div className="w-[300px] h-[600px] bg-card rounded-[3rem] border border-white/10 overflow-hidden">
-            <div className="h-full w-full bg-gradient-to-b from-accent/20 to-transparent" />
-          </div>
+        ))}
+        
+        {/* Marketing Text for Investors */}
+        <div className="absolute top-12 left-12 max-w-xs space-y-4">
+          <Badge className="bg-primary/10 text-primary border-primary/20 uppercase tracking-[0.3em] font-black text-[10px]">Interface Proprietária</Badge>
+          <h2 className="text-4xl font-black italic uppercase tracking-tighter text-white/80">O Shopping <br /> Vertical</h2>
+          <p className="text-sm text-white/30 font-bold leading-relaxed">
+            Experiência imersiva otimizada para conversão instantânea. Onde o entretenimento encontra o lucro.
+          </p>
         </div>
       </div>
 
