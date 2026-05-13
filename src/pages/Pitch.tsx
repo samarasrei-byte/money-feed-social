@@ -4,7 +4,8 @@ import {
   DollarSign, Shield, Zap, TrendingUp, Sparkles, Star, 
   ArrowRight, Globe, MessageCircle, Heart, Smartphone,
   Award, Search, Filter, ShoppingCart, MousePointer, Eye,
-  Trophy, Network, Briefcase, Handshake, Landmark, Percent, PieChart, Coins
+  Trophy, Network, Briefcase, Handshake, Landmark, Percent, PieChart, Coins,
+  Code2, Megaphone, Share2, Cpu
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -15,180 +16,180 @@ import { motion, AnimatePresence } from "framer-motion";
 const slides = [
   {
     id: "intro",
-    title: "A Revolução do Social Commerce",
-    subtitle: "A maior Startup de 2026 está prestes a ser lançada.",
-    content: "Only Shop: Onde conteúdo encontra monetização real em um ecossistema inteligente.",
-    gradient: "from-[hsl(330,81%,60%)] to-[hsl(270,91%,65%)]",
-    icon: Rocket,
-    badge: "Lançamento: Maio 2026"
-  },
-  {
-    id: "vision",
-    title: "Oportunidade Pré-Seed",
-    subtitle: "Seja um dos primeiros parceiros da próxima unicórnio.",
+    title: "A Próxima Fronteira do Social Commerce",
+    subtitle: "Plataforma em desenvolvimento final. Lançamento em Maio 2026.",
     content: (
       <div className="space-y-6">
-        <div className="grid grid-cols-2 gap-4">
-          <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
-            <p className="text-[10px] text-white/40 uppercase font-bold tracking-wider mb-1">Aporte Necessário</p>
-            <p className="text-2xl font-bold text-white">R$ 1.5M</p>
-          </div>
-          <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
-            <p className="text-[10px] text-white/40 uppercase font-bold tracking-wider mb-1">Post-Money Val.</p>
-            <p className="text-2xl font-bold text-white">R$ 10.5M</p>
+        <p className="text-lg text-white/80 leading-relaxed">
+          A Only Shop não é apenas um app, é a infraestrutura definitiva para a economia dos criadores.
+        </p>
+        <div className="flex flex-wrap gap-2">
+          <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/20 px-3 py-1">Status: Em Desenvolvimento</Badge>
+          <Badge className="bg-white/10 text-white/60 border-white/5 px-3 py-1">Lançamento: 30 de Maio</Badge>
+        </div>
+      </div>
+    ),
+    gradient: "from-[#00f2ff] via-[#0066ff] to-[#7000ff]",
+    icon: Rocket,
+    badge: "O Futuro Chegou"
+  },
+  {
+    id: "investment",
+    title: "Oportunidade Pré-Seed",
+    subtitle: "A maior Startup de 2026 está aberta para investidores anjo.",
+    content: (
+      <div className="space-y-6">
+        <div className="grid grid-cols-1 gap-4">
+          <div className="relative group p-6 rounded-[2rem] bg-black/40 backdrop-blur-xl border border-white/10 overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="relative flex justify-between items-end">
+              <div>
+                <p className="text-xs text-white/40 uppercase font-black tracking-[0.2em] mb-2">Aporte Inicial</p>
+                <p className="text-5xl font-black text-white tracking-tighter shadow-white/10 drop-shadow-2xl">R$ 200k</p>
+              </div>
+              <div className="text-right">
+                <p className="text-xs text-white/40 uppercase font-black tracking-[0.2em] mb-2">Equity</p>
+                <p className="text-4xl font-black text-[#00f2ff]">10%</p>
+              </div>
+            </div>
           </div>
         </div>
-        <div className="p-5 rounded-2xl bg-gradient-to-br from-white/10 to-transparent border border-white/10">
-          <p className="text-sm text-white/70 leading-relaxed italic">
-            "Baseado no histórico de faturamento dos fundadores e no volume de creators já pré-cadastrados, a Only Shop entra no mercado com tração validada e tecnologia superior."
+        <div className="p-6 rounded-2xl bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/5">
+          <p className="text-sm text-white/60 leading-relaxed italic">
+            "Validado por players que já faturam milhões no mercado. Estamos construindo a solução que o mercado de influência implora para ter."
           </p>
         </div>
       </div>
     ),
-    gradient: "from-[hsl(25,95%,53%)] to-[hsl(330,81%,60%)]",
-    icon: Landmark
+    gradient: "from-[#ff0055] via-[#ff00aa] to-[#7000ff]",
+    icon: Coins
   },
   {
     id: "use-of-funds",
-    title: "Destinação do Capital",
-    subtitle: "Eficiência operacional e escala agressiva.",
+    title: "Alocação do Capital",
+    subtitle: "Foco total em tecnologia de ponta e tração de mercado.",
     content: (
-      <div className="space-y-4">
+      <div className="space-y-5">
         {[
-          { label: "Desenvolvimento & IA", value: 40, icon: Zap },
-          { label: "Aquisição de Creators", value: 35, icon: Users },
-          { label: "Operações & Legal", value: 15, icon: Shield },
-          { label: "Reserva Estratégica", value: 10, icon: Landmark },
+          { label: "Melhorias no App (IA/UX)", value: 40, icon: Code2, color: "bg-[#00f2ff]" },
+          { label: "Prospecção de Marcas", value: 30, icon: Target, color: "bg-[#7000ff]" },
+          { label: "Afiliados & Influenciadores", value: 20, icon: Share2, color: "bg-[#ff0055]" },
+          { label: "Operacional & Legal", value: 10, icon: Shield, color: "bg-white/40" },
         ].map((item) => (
-          <div key={item.label} className="space-y-2">
-            <div className="flex justify-between items-center text-xs">
-              <span className="flex items-center gap-2"><item.icon className="h-3 w-3 text-white/40" /> {item.label}</span>
-              <span className="font-bold">{item.value}%</span>
+          <div key={item.label} className="space-y-2 group">
+            <div className="flex justify-between items-center text-[10px] uppercase font-bold tracking-widest text-white/60 group-hover:text-white transition-colors">
+              <span className="flex items-center gap-2">
+                <item.icon className={`h-3.5 w-3.5 ${item.color.replace('bg-', 'text-')}`} /> 
+                {item.label}
+              </span>
+              <span>{item.value}%</span>
             </div>
-            <Progress value={item.value} className="h-1.5 bg-white/5" />
+            <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden border border-white/5">
+              <motion.div 
+                initial={{ width: 0 }}
+                animate={{ width: `${item.value}%` }}
+                transition={{ duration: 1, delay: 0.5 }}
+                className={`h-full ${item.color} shadow-[0_0_15px_rgba(255,255,255,0.1)]`} 
+              />
+            </div>
           </div>
         ))}
       </div>
     ),
-    gradient: "from-[hsl(270,91%,65%)] to-[hsl(240,12%,10%)]",
+    gradient: "from-[#0066ff] to-[#00f2ff]",
     icon: PieChart
   },
   {
-    id: "projections",
-    title: "Projeções Financeiras",
-    subtitle: "Caminho claro para lucratividade (Break-even: Mês 18).",
-    content: (
-      <div className="space-y-5">
-        <div className="relative h-32 w-full bg-white/5 rounded-xl border border-white/5 flex items-end p-2 gap-1">
-          {[20, 35, 55, 80, 100, 140, 200, 280, 380, 520, 700, 950].map((h, i) => (
-            <div 
-              key={i} 
-              className="flex-1 bg-gradient-to-t from-[hsl(330,81%,60%)] to-[hsl(270,91%,65%)] rounded-t-sm" 
-              style={{ height: `${(h/950)*100}%`, opacity: i > 8 ? 1 : 0.4 }} 
-            />
-          ))}
-          <div className="absolute top-2 left-3 text-[9px] text-white/30 uppercase font-bold tracking-widest">Revenue Growth (24 Months)</div>
-        </div>
-        <div className="grid grid-cols-2 gap-3">
-          <div className="p-3 rounded-xl bg-white/5 border border-white/5">
-            <p className="text-[9px] text-white/40 uppercase font-bold">Ticket Médio (SaaS)</p>
-            <p className="text-lg font-bold">R$ 699,00</p>
-          </div>
-          <div className="p-3 rounded-xl bg-white/5 border border-white/5">
-            <p className="text-[9px] text-white/40 uppercase font-bold">Margem Operacional</p>
-            <p className="text-lg font-bold text-emerald-400">72%</p>
-          </div>
-        </div>
-      </div>
-    ),
-    gradient: "from-[hsl(174,100%,47%)] to-[hsl(200,100%,55%)]",
-    icon: BarChart3
-  },
-  {
-    id: "ecosystem",
-    title: "Ecossistema Completo",
-    subtitle: "Três pilares de escala imbatível.",
+    id: "functionalities",
+    title: "Ecossistema de Elite",
+    subtitle: "Social, Monetização e Escala em um único lugar.",
     content: (
       <div className="grid grid-cols-1 gap-3">
         {[
-          { title: "Social", desc: "Feed, comunidades e engajamento orgânico.", icon: Heart, badge: "Match IA" },
-          { title: "Monetização", desc: "Links, checkout 1-clique e comissões.", icon: DollarSign, badge: "Automático" },
-          { title: "Escala", desc: "CRM B2B, Analytics e gestão de afiliados.", icon: TrendingUp, badge: "B2B" },
+          { title: "Social", desc: "Comunidades, feed interativo e Match IA.", icon: Heart, color: "text-[#ff0055]" },
+          { title: "Monetização", desc: "Checkout 1-clique, Wallet e links dinâmicos.", icon: DollarSign, color: "text-emerald-400" },
+          { title: "Escala", desc: "CRM B2B, Dashboard de Afiliados e Big Data.", icon: TrendingUp, color: "text-[#00f2ff]" },
         ].map((item) => (
-          <div key={item.title} className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/10">
-            <div className="h-10 w-10 rounded-xl bg-white/10 flex items-center justify-center">
-              <item.icon className="h-5 w-5 text-white" />
-            </div>
-            <div className="flex-1">
-              <div className="flex justify-between items-center">
-                <h4 className="font-bold text-sm">{item.title}</h4>
-                <Badge className="bg-white/10 text-[8px] h-4">{item.badge}</Badge>
+          <div key={item.title} className="group relative overflow-hidden p-5 rounded-3xl bg-white/5 border border-white/10 hover:border-white/20 transition-all hover:bg-white/[0.08]">
+            <div className="flex items-start gap-4">
+              <div className={`h-12 w-12 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 ${item.color}`}>
+                <item.icon className="h-6 w-6" />
               </div>
-              <p className="text-xs text-white/40">{item.desc}</p>
+              <div className="flex-1">
+                <h4 className="font-black text-base tracking-tight mb-1">{item.title}</h4>
+                <p className="text-xs text-white/40 font-medium">{item.desc}</p>
+              </div>
             </div>
           </div>
         ))}
       </div>
     ),
-    gradient: "from-[hsl(330,81%,60%)] to-[hsl(25,95%,53%)]",
-    icon: Network
+    gradient: "from-[#7000ff] to-[#ff00aa]",
+    icon: Cpu
   },
   {
-    id: "smart-match",
-    title: "Diferencial Competitivo",
-    subtitle: 'O "Tinder" do Social Commerce.',
+    id: "projections",
+    title: "Visão Financeira",
+    subtitle: "Break-even projetado para o Mês 18.",
     content: (
-      <div className="space-y-4">
-        <div className="relative aspect-square max-w-[200px] mx-auto">
-          <div className="absolute inset-0 rounded-full border-2 border-dashed border-white/10 animate-[spin_20s_linear_infinite]" />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="h-20 w-20 rounded-2xl bg-gradient-to-br from-[hsl(330,81%,60%)] to-[hsl(270,91%,65%)] flex items-center justify-center shadow-[0_0_40px_hsl(330,81%,60%,0.4)]">
-              <Sparkles className="h-10 w-10 text-white" />
-            </div>
+      <div className="space-y-6">
+        <div className="relative h-40 w-full bg-black/40 rounded-3xl border border-white/5 flex items-end p-4 gap-1.5 overflow-hidden">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(0,242,255,0.1),transparent)]" />
+          {[15, 25, 40, 60, 85, 120, 160, 210, 280, 380, 520, 750].map((h, i) => (
+            <motion.div 
+              key={i} 
+              initial={{ height: 0 }}
+              animate={{ height: `${(h/750)*100}%` }}
+              transition={{ delay: i * 0.1, duration: 0.8 }}
+              className={`flex-1 rounded-t-lg bg-gradient-to-t ${i > 8 ? 'from-[#00f2ff] to-[#0066ff]' : 'from-white/10 to-white/20'}`} 
+            />
+          ))}
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="p-4 rounded-2xl bg-white/5 border border-white/5">
+            <p className="text-[10px] text-white/40 uppercase font-black tracking-widest mb-1">Ticket Médio</p>
+            <p className="text-xl font-black">R$ 699</p>
           </div>
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 p-2 rounded-xl bg-white/10 backdrop-blur-md border border-white/10">
-            <Users className="h-4 w-4" />
-          </div>
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 p-2 rounded-xl bg-white/10 backdrop-blur-md border border-white/10">
-            <ShoppingCart className="h-4 w-4" />
+          <div className="p-4 rounded-2xl bg-white/5 border border-white/5">
+            <p className="text-[10px] text-white/40 uppercase font-black tracking-widest mb-1">Margem</p>
+            <p className="text-xl font-black text-emerald-400">72%</p>
           </div>
         </div>
-        <p className="text-center text-xs text-white/50 leading-relaxed">
-          Nossa IA proprietária conecta influenciadores a marcas globais através de geolocalização, nicho e performance real de vendas.
-        </p>
       </div>
     ),
-    gradient: "from-[hsl(270,91%,65%)] to-[hsl(330,81%,60%)]",
-    icon: Sparkles
+    gradient: "from-[#00f2ff] to-[#0066ff]",
+    icon: BarChart3
   },
   {
     id: "cta",
-    title: "Faça parte da história",
-    subtitle: "Lançamento confirmado para este mês.",
+    title: "O Amanhã Começa Hoje",
+    subtitle: "A maior startup da década está nascendo.",
     content: (
       <div className="space-y-8 text-center">
-        <div className="flex justify-center -space-x-4">
-          {[1,2,3,4].map(i => (
-            <div key={i} className="h-12 w-12 rounded-full border-4 border-[hsl(240,12%,5%)] bg-white/10 flex items-center justify-center overflow-hidden">
-              <img src={`https://i.pravatar.cc/150?u=${i+10}`} alt="" />
-            </div>
-          ))}
-          <div className="h-12 w-12 rounded-full border-4 border-[hsl(240,12%,5%)] bg-[hsl(330,81%,60%)] flex items-center justify-center text-xs font-bold text-white">
-            +10k
+        <div className="relative inline-block">
+          <div className="absolute -inset-4 bg-gradient-to-r from-[#00f2ff] to-[#7000ff] rounded-full blur-2xl opacity-20 animate-pulse" />
+          <div className="flex justify-center -space-x-4 relative">
+            {[1,2,3,4,5].map(i => (
+              <div key={i} className="h-14 w-14 rounded-full border-4 border-[#09090b] bg-white/10 flex items-center justify-center overflow-hidden">
+                <img src={`https://i.pravatar.cc/150?u=${i+20}`} alt="" className="w-full h-full object-cover" />
+              </div>
+            ))}
           </div>
         </div>
+        
         <div className="space-y-4">
-          <Button asChild size="lg" className="w-full h-14 rounded-2xl bg-white text-black hover:bg-white/90 font-bold text-base shadow-[0_10px_30px_rgba(255,255,255,0.2)]">
-            <Link to="/auth">Solicitar Acesso Antecipado</Link>
+          <Button asChild size="lg" className="w-full h-16 rounded-3xl bg-white text-black hover:bg-[#00f2ff] hover:text-black transition-all font-black text-lg shadow-[0_20px_40px_rgba(255,255,255,0.1)] group">
+            <Link to="/auth" className="flex items-center justify-center gap-2">
+              RESERVAR MEU ESPAÇO <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+            </Link>
           </Button>
-          <Button variant="ghost" className="w-full text-white/40 hover:text-white hover:bg-white/5">
-            Download Pitch Deck (PDF)
-          </Button>
+          <p className="text-[10px] text-white/40 font-bold uppercase tracking-[0.3em]">
+            Lançamento Final de Maio/2026
+          </p>
         </div>
-        <p className="text-[10px] text-white/20 uppercase tracking-[0.2em] font-bold">Only Shop © 2026 · Built to Scale</p>
       </div>
     ),
-    gradient: "from-[hsl(240,12%,5%)] to-[hsl(240,12%,15%)]",
+    gradient: "from-[#09090b] to-[#1a1a1e]",
     icon: Trophy
   }
 ];
@@ -224,109 +225,153 @@ export default function Pitch() {
   const Icon = slide.icon;
 
   return (
-    <div className="min-h-screen bg-[hsl(240,12%,3%)] text-white overflow-hidden flex flex-col font-sans">
-      <div className="fixed inset-0 pointer-events-none">
+    <div className="min-h-screen bg-[#020205] text-white overflow-hidden flex flex-col font-sans selection:bg-[#00f2ff] selection:text-black">
+      {/* Cinematic Futuristic Background */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.div
             key={current}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.15 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1 }}
-            className={`absolute inset-0 bg-gradient-to-br ${slide.gradient} blur-[120px]`}
+            initial={{ opacity: 0, scale: 1.2 }}
+            animate={{ opacity: 0.3, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.1 }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
+            className={`absolute inset-0 bg-gradient-to-br ${slide.gradient} blur-[120px] mix-blend-screen`}
           />
         </AnimatePresence>
-        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")` }} />
+        
+        {/* Dynamic Grid Overlay */}
+        <div className="absolute inset-0 opacity-20" 
+             style={{ 
+               backgroundImage: `linear-gradient(#ffffff0a 1px, transparent 1px), linear-gradient(90deg, #ffffff0a 1px, transparent 1px)`,
+               backgroundSize: '40px 40px' 
+             }} 
+        />
+        
+        {/* Moving Scanline */}
+        <motion.div 
+          animate={{ translateY: ["0%", "100%"] }}
+          transition={{ repeat: Infinity, duration: 4, ease: "linear" }}
+          className="absolute inset-x-0 h-[20vh] bg-gradient-to-b from-transparent via-[#00f2ff05] to-transparent z-10"
+        />
+
+        {/* Noise Filter */}
+        <div className="absolute inset-0 opacity-[0.05] contrast-150 brightness-150" 
+             style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")` }} 
+        />
       </div>
 
-      <div className="relative z-50 flex gap-1.5 px-4 pt-4">
+      {/* Top Status Bar */}
+      <div className="relative z-50 flex gap-1 px-2 pt-2 sm:px-4 sm:pt-4">
         {slides.map((_, i) => (
-          <div key={i} className="h-1 flex-1 rounded-full bg-white/10 overflow-hidden">
-            {i <= current && (
-              <motion.div 
-                layoutId="progress"
-                className="h-full bg-white"
-                initial={i === current ? { width: "0%" } : { width: "100%" }}
-                animate={i === current ? { width: "100%" } : { width: "100%" }}
-                transition={{ duration: i === current ? 5 : 0 }}
-              />
-            )}
+          <div key={i} className="h-0.5 sm:h-1 flex-1 rounded-full bg-white/5 overflow-hidden">
+            <AnimatePresence>
+              {i <= current && (
+                <motion.div 
+                  layoutId="progress-bar"
+                  className={`h-full bg-gradient-to-r ${i === current ? 'from-[#00f2ff] to-white' : 'from-white/40 to-white/60'}`}
+                  initial={i === current ? { width: "0%" } : { width: "100%" }}
+                  animate={i === current ? { width: "100%" } : { width: "100%" }}
+                  transition={{ duration: i === current ? 5 : 0.3, ease: "linear" }}
+                />
+              )}
+            </AnimatePresence>
           </div>
         ))}
       </div>
 
-      <header className="relative z-50 px-6 py-8 flex justify-between items-center">
-        <Link to="/" className="flex items-center gap-2 group">
-          <div className="h-8 w-8 rounded-lg bg-white flex items-center justify-center group-hover:scale-110 transition-transform">
-            <Rocket className="h-5 w-5 text-black" />
+      <header className="relative z-50 px-6 py-6 sm:py-8 flex justify-between items-center">
+        <Link to="/" className="flex items-center gap-3 group">
+          <div className="h-10 w-10 rounded-xl bg-white flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+            <Rocket className="h-6 w-6 text-black" />
           </div>
-          <span className="font-bold tracking-tighter text-xl">Only Shop</span>
+          <div className="flex flex-col">
+            <span className="font-black tracking-tighter text-2xl leading-none italic uppercase">Only Shop</span>
+            <span className="text-[8px] font-black tracking-[0.4em] text-[#00f2ff] uppercase">V.2026.PRO</span>
+          </div>
         </Link>
-        <Badge className="bg-white/10 text-white/60 border-white/5 rounded-full px-4 py-1.5 text-[10px] font-bold tracking-widest uppercase">
-          Confidencial · Investor Pitch
+        <Badge className="hidden sm:flex bg-white/5 text-white/40 border-white/10 rounded-full px-5 py-2 text-[9px] font-black tracking-[0.2em] uppercase backdrop-blur-md">
+          <div className="h-1.5 w-1.5 rounded-full bg-[#00f2ff] animate-pulse mr-2" />
+          Protocolo Alfa Confidencial
         </Badge>
       </header>
 
-      <main className="relative z-40 flex-1 flex flex-col justify-center px-6 max-w-xl mx-auto w-full pb-20">
+      <main className="relative z-40 flex-1 flex flex-col justify-center px-6 max-w-xl mx-auto w-full pb-24">
         <AnimatePresence mode="wait" custom={direction}>
           <motion.div
             key={current}
             custom={direction}
-            initial={{ opacity: 0, x: direction * 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: direction * -100 }}
-            transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="space-y-10"
+            initial={{ opacity: 0, x: direction * 50, scale: 0.95 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: direction * -50, scale: 1.05 }}
+            transition={{ type: "spring", damping: 30, stiffness: 300 }}
+            className="space-y-8 sm:space-y-12"
           >
-            <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <div className={`p-3 rounded-2xl bg-gradient-to-br ${slide.gradient} shadow-lg`}>
-                  <Icon className="h-6 w-6 text-white" />
-                </div>
+            <div className="space-y-4 sm:space-y-6">
+              <div className="flex items-center gap-4">
+                <motion.div 
+                  initial={{ rotate: -20, scale: 0.8 }}
+                  animate={{ rotate: 0, scale: 1 }}
+                  className={`p-4 rounded-[1.5rem] bg-gradient-to-br ${slide.gradient} shadow-[0_0_30px_rgba(255,255,255,0.1)]`}
+                >
+                  <Icon className="h-8 w-8 text-white drop-shadow-md" />
+                </motion.div>
                 {slide.badge && (
-                  <Badge className="bg-[hsl(330,81%,60%)]/20 text-[hsl(330,81%,60%)] border-[hsl(330,81%,60%)]/20 px-3 py-1 text-[10px] font-bold">
+                  <Badge className="bg-white/10 text-white border-white/20 px-4 py-1.5 text-[10px] font-black uppercase tracking-widest backdrop-blur-xl">
                     {slide.badge}
                   </Badge>
                 )}
               </div>
-              <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight leading-[1.1]">
+              <h1 className="text-5xl sm:text-7xl font-black tracking-tighter leading-[0.9] italic uppercase text-glow">
                 {slide.title}
               </h1>
-              <p className="text-xl text-white/60 font-medium">
+              <p className="text-xl sm:text-2xl text-[#00f2ff] font-black uppercase tracking-tight opacity-80 italic drop-shadow-[0_0_10px_rgba(0,242,255,0.5)]">
                 {slide.subtitle}
               </p>
             </div>
 
-            <div className="text-lg text-white/90 leading-relaxed">
-              {typeof slide.content === "string" ? slide.content : slide.content}
+            <div className="relative">
+              <div className="absolute -inset-4 bg-white/[0.02] blur-2xl rounded-[3rem] -z-10" />
+              {typeof slide.content === "string" ? (
+                <p className="text-lg sm:text-xl text-white/70 leading-relaxed font-medium">
+                  {slide.content}
+                </p>
+              ) : slide.content}
             </div>
           </motion.div>
         </AnimatePresence>
       </main>
 
+      {/* Navigation Touch Zones */}
       <div className="absolute inset-y-0 left-0 w-1/4 z-30 cursor-pointer" onClick={prevSlide} />
       <div className="absolute inset-y-0 right-0 w-3/4 z-30 cursor-pointer" onClick={nextSlide} />
 
-      <footer className="relative z-50 p-8 flex justify-between items-center">
+      <footer className="relative z-50 p-6 sm:p-10 flex justify-between items-center mt-auto">
         <div className="flex gap-4">
           <button 
             onClick={prevSlide}
             disabled={current === 0}
-            className="h-12 w-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/5 disabled:opacity-30 transition-all"
+            className="h-14 w-14 rounded-2xl border border-white/10 flex items-center justify-center hover:bg-white/5 disabled:opacity-20 transition-all active:scale-90 group backdrop-blur-md"
           >
-            <ChevronLeft className="h-5 w-5" />
+            <ChevronLeft className="h-6 w-6 group-hover:-translate-x-1 transition-transform" />
           </button>
           <button 
             onClick={nextSlide}
             disabled={current === slides.length - 1}
-            className="h-12 w-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/5 disabled:opacity-30 transition-all"
+            className="h-14 w-14 rounded-2xl border border-white/10 flex items-center justify-center hover:bg-white/5 disabled:opacity-20 transition-all active:scale-90 group backdrop-blur-md"
           >
-            <ChevronRight className="h-5 w-5" />
+            <ChevronRight className="h-6 w-6 group-hover:translate-x-1 transition-transform" />
           </button>
         </div>
-        <div className="text-right">
-          <p className="text-[10px] text-white/30 uppercase font-bold tracking-widest">Slide</p>
-          <p className="text-lg font-bold">{current + 1} <span className="text-white/20">/ {slides.length}</span></p>
+        
+        <div className="flex flex-col items-end">
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-[10px] text-white/20 uppercase font-black tracking-[0.3em]">Status: Live</span>
+            <div className="h-1 w-1 rounded-full bg-[#00f2ff]" />
+          </div>
+          <p className="text-3xl font-black italic tracking-tighter">
+            {String(current + 1).padStart(2, '0')} 
+            <span className="text-white/10 ml-2">/ {String(slides.length).padStart(2, '0')}</span>
+          </p>
         </div>
       </footer>
     </div>
