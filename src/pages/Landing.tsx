@@ -28,7 +28,7 @@ const testimonials = [
 const MeshBackground = memo(() => (
   <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
     <div className="absolute top-[-10%] left-[-10%] w-[70vw] h-[70vw] rounded-full bg-[hsl(346,100%,58%)] opacity-[0.03] blur-[120px] animate-float" />
-    <div className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] rounded-full bg-[hsl(174,100%,47%)] opacity-[0.02] blur-[120px] animate-float" style={{ animationDelay: '2s' }} />
+    <div className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] rounded-full bg-[hsl(174,100%,47%)] opacity-[0.01] blur-[120px] animate-float" style={{ animationDelay: '2s' }} />
     <div className="absolute inset-0 opacity-[0.015]" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E\")" }} />
   </div>
 ));
@@ -47,7 +47,6 @@ export default function Landing() {
             <div className="h-10 w-10 rounded-xl bg-white flex items-center justify-center group-hover:rotate-12 transition-transform duration-500 shadow-[0_0_20px_rgba(255,255,255,0.2)]">
               <img src={logoImg} alt={APP_NAME} className="h-7 w-7 rounded-lg object-cover" />
             </div>
-            <span className="font-black italic text-2xl tracking-tighter uppercase text-white">Only Shop</span>
           </Link>
           
           <div className="hidden md:flex items-center gap-8 text-[10px] uppercase font-bold tracking-[0.2em] text-white/40">
@@ -81,13 +80,13 @@ export default function Landing() {
                 V.2026 ALPHA PROTOCOL
               </Badge>
 
-              <h1 className="text-7xl md:text-[11rem] font-black leading-[0.75] tracking-tighter italic uppercase mb-14">
+              <h1 className="text-7xl md:text-[11.5rem] font-black leading-[0.7] tracking-tighter italic uppercase mb-16">
                 THE <br />
-                <span className="text-gradient-primary drop-shadow-[0_0_80px_rgba(255,46,104,0.3)]">ECOSYSTEM</span>
+                <span className="text-gradient-primary drop-shadow-[0_0_100px_rgba(255,46,104,0.4)]">ECOSYSTEM</span>
               </h1>
 
-              <p className="text-xl md:text-2xl text-white/30 mb-16 font-bold leading-relaxed tracking-tight max-w-2xl mx-auto">
-                Uma infraestrutura invisível que transforma influência em receita global através de IA e automação absoluta.
+              <p className="text-xl md:text-[1.75rem] text-white/20 mb-20 font-medium leading-relaxed tracking-tight max-w-2xl mx-auto italic">
+                An invisible infrastructure merging influence and global ecommerce through pure intelligence.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
@@ -189,25 +188,25 @@ export default function Landing() {
       {/* CTA FOOTER */}
       <section className="py-40 border-t border-white/[0.02]">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="rounded-[4rem] bg-gradient-to-br from-white/5 to-transparent border border-white/10 p-12 md:p-24 text-center relative overflow-hidden group">
-            <div className="absolute top-0 right-0 p-12 opacity-5 group-hover:opacity-10 transition-opacity">
+          <div className="rounded-[5rem] bg-white/[0.005] border border-white/[0.02] p-16 md:p-32 text-center relative overflow-hidden group">
+            <div className="absolute top-0 right-0 p-12 opacity-[0.01] group-hover:opacity-[0.03] transition-opacity">
                <TrendingUp className="h-64 w-64" />
             </div>
             
-            <h2 className="text-5xl md:text-8xl font-black italic uppercase tracking-tighter mb-12 relative z-10 leading-none">
-              Pronto para o <br /> <span className="text-gradient-primary">Próximo Nível?</span>
+            <h2 className="text-5xl md:text-[9rem] font-black italic uppercase tracking-tighter mb-16 relative z-10 leading-none">
+              READY FOR <br /> <span className="text-gradient-primary">THE EDGE?</span>
             </h2>
             
-            <Button asChild size="lg" className="h-20 px-12 rounded-full bg-white text-black hover:bg-primary hover:text-white font-black text-xl uppercase tracking-tighter italic relative z-10 shadow-2xl transition-all">
-              <Link to="/auth">Criar Conta Grátis</Link>
+            <Button asChild size="lg" className="h-24 px-16 rounded-full bg-white text-black hover:bg-[#00f2ff] hover:scale-105 font-black text-2xl uppercase tracking-tighter italic relative z-10 transition-all duration-500">
+              <Link to="/auth">INITIATE ACCESS</Link>
             </Button>
             
-            <div className="mt-16 flex justify-center gap-12 text-white/10 font-black uppercase tracking-[0.3em] text-[10px] relative z-10">
-               <span>No Credit Card</span>
+            <div className="mt-20 flex justify-center gap-16 text-white/[0.03] font-black uppercase tracking-[0.5em] text-[10px] relative z-10">
+               <span>ZERO FRICTION</span>
                <span>•</span>
-               <span>Instant Access</span>
+               <span>ALPHA DEPLOY</span>
                <span>•</span>
-               <span>2026 Ready</span>
+               <span>V.2026</span>
             </div>
           </div>
         </div>

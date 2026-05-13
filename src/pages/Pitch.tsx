@@ -347,10 +347,6 @@ export default function Pitch() {
           <div className="h-10 w-10 rounded-xl bg-white flex items-center justify-center group-hover:rotate-12 transition-transform duration-500 shadow-[0_0_20px_rgba(255,255,255,0.3)]">
             <img src={logoImg} alt={APP_NAME} className="h-7 w-7 rounded-lg object-cover" />
           </div>
-          <div className="flex flex-col">
-            <span className="font-black tracking-tighter text-2xl leading-none italic uppercase">Only Shop</span>
-            <span className="text-[8px] font-black tracking-[0.4em] text-[#00f2ff] uppercase">V.2026.PRO</span>
-          </div>
         </Link>
         <Badge className="hidden sm:flex bg-white/5 text-white/40 border-white/10 rounded-full px-5 py-2 text-[9px] font-black tracking-[0.2em] uppercase backdrop-blur-md">
           <div className="h-1.5 w-1.5 rounded-full bg-[#00f2ff] animate-pulse mr-2" />
