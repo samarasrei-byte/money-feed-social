@@ -41,7 +41,7 @@ const slides = [
     content: (
       <div className="space-y-6">
         <div className="grid grid-cols-1 gap-4">
-          <div className="relative group p-6 rounded-[2rem] bg-black/40 backdrop-blur-xl border border-white/10 overflow-hidden">
+          <div className="relative group p-8 rounded-[2.5rem] bg-white/[0.01] border border-white/[0.03] overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="relative flex justify-between items-end">
               <div>
@@ -110,8 +110,11 @@ const slides = [
           { title: "Social", desc: "Comunidades, feed interativo e Match IA.", icon: Heart, color: "text-[#ff0055]" },
           { title: "Monetização", desc: "Checkout 1-clique, Wallet e links dinâmicos.", icon: DollarSign, color: "text-emerald-400" },
           { title: "Escala", desc: "CRM B2B, Dashboard de Afiliados e Big Data.", icon: TrendingUp, color: "text-[#00f2ff]" },
-        ].map((item) => (
-          <div key={item.title} className="group relative overflow-hidden p-5 rounded-3xl bg-white/5 border border-white/10 hover:border-white/20 transition-all hover:bg-white/[0.08]">
+        ].map((item, idx) => (
+          <div key={item.title} className="group relative overflow-hidden p-6 rounded-[2rem] border border-white/[0.03] bg-white/[0.01] hover:bg-white/[0.02] transition-all duration-500">
+            <div className="absolute top-0 right-0 p-4 opacity-[0.02] group-hover:opacity-[0.05] transition-opacity">
+               <item.icon className="h-16 w-16" />
+            </div>
             <div className="flex items-start gap-4">
               <div className={`h-12 w-12 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 ${item.color}`}>
                 <item.icon className="h-6 w-6" />

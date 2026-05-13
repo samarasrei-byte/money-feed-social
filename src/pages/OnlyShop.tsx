@@ -168,7 +168,7 @@ function OnlyShopCard({
       </AnimatePresence>
 
       {/* Left Sidebar Info (Bottom) */}
-      <div className="absolute bottom-6 left-4 right-20 z-20 space-y-4 sm:max-w-[calc(theme(maxWidth.md)-5rem)] sm:ml-[calc(50%-theme(maxWidth.md)/2)]">
+      <div className="absolute bottom-6 left-4 right-20 z-20 space-y-4 sm:max-w-[calc(theme(maxWidth.md)-5rem)] sm:ml-[calc(50%-theme(maxWidth.md)/2)] animate-slide-up">
         {/* Brand */}
         <div className="flex items-center gap-2 group cursor-pointer">
           <div className="relative">
@@ -199,7 +199,7 @@ function OnlyShopCard({
 
         {/* Price & Action */}
         <div className="flex items-center gap-3">
-          <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl px-4 py-2 flex flex-col items-center">
+          <div className="bg-white/[0.03] backdrop-blur-3xl border border-white/[0.05] rounded-2xl px-4 py-2 flex flex-col items-center">
             <span className="text-[10px] text-white/40 font-bold uppercase tracking-wider">Preço</span>
             <div className="flex items-center gap-2">
               <span className="text-lg font-black text-white italic">R$ {video.price.toFixed(2)}</span>
