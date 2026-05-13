@@ -385,7 +385,7 @@ export default function Admin() {
             <div className="flex items-center justify-center py-12"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>
           ) : (
             <>
-              <div className="grid grid-cols-3 md:grid-cols-5 gap-3">
+              <div className="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-9 gap-3">
                 {statCards.map(({ icon: Icon, label, value }) => (
                   <Card key={label} className="border-border/30">
                     <CardContent className="p-3 text-center">

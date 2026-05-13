@@ -41,7 +41,7 @@ export default function Chat() {
   }
 
   return (
-    <div className="max-w-lg mx-auto">
+    <div className="max-w-4xl mx-auto">
       <div className="px-4 py-5">
         <h1 className="text-lg font-bold tracking-tight">Mensagens</h1>
       </div>

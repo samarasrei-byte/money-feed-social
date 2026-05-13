@@ -197,7 +197,7 @@ export default function Feed() {
   }
 
   return (
-    <div ref={containerRef} className="max-w-lg mx-auto overflow-auto hide-scrollbar">
+    <div ref={containerRef} className="max-w-xl mx-auto overflow-auto hide-scrollbar w-full">
       {/* Pull to refresh */}
       <div
         className="flex justify-center items-center overflow-hidden transition-all duration-200"

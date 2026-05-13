@@ -122,7 +122,7 @@ export default function Ranking() {
   }
 
   return (
-    <div className="max-w-lg mx-auto px-4 py-6 space-y-6">
+    <div className="max-w-2xl mx-auto px-4 py-6 space-y-6">
       {/* Header */}
       <div className="text-center space-y-1">
         <div className="flex items-center justify-center gap-2">
@@ -246,7 +246,7 @@ export default function Ranking() {
           )}
 
           {/* List */}
-          <div className="space-y-0.5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-0.5">
             {rankings.slice(3).map((r) => {
               const lvlMeta = getLevelMeta(r.level);
               const score = getScore(r);

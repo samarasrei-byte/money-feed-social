@@ -173,7 +173,7 @@ export default function Affiliate() {
   );
 
   return (
-    <div className="max-w-lg mx-auto px-4 py-6 space-y-5">
+    <div className="max-w-4xl mx-auto px-4 py-6 space-y-5">
       <div>
         <h1 className="text-lg font-bold tracking-tight">Afiliados</h1>
         <p className="text-[11px] text-muted-foreground/40">Links, performance e comissões</p>
@@ -200,7 +200,7 @@ export default function Affiliate() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-4 gap-2">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
         {[
           { icon: MousePointer, label: "Cliques", value: stats.totalClicks.toString(), color: "text-primary" },
           { icon: ShoppingCart, label: "Conversões", value: stats.totalConversions.toString(), color: "text-accent" },
@@ -308,7 +308,7 @@ export default function Affiliate() {
               </Button>
             </div>
           ) : (
-            <div className="space-y-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 space-y-0">
               {sortedLinks.map((link) => (
                 <div key={link.id} className="p-4 rounded-2xl border border-border/15 bg-background">
                   <div className="flex items-start justify-between gap-2">
