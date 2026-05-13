@@ -47,6 +47,7 @@ import PublicProfile from "./pages/PublicProfile";
 import Invites from "./pages/Invites";
 import PostDetail from "./pages/PostDetail";
 import VSL from "./pages/VSL";
+import Pitch from "./pages/Pitch";
 
 const queryClient = new QueryClient();
 
@@ -66,6 +67,7 @@ const App = () => (
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/r/:code" element={<RedirectLink />} />
             <Route path="/vsl" element={<VSL />} />
+            <Route path="/pitch" element={<Pitch />} />
             
             {/* App routes with layout */}
             <Route element={<AppLayout />}>

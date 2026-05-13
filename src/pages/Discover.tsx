@@ -150,7 +150,7 @@ export default function Discover() {
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="brands" className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3 space-y-0">
+        <TabsContent value="brands" className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 space-y-0">
           {loading ? (
             <Loading />
           ) : brands.length === 0 ? (
@@ -195,7 +195,7 @@ export default function Discover() {
           )}
         </TabsContent>
 
-        <TabsContent value="affiliates" className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3 space-y-0">
+        <TabsContent value="affiliates" className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 space-y-0">
           {!isBrand ? (
             <EmptyState text="Disponível para contas de marca." />
           ) : loading ? (

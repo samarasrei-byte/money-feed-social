@@ -108,6 +108,7 @@ export default function Landing() {
             <button onClick={() => document.getElementById("features")?.scrollIntoView({ behavior: "smooth" })} className="hover:text-white transition-colors">Recursos</button>
             <button onClick={() => document.getElementById("plans")?.scrollIntoView({ behavior: "smooth" })} className="hover:text-white transition-colors">Planos</button>
             <button onClick={() => document.getElementById("faq")?.scrollIntoView({ behavior: "smooth" })} className="hover:text-white transition-colors">FAQ</button>
+            <Link to="/pitch" className="hover:text-white transition-colors">Pitch</Link>
           </div>
           <div className="flex items-center gap-2">
             <Button asChild variant="ghost" size="sm" className="text-white/40 hover:text-white hover:bg-white/5 text-xs h-9 rounded-full px-4">
