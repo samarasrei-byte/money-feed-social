@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import { APP_NAME } from "@/lib/constants";
 import logoImg from "@/assets/color-palette-ref.png";
-import { memo } from "react";
+import { memo, useEffect } from "react";
 import { motion } from "framer-motion";
 
 const stats = [
@@ -36,6 +36,10 @@ const MeshBackground = memo(() => (
 MeshBackground.displayName = "MeshBackground";
 
 export default function Landing() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="min-h-screen bg-[#050505] text-white overflow-x-hidden selection:bg-primary/30 font-sans">
       <MeshBackground />
@@ -56,7 +60,7 @@ export default function Landing() {
           </div>
 
           <div className="flex items-center gap-4">
-            <Button asChild variant="ghost" size="sm" className="text-white/40 hover:text-white text-[10px] font-bold uppercase tracking-widest px-4">
+            <Button asChild variant="ghost" size="sm" className="text-white/[0.05] hover:text-white text-[10px] font-black uppercase tracking-widest px-4">
               <Link to="/auth">Login</Link>
             </Button>
             <Button asChild size="sm" className="bg-white text-black hover:bg-[#00f2ff] hover:text-black text-[10px] font-black uppercase tracking-widest h-10 px-6 rounded-full transition-all">
