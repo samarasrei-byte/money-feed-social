@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext, useContext, ReactNode } from "react";
+import { useState, useEffect, createContext, useContext, ReactNode, useMemo, useCallback } from "react";
 import { User, Session, AuthChangeEvent } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -38,48 +38,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
-  // Fetch user profile and role
-  const fetchUserData = async (userId: string) => {
+  const fetchUserData = useCallback(async (userId: string) => {
     try {
-      // Fetch profile
-      const { data: profileData, error: profileError } = await supabase
-        .from("profiles")
-        .select("*")
-        .eq("user_id", userId)
-        .single();
+      const [{ data: profileData }, { data: roleData }] = await Promise.all([
+        supabase.from("profiles").select("id, user_id, username, display_name, avatar_url, bio").eq("user_id", userId).single(),
+        supabase.from("user_roles").select("role").eq("user_id", userId).single(),
+      ]);
 
-      if (profileError && profileError.code !== "PGRST116") {
-        console.error("Error fetching profile:", profileError);
-      } else if (profileData) {
-        setProfile(profileData as Profile);
-      }
-
-      // Fetch user role
-      const { data: roleData, error: roleError } = await supabase
-        .from("user_roles")
-        .select("role")
-        .eq("user_id", userId)
-        .single();
-
-      if (roleError && roleError.code !== "PGRST116") {
-        console.error("Error fetching role:", roleError);
-      } else if (roleData) {
-        setUserRole(roleData as UserRole);
-      }
+      if (profileData) setProfile(profileData as Profile);
+      if (roleData) setUserRole(roleData as UserRole);
     } catch (error) {
       console.error("Error in fetchUserData:", error);
     }
-  };
+  }, []);
 
   useEffect(() => {
-    // onAuthStateChange with INITIAL_SESSION handles the initial session check
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event: AuthChangeEvent, session: Session | null) => {
         setSession(session);
         setUser(session?.user ?? null);
 
         if (session?.user) {
-          // Fetch data immediately when session is available
           fetchUserData(session.user.id);
         } else {
           setProfile(null);
@@ -96,31 +75,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     );
 
     return () => subscription.unsubscribe();
-  }, []);
+  }, [fetchUserData]);
 
-  const signUp = async (email: string, password: string, username?: string) => {
+  const signUp = useCallback(async (email: string, password: string, username?: string) => {
     setLoading(true);
     try {
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
-        options: {
-          emailRedirectTo: window.location.origin,
-        },
+        options: { emailRedirectTo: window.location.origin },
       });
 
       if (error) throw error;
 
-      // Update username if provided
       if (data.user && username) {
-        const { error: updateError } = await supabase
-          .from("profiles")
-          .update({ username })
-          .eq("user_id", data.user.id);
-
-        if (updateError) {
-          console.error("Error updating username:", updateError);
-        }
+        await supabase.from("profiles").update({ username }).eq("user_id", data.user.id);
       }
 
       toast({
@@ -137,22 +106,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [toast]);
 
-  const signIn = async (email: string, password: string) => {
+  const signIn = useCallback(async (email: string, password: string) => {
     setLoading(true);
     try {
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
-
-      toast({
-        title: "Bem-vindo!",
-        description: "Login realizado com sucesso.",
-      });
+      toast({ title: "Bem-vindo!", description: "Login realizado com sucesso." });
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -163,17 +124,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [toast]);
 
-  const signOut = async () => {
+  const signOut = useCallback(async () => {
     try {
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
-
-      toast({
-        title: "Até logo!",
-        description: "Você saiu da sua conta.",
-      });
+      toast({ title: "Até logo!", description: "Você saiu da sua conta." });
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -181,25 +138,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         description: error.message,
       });
     }
-  };
+  }, [toast]);
 
-  const updateProfile = async (updates: Partial<Profile>) => {
+  const updateProfile = useCallback(async (updates: Partial<Profile>) => {
     if (!user) return;
-
     try {
-      const { error } = await supabase
-        .from("profiles")
-        .update(updates)
-        .eq("user_id", user.id);
-
+      const { error } = await supabase.from("profiles").update(updates).eq("user_id", user.id);
       if (error) throw error;
-
       setProfile((prev) => (prev ? { ...prev, ...updates } : null));
-
-      toast({
-        title: "Perfil atualizado!",
-        description: "Suas informações foram salvas.",
-      });
+      toast({ title: "Perfil atualizado!", description: "Suas informações foram salvas." });
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -208,22 +155,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       });
       throw error;
     }
-  };
+  }, [user, toast]);
+
+  const value = useMemo(() => ({
+    user,
+    session,
+    profile,
+    userRole,
+    loading,
+    signUp,
+    signIn,
+    signOut,
+    updateProfile,
+  }), [user, session, profile, userRole, loading, signUp, signIn, signOut, updateProfile]);
 
   return (
-    <AuthContext.Provider
-      value={{
-        user,
-        session,
-        profile,
-        userRole,
-        loading,
-        signUp,
-        signIn,
-        signOut,
-        updateProfile,
-      }}
-    >
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );
