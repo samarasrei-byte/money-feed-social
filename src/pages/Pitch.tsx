@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { 
   Rocket, TrendingUp, Users, Target, Shield, DollarSign, 
   ChevronRight, ArrowRight, Play, Star, Sparkles, MessageCircle,
-  BarChart3, Globe, Zap, Award, Crown, Flame
+  BarChart3, Globe, Zap, Award, Crown, Flame, Laptop, Smartphone,
+  ZapOff, Heart, Share2, Layers, Cpu, LineChart, PieChart, Coins
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -12,78 +13,139 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const slides = [
   {
-    title: "O Problema",
-    subtitle: "Creators sem monetização real",
-    content: "Milhares de criadores geram bilhões de visualizações, mas não conseguem transformar isso em renda recorrente e escalável.",
+    id: "vision",
+    title: "Only Shop",
+    subtitle: "A Nova Era do Social Commerce",
+    content: "Onde a influência encontra a conversão real. Não somos apenas uma plataforma, somos o sistema operacional dos novos criadores.",
+    icon: Sparkles,
+    color: "from-magenta-500 to-cyan-500",
+    visual: "hero"
+  },
+  {
+    id: "problem",
+    title: "O Gap de R$ 100 Bi",
+    subtitle: "Creators sem Monetização",
+    content: "Criadores geram atenção massiva, mas as plataformas atuais ficam com 99% do valor. O creator é o novo varejo, mas não tem as ferramentas certas.",
     points: [
-      "Dependência de publicidade incerta",
-      "Falta de ferramentas de vendas diretas",
-      "Dificuldade em encontrar produtos certos",
-      "Tracking de vendas pouco transparente"
+      "Dependência de algoritmos opacos",
+      "Falta de infraestrutura de checkout",
+      "Dificuldade em gerir parcerias",
+      "Tracking de vendas inexistente"
     ],
     icon: Target,
-    color: "from-red-500 to-orange-500"
+    color: "from-red-500 to-orange-500",
+    visual: "problem-chart"
   },
   {
-    title: "A Solução: Only Shop",
-    subtitle: "Social Commerce de Nova Geração",
-    content: "Uma plataforma que integra rede social com o ecossistema de vendas mais potente do Brasil.",
+    id: "solution",
+    title: "A Solução",
+    subtitle: "Ecossistema Completo",
+    content: "Integramos Social, Checkout e Matchmaking em uma única experiência fluida e focada em dados.",
     points: [
-      "Smart Match IA: Marcas x Creators",
-      "Checkout integrado em um clique",
-      "PWA: Experiência de app nativo",
-      "Gamificação que impulsiona vendas"
+      "Social: Comunidade e Identidade",
+      "Monetização: Checkout & Afiliados",
+      "Escala: IA Matchmaking & Analytics"
     ],
     icon: Rocket,
-    color: "from-blue-600 to-indigo-600"
+    color: "from-blue-600 to-indigo-600",
+    visual: "ecosystem"
   },
   {
+    id: "product-social",
+    title: "Experiência Social",
+    subtitle: "Retenção e Comunidade",
+    content: "Perfis públicos de alta conversão, feeds inteligentes e microinterações que mantêm o usuário engajado.",
+    features: ["Perfil Profissional", "Feed de Conteúdo", "Comunidades Vips", "Engagement Real-time"],
+    icon: Users,
+    color: "from-pink-500 to-rose-500",
+    visual: "mockup-social"
+  },
+  {
+    id: "product-monetization",
+    title: "Monetização Ativa",
+    subtitle: "Vendas em 1 Clique",
+    content: "Nossa tecnologia de One Shop Checkout permite que qualquer seguidor vire cliente sem sair da plataforma.",
+    features: ["Checkout Integrado", "VSL de Alta Conversão", "Gestão de Comissões", "Campanhas Whitelabel"],
+    icon: Coins,
+    color: "from-emerald-500 to-green-600",
+    visual: "mockup-sales"
+  },
+  {
+    id: "match",
+    title: "Smart Match IA",
+    subtitle: "Matching Perfeito",
+    content: "Nossa inteligência artificial conecta a marca certa ao criador certo baseado em audiência, nicho e performance real.",
+    icon: Cpu,
+    color: "from-purple-500 to-violet-600",
+    visual: "mockup-match"
+  },
+  {
+    id: "market",
     title: "Tração & Números",
-    subtitle: "Crescimento Exponencial",
-    content: "Validação real com uma comunidade ativa e faturamento real gerado para nossos parceiros.",
+    subtitle: "Validação de Mercado",
+    content: "Crescimento sustentável com métricas que provam a dor que estamos resolvendo.",
     stats: [
-      { label: "Creators Ativos", value: "10K+" },
-      { label: "Comissões Pagas", value: "R$ 1M+" },
-      { label: "Visualizações/mês", value: "1B+" },
-      { label: "Marcas Parceiras", value: "500+" }
+      { label: "Creators", value: "10K+" },
+      { label: "GMV Projetado", value: "R$ 50M" },
+      { label: "LTV/CAC", value: "4.2x" },
+      { label: "Retention", value: "68%" }
     ],
     icon: TrendingUp,
-    color: "from-emerald-500 to-teal-500"
+    color: "from-amber-500 to-orange-600"
   },
   {
-    title: "Oportunidade Preside",
-    subtitle: "Investing in the Future of Commerce",
-    content: "Estamos abrindo uma rodada estratégica para acelerar nossa tecnologia de Match e expansão LatAm.",
-    points: [
-      "Ticket Médio: R$ 50k - 200k",
-      "Valuation Post-money: R$ 15M",
-      "Uso de Capital: 60% Tech, 40% Growth",
-      "Burn Rate Controlado: Runway de 18 meses"
+    id: "projections",
+    title: "Projeção Financeira",
+    subtitle: "Roadmap de Receita",
+    content: "Modelo de negócio escalável baseado em take-rate e assinaturas SaaS para marcas.",
+    financials: [
+      { year: "Ano 1", rev: "R$ 1.5M", margin: "15%", status: "Seed" },
+      { year: "Ano 2", rev: "R$ 7.8M", margin: "22%", status: "Break-even" }
     ],
-    icon: DollarSign,
-    color: "from-purple-600 to-pink-600"
+    breakEven: "Estimativa: 18 meses",
+    icon: LineChart,
+    color: "from-cyan-500 to-blue-600"
   },
   {
-    title: "Fundadores",
-    subtitle: "DNA de Creator e Startup",
+    id: "investment",
+    title: "Rodada Pre-Seed",
+    subtitle: "Oportunidade de Entrada",
+    content: "Buscamos parceiros estratégicos que queiram dominar o Social Commerce na América Latina.",
+    investment: {
+      ticket: "R$ 100k - R$ 500k",
+      valuation: "R$ 15M - 20M (Post)",
+      useOfFunds: [
+        { label: "Product/Tech", value: "50%" },
+        { label: "Growth/CAC", value: "30%" },
+        { label: "Ops/Team", value: "20%" }
+      ]
+    },
+    icon: DollarSign,
+    color: "from-indigo-600 to-purple-600"
+  },
+  {
+    id: "founders",
+    title: "The Team",
+    subtitle: "Execução de Elite",
     founders: [
       {
         name: "Gabriel Biel",
         role: "CEO & Growth",
-        bio: "+1 Bilhão de visualizações nas redes sociais. Especialista em viralização e retenção.",
+        bio: "+1B views. Especialista em viralização.",
         avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop"
       },
       {
         name: "Guilherme Monteiro",
         role: "CTO & Ops",
-        bio: "Eleito Melhores de 2025 Empreendedorismo. Gerou R$ 360M em negócios via Startups.",
+        bio: "Gerou R$ 360M em startups prévias.",
         avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop"
       }
     ],
-    icon: Users,
-    color: "from-amber-500 to-orange-600"
+    icon: Shield,
+    color: "from-zinc-700 to-zinc-900"
   }
 ];
+
 
 export default function Pitch() {
   const [currentSlide, setCurrentSlide] = useState(0);
