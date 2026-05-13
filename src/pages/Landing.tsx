@@ -95,7 +95,7 @@ export default function Landing() {
                     Começar Agora <ArrowRight className="h-5 w-5" />
                   </Link>
                 </Button>
-                <Button size="lg" variant="outline" className="h-16 px-10 rounded-full border-white/10 text-white/40 hover:text-white hover:bg-white/5 font-bold text-sm uppercase tracking-tighter w-full sm:w-auto transition-all">
+                <Button size="lg" variant="ghost" className="h-16 px-10 rounded-full text-white/[0.05] hover:text-white transition-all font-bold text-sm uppercase tracking-widest italic">
                   <Play className="mr-2 h-4 w-4 fill-current" /> Ver Demo
                 </Button>
               </div>
@@ -163,16 +163,18 @@ export default function Landing() {
             {/* Visual Teaser */}
             <div className="relative group">
               <div className="absolute -inset-20 bg-gradient-to-tr from-primary/10 to-transparent blur-[100px] opacity-50 group-hover:opacity-100 transition-opacity" />
-              <div className="relative rounded-[3rem] border border-white/10 bg-white/[0.02] p-2 aspect-[4/5] overflow-hidden shadow-2xl">
-                 <div className="h-full w-full bg-[#0a0a0a] rounded-[2.5rem] flex items-center justify-center p-12 text-center">
-                    <div className="space-y-6">
-                       <div className="h-24 w-24 rounded-full bg-gradient-primary mx-auto flex items-center justify-center animate-float">
-                          <Rocket className="h-10 w-10 text-white" />
+              <div className="relative rounded-[4rem] border border-white/[0.01] bg-white/[0.005] p-2 aspect-[4/5] overflow-hidden">
+                 <div className="h-full w-full bg-[#030303] rounded-[3.8rem] flex items-center justify-center p-12 text-center relative">
+                    <div className="absolute inset-0 bg-gradient-to-b from-primary/[0.02] to-transparent" />
+                    <div className="space-y-8 relative z-10">
+                       <div className="h-32 w-32 rounded-full border border-white/[0.03] mx-auto flex items-center justify-center">
+                          <div className="h-24 w-24 rounded-full bg-gradient-primary blur-3xl opacity-20 absolute" />
+                          <Rocket className="h-10 w-10 text-primary opacity-40 animate-float" />
                        </div>
-                       <p className="text-[10px] font-black uppercase tracking-[0.5em] text-white/10">UI Intelligence Interface</p>
-                       <div className="space-y-2">
-                          <div className="h-1 w-32 bg-white/5 rounded-full mx-auto" />
-                          <div className="h-1 w-24 bg-white/5 rounded-full mx-auto" />
+                       <p className="text-[9px] font-black uppercase tracking-[1em] text-white/[0.03]">CORE SYSTEM INTERFACE</p>
+                       <div className="space-y-4">
+                          <div className="h-0.5 w-48 bg-white/[0.02] mx-auto" />
+                          <div className="h-0.5 w-32 bg-white/[0.02] mx-auto" />
                        </div>
                     </div>
                  </div>
@@ -217,10 +219,10 @@ export default function Landing() {
               <span className="text-[8px] font-black text-white/10 uppercase tracking-[0.4em]">Proprietary OS</span>
            </div>
            
-           <div className="flex gap-10 text-[10px] font-bold uppercase tracking-[0.2em] text-white/20">
-              <Link to="/terms" className="hover:text-white transition-colors">Terms</Link>
-              <Link to="/privacy" className="hover:text-white transition-colors">Privacy</Link>
-              <a href="#" className="hover:text-white transition-colors">Contact</a>
+           <div className="flex gap-12 text-[9px] font-black uppercase tracking-[0.4em] text-white/[0.03]">
+              <Link to="/terms" className="hover:text-white transition-all">TERMS</Link>
+              <Link to="/privacy" className="hover:text-white transition-all">PRIVACY</Link>
+              <a href="#" className="hover:text-white transition-all">NETWORK</a>
            </div>
            
            <p className="text-[10px] font-bold text-white/10 uppercase tracking-[0.2em]">
