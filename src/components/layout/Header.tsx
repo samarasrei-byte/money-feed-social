@@ -97,7 +97,7 @@ export const Header = memo(function Header() {
                 )}
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-80 rounded-3xl border-border/30 shadow-2xl backdrop-blur-3xl bg-background/95 mt-2">
+            <DropdownMenuContent align="end" className="w-[calc(100vw-32px)] sm:w-80 rounded-3xl border-border/30 shadow-2xl backdrop-blur-3xl bg-background/95 mt-2 overflow-hidden">
               <div className="px-4 py-3 border-b border-border/30">
                 <p className="text-[11px] font-bold uppercase tracking-wider opacity-40">Notificações</p>
               </div>
@@ -147,7 +147,7 @@ export const Header = memo(function Header() {
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56 rounded-3xl border-border/30 shadow-2xl backdrop-blur-3xl bg-background/95 mt-2">
+              <DropdownMenuContent align="end" className="w-56 rounded-3xl border-border/30 shadow-2xl backdrop-blur-3xl bg-background/95 mt-2 overflow-hidden">
                 <div className="px-4 py-3">
                   <p className="text-[13px] font-bold truncate">{profile?.display_name || "Usuário"}</p>
                   <p className="text-[10px] text-muted-foreground/40 truncate font-medium">{user.email}</p>

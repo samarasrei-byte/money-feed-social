@@ -122,7 +122,7 @@ export default function Ranking() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-6 space-y-6">
+    <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
       {/* Header */}
       <div className="text-center space-y-1">
         <div className="flex items-center justify-center gap-2">
@@ -199,7 +199,7 @@ export default function Ranking() {
       </div>
 
       {/* XP Actions Legend */}
-      <div className="grid grid-cols-3 gap-1.5">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
         {[
           { action: "Post", pts: 10, icon: "📝" },
           { action: "Comentar", pts: 5, icon: "💬" },

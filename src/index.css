@@ -126,6 +126,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
+    width: 100vw;
     scroll-behavior: smooth;
     text-rendering: optimizeLegibility;
     touch-action: manipulation;
