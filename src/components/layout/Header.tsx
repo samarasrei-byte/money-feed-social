@@ -43,8 +43,11 @@ export const Header = memo(function Header() {
     <header className="sticky top-0 z-50 w-full glass safe-area-inset-top border-b border-white/[0.04]">
       <div className="flex h-12 items-center justify-between px-4 max-w-7xl mx-auto w-full">
         {/* Logo */}
-        <Link to="/feed" className="flex items-center tap">
-          <img src={logoImg} alt={APP_NAME} className="h-7 w-7 rounded-lg object-cover shadow-sm" />
+        <Link to="/feed" className="flex items-center gap-2.5 tap group">
+          <div className="h-8 w-8 rounded-lg bg-white flex items-center justify-center group-hover:rotate-6 transition-transform shadow-sm">
+            <img src={logoImg} alt={APP_NAME} className="h-5.5 w-5.5 rounded-[4px] object-cover" />
+          </div>
+          <span className="font-black italic text-base tracking-tighter uppercase text-foreground">Only Shop</span>
         </Link>
 
         {/* Search - Desktop */}

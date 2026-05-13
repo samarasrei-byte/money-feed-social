@@ -43,11 +43,11 @@ export default function Landing() {
       {/* NAV */}
       <nav className="relative z-50 w-full border-b border-white/[0.03] backdrop-blur-md sticky top-0">
         <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-          <Link to="/" className="flex items-center gap-2 group">
-            <div className="h-9 w-9 rounded-xl bg-white flex items-center justify-center group-hover:rotate-12 transition-transform duration-500">
-              <img src={logoImg} alt={APP_NAME} className="h-6 w-6 rounded-lg object-cover" />
+          <Link to="/" className="flex items-center gap-3 group">
+            <div className="h-10 w-10 rounded-xl bg-white flex items-center justify-center group-hover:rotate-12 transition-transform duration-500 shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+              <img src={logoImg} alt={APP_NAME} className="h-7 w-7 rounded-lg object-cover" />
             </div>
-            <span className="font-black italic text-xl tracking-tighter uppercase">Only Shop</span>
+            <span className="font-black italic text-2xl tracking-tighter uppercase text-white">Only Shop</span>
           </Link>
           
           <div className="hidden md:flex items-center gap-8 text-[10px] uppercase font-bold tracking-[0.2em] text-white/40">
@@ -76,14 +76,14 @@ export default function Landing() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <Badge className="mb-8 bg-white/5 text-white/40 border-white/10 px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.3em] inline-flex items-center gap-3">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#ff2e68] animate-pulse" />
-                Next-Gen Social Ecommerce
+              <Badge className="mb-10 bg-white/5 text-primary border-primary/20 px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.4em] inline-flex items-center gap-3 shadow-[0_0_20px_rgba(255,46,104,0.1)]">
+                <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+                V.2026 ALPHA PROTOCOL
               </Badge>
 
-              <h1 className="text-7xl md:text-[10rem] font-black leading-[0.8] tracking-tighter italic uppercase mb-12">
-                O Futuro do <br />
-                <span className="text-gradient-primary drop-shadow-[0_0_50px_rgba(255,46,104,0.2)]">Ecommerce</span>
+              <h1 className="text-7xl md:text-[11rem] font-black leading-[0.75] tracking-tighter italic uppercase mb-14">
+                THE <br />
+                <span className="text-gradient-primary drop-shadow-[0_0_80px_rgba(255,46,104,0.3)]">ECOSYSTEM</span>
               </h1>
 
               <p className="text-xl md:text-2xl text-white/30 mb-16 font-bold leading-relaxed tracking-tight max-w-2xl mx-auto">
@@ -187,7 +187,7 @@ export default function Landing() {
       </section>
 
       {/* CTA FOOTER */}
-      <section className="py-40">
+      <section className="py-40 border-t border-white/[0.02]">
         <div className="max-w-7xl mx-auto px-6">
           <div className="rounded-[4rem] bg-gradient-to-br from-white/5 to-transparent border border-white/10 p-12 md:p-24 text-center relative overflow-hidden group">
             <div className="absolute top-0 right-0 p-12 opacity-5 group-hover:opacity-10 transition-opacity">

@@ -342,8 +342,8 @@ export default function Pitch() {
 
       <header className="relative z-50 px-6 py-6 sm:py-8 flex justify-between items-center">
         <Link to="/" className="flex items-center gap-3 group">
-          <div className="h-10 w-10 rounded-xl bg-white flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shadow-[0_0_20px_rgba(255,255,255,0.3)]">
-            <Rocket className="h-6 w-6 text-black" />
+          <div className="h-10 w-10 rounded-xl bg-white flex items-center justify-center group-hover:rotate-12 transition-transform duration-500 shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+            <img src={logoImg} alt={APP_NAME} className="h-7 w-7 rounded-lg object-cover" />
           </div>
           <div className="flex flex-col">
             <span className="font-black tracking-tighter text-2xl leading-none italic uppercase">Only Shop</span>
