@@ -125,17 +125,17 @@ export default function Landing() {
       <section className="relative z-10 pt-8 sm:pt-16 pb-20 overflow-hidden">
         <div className="max-w-6xl mx-auto px-5">
           <div className="max-w-2xl mx-auto text-center sm:text-left sm:mx-0">
-            <Badge className="mb-6 bg-white/[0.06] backdrop-blur-xl text-white/60 border-white/[0.08] text-[10px] font-semibold px-4 py-1.5 rounded-full uppercase tracking-[0.15em] inline-flex">
-              <Sparkles className="h-3 w-3 mr-1.5 text-[hsl(25,95%,53%)]" />
-              Social Commerce #1 do Brasil
+            <Badge className="mb-6 bg-white/[0.04] backdrop-blur-2xl text-white/50 border-white/[0.06] text-[10px] font-bold px-5 py-2 rounded-full uppercase tracking-[0.2em] inline-flex items-center gap-2 group hover:border-white/20 transition-all">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[hsl(330,81%,60%)] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[hsl(330,81%,60%)]"></span>
+              </span>
+              Lançamento Oficial: Maio 2026
             </Badge>
 
-            <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-extrabold mb-6 leading-[0.95] tracking-tight">
-              Transforme{" "}
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[hsl(25,95%,53%)] via-[hsl(330,81%,60%)] to-[hsl(270,91%,65%)]">conteúdo</span>
-              <br />
-              em{" "}
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[hsl(330,81%,60%)] to-[hsl(270,91%,65%)]">renda real</span>
+            <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-black mb-8 leading-[0.9] tracking-tighter">
+              O futuro do <br />
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[hsl(25,95%,53%)] via-[hsl(330,81%,60%)] to-[hsl(270,91%,65%)] animate-gradient-x">Commerce</span>
             </h1>
 
             <p className="text-sm sm:text-base text-white/35 mb-8 max-w-md leading-relaxed mx-auto sm:mx-0">
