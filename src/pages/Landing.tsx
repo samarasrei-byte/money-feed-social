@@ -120,9 +120,9 @@ export default function Landing() {
           <div className="max-w-7xl mx-auto px-6 py-10">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
               {stats.map((stat) => (
-                <div key={stat.label} className="text-center group">
-                  <p className="text-4xl font-black italic tracking-tighter mb-2 group-hover:text-primary transition-colors">{stat.value}</p>
-                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/20">{stat.label}</p>
+                <div key={stat.label} className="text-center group border-l border-white/[0.03] first:border-l-0">
+                  <p className="text-5xl font-black italic tracking-tighter mb-3 group-hover:text-primary transition-all duration-500">{stat.value}</p>
+                  <p className="text-[9px] font-black uppercase tracking-[0.4em] text-white/[0.05]">{stat.label}</p>
                 </div>
               ))}
             </div>
@@ -138,11 +138,11 @@ export default function Landing() {
               <Badge className="bg-primary/10 text-primary border-primary/20 px-4 py-1 text-[10px] font-black uppercase tracking-widest">
                 Engine Proprietária
               </Badge>
-              <h2 className="text-5xl md:text-7xl font-black italic uppercase tracking-tighter leading-[0.9]">
-                Inteligência <br /> que <span className="text-white/20 text-glow">Cria Valor</span>
+              <h2 className="text-6xl md:text-[10rem] font-black italic uppercase tracking-tighter leading-[0.65] mb-8">
+                PURE <br /> <span className="text-white/[0.02] text-glow">INTELLIGENCE</span>
               </h2>
-              <p className="text-lg text-white/30 font-medium leading-relaxed max-w-lg">
-                Nossa IA processa bilhões de pontos de dados para conectar marcas a audiências reais, eliminando o desperdício de marketing.
+              <p className="text-xl text-white/[0.08] font-medium leading-relaxed max-w-lg italic">
+                Our proprietary engine computes billions of data points to orchestrate high-yield ecommerce connections.
               </p>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
@@ -215,8 +215,8 @@ export default function Landing() {
       {/* FOOTER */}
       <footer className="py-12 border-t border-white/5 relative z-10">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
-           <div className="flex items-center gap-3">
-              <span className="font-black italic text-lg uppercase tracking-tighter">Only Shop</span>
+           <div className="flex items-center gap-4 opacity-20">
+              <span className="font-black italic text-2xl uppercase tracking-tighter">ONLY SHOP</span>
               <span className="text-[8px] font-black text-white/10 uppercase tracking-[0.4em]">Proprietary OS</span>
            </div>
            
