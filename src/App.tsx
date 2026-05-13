@@ -7,6 +7,7 @@ import { AuthProvider } from "@/hooks/useAuth";
 
 // Layouts
 import { AppLayout } from "@/components/layout/AppLayout";
+import { ProtectedRoute } from "@/components/layout/ProtectedRoute";
 
 // Pages
 import Landing from "./pages/Landing";
