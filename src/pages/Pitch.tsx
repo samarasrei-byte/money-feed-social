@@ -321,10 +321,10 @@ export default function Pitch() {
                   </Badge>
                 )}
               </div>
-              <h1 className="text-5xl sm:text-7xl font-black tracking-tighter leading-[0.9] italic uppercase">
+              <h1 className="text-5xl sm:text-7xl font-black tracking-tighter leading-[0.9] italic uppercase text-glow">
                 {slide.title}
               </h1>
-              <p className="text-xl sm:text-2xl text-[#00f2ff] font-black uppercase tracking-tight opacity-80 italic">
+              <p className="text-xl sm:text-2xl text-[#00f2ff] font-black uppercase tracking-tight opacity-80 italic drop-shadow-[0_0_10px_rgba(0,242,255,0.5)]">
                 {slide.subtitle}
               </p>
             </div>
