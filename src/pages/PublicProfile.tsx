@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -29,6 +29,7 @@ export default function PublicProfile() {
   const { username } = useParams<{ username: string }>();
   const { user } = useAuth();
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [profile, setProfile] = useState<PublicProfileData | null>(null);
   const [level, setLevel] = useState<UserLevel | null>(null);
   const [posts, setPosts] = useState<any[]>([]);
@@ -134,7 +135,7 @@ export default function PublicProfile() {
         convId = newC.id;
       }
     }
-    window.location.href = `/chat?c=${convId}`;
+    navigate(`/chat?c=${convId}`);
   };
 
   if (loading) {

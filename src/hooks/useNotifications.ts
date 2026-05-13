@@ -26,39 +26,31 @@ export function useNotifications() {
 
     const { data, error } = await supabase
       .from("notifications")
-      .select("*")
+      .select(`
+        *,
+        actor:profiles!notifications_actor_id_fkey(user_id, username, display_name, avatar_url)
+      `)
       .eq("user_id", user.id)
       .order("created_at", { ascending: false })
       .limit(50);
 
     if (error || !data) return;
 
-    const actorIds = [...new Set(data.map((n) => n.actor_id))];
-    const { data: profiles } = await supabase
-      .from("profiles")
-      .select("user_id, username, display_name, avatar_url")
-      .in("user_id", actorIds);
-
-    const profilesMap = new Map(profiles?.map((p) => [p.user_id, p]) || []);
-
-    const mapped: Notification[] = data.map((n) => {
-      const actor = profilesMap.get(n.actor_id);
-      return {
-        id: n.id,
-        type: n.type,
-        actorId: n.actor_id,
-        postId: n.post_id || undefined,
-        read: n.read,
-        createdAt: n.created_at,
-        actor: actor
-          ? {
-              username: actor.username || "user",
-              displayName: actor.display_name || "Usuário",
-              avatarUrl: actor.avatar_url || undefined,
-            }
-          : undefined,
-      };
-    });
+    const mapped: Notification[] = data.map((n: any) => ({
+      id: n.id,
+      type: n.type,
+      actorId: n.actor_id,
+      postId: n.post_id || undefined,
+      read: n.read,
+      createdAt: n.created_at,
+      actor: n.actor
+        ? {
+            username: n.actor.username || "user",
+            displayName: n.actor.display_name || "Usuário",
+            avatarUrl: n.actor.avatar_url || undefined,
+          }
+        : undefined,
+    }));
 
     setNotifications(mapped);
     setUnreadCount(mapped.filter((n) => !n.read).length);
