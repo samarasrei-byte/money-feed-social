@@ -29,6 +29,7 @@ export default function PublicProfile() {
   const { username } = useParams<{ username: string }>();
   const { user } = useAuth();
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [profile, setProfile] = useState<PublicProfileData | null>(null);
   const [level, setLevel] = useState<UserLevel | null>(null);
   const [posts, setPosts] = useState<any[]>([]);
