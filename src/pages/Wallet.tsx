@@ -160,7 +160,7 @@ export default function Wallet() {
   );
 
   return (
-    <div className="max-w-lg mx-auto px-4 py-6 space-y-5">
+    <div className="max-w-4xl mx-auto px-4 py-6 space-y-5">
       {/* Header */}
       <div className="flex items-center gap-3">
         <Button asChild variant="ghost" size="icon" className="h-8 w-8 rounded-full">
@@ -280,7 +280,7 @@ export default function Wallet() {
             <p className="text-xs text-muted-foreground/30">Nenhuma transação encontrada</p>
           </div>
         ) : (
-          <div className="space-y-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 space-y-0">
             {filtered.map((t) => {
               const cfg = typeConfig[t.type];
               const sCfg = statusConfig[t.status];

@@ -129,7 +129,7 @@ export default function Discover() {
   if (!user) return <Navigate to="/auth" replace />;
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-6 space-y-6">
+    <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
       <div className="flex items-center gap-3">
         <div className="h-10 w-10 rounded-2xl bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center">
           <Sparkles className="h-5 w-5 text-primary-foreground" />
@@ -150,7 +150,7 @@ export default function Discover() {
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="brands" className="mt-4 space-y-2">
+        <TabsContent value="brands" className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3 space-y-0">
           {loading ? (
             <Loading />
           ) : brands.length === 0 ? (
@@ -195,7 +195,7 @@ export default function Discover() {
           )}
         </TabsContent>
 
-        <TabsContent value="affiliates" className="mt-4 space-y-2">
+        <TabsContent value="affiliates" className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3 space-y-0">
           {!isBrand ? (
             <EmptyState text="Disponível para contas de marca." />
           ) : loading ? (
@@ -247,7 +247,7 @@ export default function Discover() {
 
 function Loading() {
   return (
-    <div className="flex items-center justify-center py-12">
+    <div className="flex items-center justify-center py-12 col-span-full">
       <Loader2 className="h-4 w-4 animate-spin text-muted-foreground/30" />
     </div>
   );
@@ -255,6 +255,6 @@ function Loading() {
 
 function EmptyState({ text }: { text: string }) {
   return (
-    <div className="text-center py-12 text-xs text-muted-foreground/50">{text}</div>
+    <div className="text-center py-12 text-xs text-muted-foreground/50 col-span-full">{text}</div>
   );
 }

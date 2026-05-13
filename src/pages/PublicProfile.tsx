@@ -160,7 +160,7 @@ export default function PublicProfile() {
         <h1 className="font-bold">@{profile.username}</h1>
       </div>
 
-      <div className="max-w-3xl mx-auto p-4 space-y-6">
+      <div className="max-w-5xl mx-auto p-4 space-y-6">
         <Card className="p-6 bg-card/40 backdrop-blur-2xl border-white/10">
           <div className="flex items-start gap-5">
             <div className="relative">
@@ -248,7 +248,7 @@ export default function PublicProfile() {
               🔥 Produtos mais hypados
               <span className="text-xs font-normal text-muted-foreground">por @{profile.username}</span>
             </h3>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2">
               {hotProducts.map((hp) => (
                 <Card key={hp.product_id} className="overflow-hidden bg-card/40 backdrop-blur-2xl border-white/10">
                   {hp.product?.image_url && (
@@ -276,7 +276,7 @@ export default function PublicProfile() {
           {posts.length === 0 ? (
             <p className="text-sm text-muted-foreground text-center py-8">Nenhuma publicação ainda</p>
           ) : (
-            <div className="grid grid-cols-3 gap-1">
+            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-1 md:gap-2">
               {posts.map((p) => (
                 <Link key={p.id} to={`/post/${p.id}`} className="aspect-square bg-muted rounded-md overflow-hidden block hover:opacity-80 transition">
                   {p.media_url ? (
