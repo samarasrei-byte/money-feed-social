@@ -121,7 +121,7 @@ export default function Landing() {
       </nav>
 
       {/* ═══ HERO ═══ */}
-      <section className="relative z-10 pt-8 sm:pt-16 pb-20">
+      <section className="relative z-10 pt-8 sm:pt-16 pb-20 overflow-hidden">
         <div className="max-w-6xl mx-auto px-5">
           <div className="max-w-2xl mx-auto text-center sm:text-left sm:mx-0">
             <Badge className="mb-6 bg-white/[0.06] backdrop-blur-xl text-white/60 border-white/[0.08] text-[10px] font-semibold px-4 py-1.5 rounded-full uppercase tracking-[0.15em] inline-flex">
@@ -129,7 +129,7 @@ export default function Landing() {
               Social Commerce #1 do Brasil
             </Badge>
 
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold mb-6 leading-[0.95] tracking-tight">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-extrabold mb-6 leading-[0.95] tracking-tight">
               Transforme{" "}
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-[hsl(25,95%,53%)] via-[hsl(330,81%,60%)] to-[hsl(270,91%,65%)]">conteúdo</span>
               <br />
@@ -173,7 +173,7 @@ export default function Landing() {
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 lg:gap-6">
             {stats.map((stat) => (
               <Glass key={stat.label} className="p-4 sm:p-5 text-center">
                 <stat.icon className="h-4 w-4 mx-auto mb-2 text-[hsl(330,81%,60%)]" />
@@ -212,7 +212,7 @@ export default function Landing() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-6">
             {[
               { icon: Sparkles, title: "Smart Match", desc: "IA cruza nicho + geo + performance e devolve top matches.", href: "/discover", color: "from-[hsl(346,100%,58%)] to-[hsl(330,81%,60%)]" },
               { icon: Flame, title: "Em Alta", desc: "Produtos hypados ranqueados por vendas reais das últimas 24h-30d.", href: "/trending", color: "from-[hsl(25,95%,53%)] to-[hsl(346,100%,58%)]" },
