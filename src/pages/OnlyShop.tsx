@@ -94,7 +94,7 @@ const MOCK_VIDEOS: ProductVideo[] = [
   }
 ];
 
-function UnishopCard({
+function OnlyShopCard({
   video,
   isActive,
   onLike,
@@ -270,7 +270,7 @@ function UnishopCard({
   );
 }
 
-export default function Unishop() {
+export default function OnlyShop() {
   const [activeIndex, setActiveIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
@@ -337,7 +337,7 @@ export default function Unishop() {
       >
         {MOCK_VIDEOS.map((video, i) => (
           <div key={video.id} className="h-full w-full">
-            <UnishopCard
+            <OnlyShopCard
               video={video}
               isActive={i === activeIndex}
               onLike={() => {}}

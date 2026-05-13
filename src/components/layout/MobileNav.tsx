@@ -6,7 +6,7 @@ import { memo } from "react";
 const navItems = [
   { href: "/feed", icon: Home, label: "Feed" },
   { href: "/discover", icon: Sparkles, label: "Match" },
-  { href: "/unishop", icon: ShoppingBag, label: "Unishop" },
+  { href: "/onlyshop", icon: ShoppingBag, label: "Only Shop" },
   { href: "/create", icon: PlusCircle, label: "", isAction: true },
   { href: "/trending", icon: Flame, label: "Em Alta" },
   { href: "/profile", icon: User, label: "Perfil" },
