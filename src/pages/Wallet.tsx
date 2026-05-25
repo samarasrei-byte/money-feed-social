@@ -185,7 +185,7 @@ export default function Wallet() {
         {/* Withdraw button */}
         <Sheet>
           <SheetTrigger asChild>
-            <Button size="sm" className="mt-4 rounded-full text-[10px] h-9 gap-1.5 w-full" disabled={balance <= 0}>
+            <Button size="lg" className="mt-6 rounded-full text-xs h-12 gap-2 w-full bg-foreground text-background hover:scale-[1.02] transition-transform" disabled={balance <= 0}>
               <DollarSign className="h-3 w-3" />
               Sacar via PIX
             </Button>
