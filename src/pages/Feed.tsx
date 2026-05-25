@@ -159,7 +159,7 @@ export default function Feed() {
   }
 
   return (
-    <div ref={containerRef} className="max-w-xl mx-auto overflow-auto hide-scrollbar w-full">
+    <div ref={containerRef} className="max-w-xl mx-auto overflow-auto hide-scrollbar w-full pt-2">
       {/* Pull to refresh */}
       <div
         className="flex justify-center items-center overflow-hidden transition-all duration-200"
@@ -207,7 +207,7 @@ export default function Feed() {
         {isFetchingNextPage ? (
           <Loader2 className="h-4 w-4 animate-spin text-primary/20" />
         ) : !hasNextPage && posts.length > 0 ? (
-          <p className="text-[11px] text-muted-foreground/30 font-medium tracking-tight">Você viu tudo ✨</p>
+          <p className="text-[11px] text-muted-foreground/40 font-bold uppercase tracking-widest">Você viu tudo ✨</p>
         ) : null}
       </div>
 

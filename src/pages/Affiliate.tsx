@@ -180,11 +180,11 @@ export default function Affiliate() {
       </div>
 
       {/* Wallet Card */}
-      <div className="p-5 rounded-2xl bg-gradient-to-br from-primary/10 via-accent/5 to-background border border-primary/20">
+      <div className="p-6 rounded-[2rem] bg-gradient-to-br from-primary/10 via-accent/5 to-background border border-primary/20 shadow-premium group">
         <div className="flex items-center justify-between mb-3">
           <div>
-            <p className="text-[9px] text-muted-foreground/40 uppercase tracking-widest font-semibold">Saldo disponível</p>
-            <p className="text-2xl font-black mt-0.5">{fmt(stats.totalEarnings)}</p>
+            <p className="text-[10px] text-muted-foreground/40 uppercase tracking-[0.2em] font-black">Saldo disponível</p>
+            <p className="text-3xl font-black italic mt-1 tracking-tighter">{fmt(stats.totalEarnings)}</p>
           </div>
           <Button asChild size="sm" className="rounded-full text-[10px] h-8 gap-1.5">
             <Link to="/wallet">
@@ -194,8 +194,8 @@ export default function Affiliate() {
           </Button>
         </div>
         <div className="flex gap-4 text-[10px]">
-          <span className="text-muted-foreground/50">Pendente: <strong className="text-warning">{fmt(stats.pendingEarnings)}</strong></span>
-          <span className="text-muted-foreground/50">Conversão: <strong className="text-primary">{stats.conversionRate.toFixed(1)}%</strong></span>
+          <span className="text-muted-foreground/40 font-bold uppercase">Pendente: <strong className="text-warning">{fmt(stats.pendingEarnings)}</strong></span>
+          <span className="text-muted-foreground/40 font-bold uppercase">Conversão: <strong className="text-primary">{stats.conversionRate.toFixed(1)}%</strong></span>
         </div>
       </div>
 

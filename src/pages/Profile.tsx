@@ -122,16 +122,16 @@ export default function Profile() {
       {/* Profile Card */}
       <div className="mx-4">
         {/* Cover */}
-        <div className="h-28 rounded-t-2xl bg-gradient-to-br from-primary/10 via-accent/5 to-primary/[0.02] dark:from-[hsl(330,81%,60%,0.15)] dark:via-[hsl(270,91%,65%,0.08)] dark:to-transparent relative overflow-hidden">
+        <div className="h-32 rounded-t-[2rem] bg-gradient-to-br from-primary/20 via-accent/10 to-primary/[0.05] relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background/20" />
         </div>
 
-        <div className="px-4 pb-5 bg-background dark:bg-white/[0.03] dark:backdrop-blur-2xl border-x border-b border-border/20 dark:border-white/[0.08] rounded-b-2xl relative">
+        <div className="px-6 pb-6 bg-background dark:bg-white/[0.02] dark:backdrop-blur-3xl border-x border-b border-white/10 rounded-b-[2rem] relative">
           {/* Avatar */}
           <div className="absolute -top-10 left-4">
             <div className="relative">
-              <div className="rounded-full p-[2px] bg-gradient-to-br from-accent via-primary to-purple-500">
-                <Avatar className="h-20 w-20 border-[3px] border-background">
+              <div className="rounded-full p-[2px] bg-gradient-to-br from-accent via-primary to-purple-500 shadow-glow">
+                <Avatar className="h-24 w-24 border-[4px] border-background shadow-premium">
                   <AvatarImage src={profile?.avatar_url || undefined} />
                   <AvatarFallback className="bg-muted text-foreground text-lg font-bold">{initials}</AvatarFallback>
                 </Avatar>
@@ -174,12 +174,12 @@ export default function Profile() {
             ) : (
               <>
                 <div className="flex items-center gap-2">
-                  <h1 className="text-base font-bold tracking-tight">{profile?.display_name || "Usuário"}</h1>
-                  <Badge variant="secondary" className="text-[9px] rounded-full bg-muted/50 text-muted-foreground/50 border-0">{roleLabels[role]}</Badge>
+                  <h1 className="text-xl font-black italic uppercase tracking-tighter">{profile?.display_name || "Usuário"}</h1>
+                  <Badge variant="secondary" className="text-[10px] font-black uppercase tracking-widest rounded-full bg-primary/10 text-primary border-0">{roleLabels[role]}</Badge>
                 </div>
-                <p className="text-xs text-muted-foreground/40">@{profile?.username || "user"}</p>
-                {profile?.bio && <p className="text-xs leading-relaxed text-foreground/70">{profile.bio}</p>}
-                <div className="flex items-center gap-1 text-[10px] text-muted-foreground/30">
+                <p className="text-sm font-bold text-muted-foreground/40 tracking-tight">@{profile?.username || "user"}</p>
+                {profile?.bio && <p className="text-sm leading-relaxed text-foreground/80 font-medium">{profile.bio}</p>}
+                <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground/40 font-bold uppercase tracking-wider">
                   <Calendar className="h-3 w-3" />
                   Entrou {formatDistanceToNow(new Date(user.created_at), { addSuffix: true, locale: ptBR })}
                 </div>

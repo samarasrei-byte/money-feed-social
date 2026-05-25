@@ -40,7 +40,7 @@ export const Header = memo(function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full glass safe-area-inset-top border-b border-white/[0.04]">
+    <header className="sticky top-0 z-50 w-full glass safe-area-inset-top border-b border-white/[0.05] transition-all duration-300">
       <div className="flex h-12 items-center justify-between px-4 max-w-7xl mx-auto w-full">
         {/* Logo */}
         <Link to="/feed" className="flex items-center tap group">
@@ -56,7 +56,7 @@ export const Header = memo(function Header() {
             <input
               type="text"
               placeholder="Buscar conteúdos..."
-              className="w-full h-8 pl-9 pr-4 rounded-full bg-muted/30 border-0 text-xs focus:outline-none focus:ring-1 focus:ring-primary/20 transition-all placeholder:text-muted-foreground/30 font-medium"
+              className="w-full h-8 pl-9 pr-4 rounded-full bg-white/[0.05] border border-white/[0.05] text-[11px] focus:outline-none focus:ring-1 focus:ring-primary/40 transition-all placeholder:text-muted-foreground/30 font-medium"
             />
           </div>
         </div>
