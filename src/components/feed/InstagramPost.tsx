@@ -100,12 +100,12 @@ export const InstagramPost = memo(function InstagramPost({
   const shouldTruncate = post.content.length > 100;
 
   return (
-    <article className="bg-background border-b border-border/10 pb-4">
+    <article className="bg-background border-b border-border/10 pb-6">
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-3">
         <div className="flex items-center gap-3 cursor-pointer flex-1 min-w-0" onClick={onProfileClick}>
           <div className="relative shrink-0">
-            <div className="rounded-full p-[1.5px] bg-gradient-to-br from-accent/40 via-primary/40 to-purple-500/40">
+            <div className="rounded-full p-[1.5px] bg-gradient-to-br from-accent via-primary to-purple-500 shadow-glow">
               <Avatar className="h-9 w-9 border-2 border-background">
                 <AvatarImage src={post.profile?.avatarUrl} alt={post.profile?.displayName} />
                 <AvatarFallback className="bg-muted text-foreground text-[10px] font-bold">
@@ -116,7 +116,7 @@ export const InstagramPost = memo(function InstagramPost({
           </div>
           <div className="flex flex-col min-w-0">
             <div className="flex items-center gap-1.5">
-              <span className="font-bold text-[13px] tracking-tight truncate">
+              <span className="font-bold text-[14px] tracking-tight truncate">
                 {post.profile?.username || "user"}
               </span>
               {(post.profile?.isVerified || post.profile?.totalEarnings) && (
@@ -232,7 +232,7 @@ export const InstagramPost = memo(function InstagramPost({
 
         {/* Likes Count */}
         {post.likesCount > 0 && (
-          <p className="pt-2 text-[13.5px] font-bold tracking-tight">
+          <p className="pt-3 text-[14px] font-bold tracking-tight">
             {post.likesCount.toLocaleString("pt-BR")} curtida{post.likesCount !== 1 && "s"}
           </p>
         )}
@@ -240,7 +240,7 @@ export const InstagramPost = memo(function InstagramPost({
         {/* Caption */}
         {post.postType !== "text" && post.content && (
           <div className="pt-1.5">
-            <p className="text-[13.5px] leading-relaxed">
+            <p className="text-[14px] leading-relaxed">
               <span className="font-bold mr-1.5">{post.profile?.username}</span>
               {shouldTruncate && !expanded ? (
                 <>

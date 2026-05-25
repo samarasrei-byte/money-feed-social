@@ -9,85 +9,24 @@
 
 @layer base {
   :root {
-    --background: 240 10% 3.9%;
+    --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
 
-    --card: 240 10% 5%;
+    --card: 0 0% 4.5%;
     --card-foreground: 0 0% 98%;
 
-    --popover: 240 10% 5%;
+    --popover: 0 0% 4.5%;
     --popover-foreground: 0 0% 98%;
 
     --primary: 346 100% 58%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 240 10% 10%;
+    --secondary: 0 0% 8%;
     --secondary-foreground: 0 0% 98%;
 
-    --muted: 240 10% 10%;
-    --muted-foreground: 240 5% 65%;
+    --muted: 0 0% 8%;
+    --muted-foreground: 0 0% 60%;
 
-    --accent: 330 81% 60%;
-    --accent-foreground: 0 0% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-
-    --success: 160 84% 39%;
-    --success-foreground: 0 0% 100%;
-
-    --warning: 45 93% 47%;
-    --warning-foreground: 0 0% 100%;
-
-    --border: 240 10% 15%;
-    --input: 240 10% 15%;
-    --ring: 346 100% 58%;
-
-    --radius: 1.25rem;
-
-    /* Sidebar */
-    --sidebar-background: 240 10% 5%;
-    --sidebar-foreground: 240 5% 90%;
-    --sidebar-primary: 346 100% 58%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 10% 10%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 240 10% 15%;
-    --sidebar-ring: 346 100% 58%;
-
-    /* Gradients 2.0 - Ultra Modern Vibrancy */
-    --gradient-primary: linear-gradient(135deg, #ff2e68 0%, #ff4d4d 50%, #9d4eff 100%);
-    --gradient-accent: linear-gradient(135deg, #00f2ff 0%, #0066ff 100%);
-    --gradient-warm: linear-gradient(135deg, #ff8c00 0%, #ff2e68 100%);
-    --gradient-surface: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0) 100%);
-
-    /* Shadows & Glows */
-    --shadow-glow: 0 0 40px -10px hsla(346, 100%, 58%, 0.4);
-    --shadow-glow-cyan: 0 0 40px -10px hsla(180, 100%, 50%, 0.4);
-    --shadow-border: 0 0 0 1px rgba(255, 255, 255, 0.08);
-  }
-
-  .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-
-    --card: 0 0% 6%;
-    --card-foreground: 0 0% 98%;
-
-    --popover: 0 0% 6%;
-    --popover-foreground: 0 0% 98%;
-
-    /* TikTok signature magenta as primary */
-    --primary: 346 100% 58%;
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 0 0% 10%;
-    --secondary-foreground: 0 0% 92%;
-
-    --muted: 0 0% 10%;
-    --muted-foreground: 0 0% 70%;
-
-    /* TikTok cyan as accent */
     --accent: 174 100% 47%;
     --accent-foreground: 0 0% 6%;
 
@@ -100,18 +39,26 @@
     --warning: 45 93% 55%;
     --warning-foreground: 0 0% 6%;
 
-    --border: 0 0% 100% / 0.10;
-    --input: 0 0% 100% / 0.10;
+    --border: 0 0% 100% / 0.08;
+    --input: 0 0% 100% / 0.08;
     --ring: 346 100% 58%;
 
-    --sidebar-background: 0 0% 4%;
-    --sidebar-foreground: 0 0% 80%;
-    --sidebar-primary: 346 100% 58%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 10%;
-    --sidebar-accent-foreground: 0 0% 92%;
-    --sidebar-border: 0 0% 100% / 0.10;
-    --sidebar-ring: 346 100% 58%;
+    --radius: 1.5rem; /* Standardized radius */
+
+    /* Gradients 2.0 - Ultra Modern Vibrancy */
+    --gradient-primary: linear-gradient(135deg, #ff2e68 0%, #ff4d4d 50%, #9d4eff 100%);
+    --gradient-accent: linear-gradient(135deg, #00f2ff 0%, #0066ff 100%);
+    --gradient-warm: linear-gradient(135deg, #ff8c00 0%, #ff2e68 100%);
+    --gradient-surface: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0) 100%);
+
+    /* Shadows & Glows */
+    --shadow-glow: 0 0 30px -10px hsla(346, 100%, 58%, 0.3);
+    --shadow-glow-cyan: 0 0 30px -10px hsla(180, 100%, 50%, 0.3);
+    --shadow-premium: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+  }
+
+  .dark {
+    /* Keeping consistent with root as we are mobile-first dark by default */
   }
 }
 

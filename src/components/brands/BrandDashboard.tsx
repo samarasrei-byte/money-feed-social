@@ -100,7 +100,7 @@ export function BrandDashboard({ brand, products, campaigns, onCreateProduct, on
   const fmt = (v: number) => new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(v);
 
   return (
-    <div className="container max-w-4xl mx-auto px-4 py-6 space-y-6">
+    <div className="container max-w-4xl mx-auto px-4 py-8 space-y-8">
       {/* Brand Header */}
       <div className="flex items-center gap-4">
         <div className="h-16 w-16 rounded-2xl bg-gradient-primary flex items-center justify-center shrink-0 overflow-hidden">
@@ -112,11 +112,11 @@ export function BrandDashboard({ brand, products, campaigns, onCreateProduct, on
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
-            <h1 className="text-xl font-display font-bold truncate">{brand.name}</h1>
+            <h1 className="text-xl font-black italic uppercase tracking-tighter truncate">{brand.name}</h1>
             {brand.verified ? (
               <CheckCircle2 className="h-5 w-5 text-success shrink-0" />
             ) : (
-              <Badge variant="secondary" className="text-[10px] shrink-0">
+              <Badge variant="secondary" className="text-[10px] font-black uppercase tracking-widest rounded-full bg-primary/10 text-primary border-0">
                 <Clock className="h-3 w-3 mr-0.5" /> Pendente
               </Badge>
             )}
@@ -138,13 +138,11 @@ export function BrandDashboard({ brand, products, campaigns, onCreateProduct, on
           { icon: DollarSign, label: "Receita", value: fmt(stats.totalRevenue), color: "text-success" },
           { icon: Users, label: "Afiliados", value: stats.totalAffiliates, color: "text-primary" },
         ].map((s) => (
-          <Card key={s.label} className="border-border/50">
-            <CardContent className="p-3 text-center">
-              <s.icon className={`h-4 w-4 mx-auto ${s.color} mb-1`} />
-              <p className="text-lg font-bold">{s.value}</p>
-              <p className="text-[9px] text-muted-foreground">{s.label}</p>
-            </CardContent>
-          </Card>
+          <div key={s.label} className="p-4 rounded-[1.5rem] bg-white/[0.02] border border-white/5 text-center transition-all hover:bg-white/[0.05]">
+            <s.icon className={`h-4 w-4 mx-auto ${s.color} mb-2`} />
+            <p className="text-base font-black italic tracking-tighter">{s.value}</p>
+            <p className="text-[9px] text-muted-foreground/40 font-black uppercase tracking-[0.1em]">{s.label}</p>
+          </div>
         ))}
       </div>
 

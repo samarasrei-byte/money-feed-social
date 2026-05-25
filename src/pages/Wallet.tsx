@@ -173,19 +173,19 @@ export default function Wallet() {
       </div>
 
       {/* Balance Card */}
-      <div className="p-6 rounded-3xl bg-gradient-to-br from-primary/15 via-accent/5 to-background border border-primary/20 relative overflow-hidden">
+      <div className="p-8 rounded-[2.5rem] bg-gradient-to-br from-primary/20 via-accent/10 to-background border border-primary/20 relative overflow-hidden shadow-premium group">
         <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2" />
-        <p className="text-[9px] text-muted-foreground/40 uppercase tracking-widest font-semibold">Saldo disponível</p>
-        <p className="text-3xl font-black mt-1">{fmt(balance)}</p>
+        <p className="text-[10px] text-muted-foreground/40 uppercase tracking-[0.2em] font-black">Saldo disponível</p>
+        <p className="text-4xl font-black mt-2 tracking-tighter italic">{fmt(balance)}</p>
         <div className="flex gap-5 mt-3 text-[10px]">
-          <span className="text-muted-foreground/50">Pendente: <strong className="text-warning">{fmt(pendingBalance)}</strong></span>
-          <span className="text-muted-foreground/50">Sacado: <strong className="text-primary">{fmt(totalWithdrawn)}</strong></span>
+          <span className="text-muted-foreground/40 font-bold uppercase tracking-wider">Pendente: <strong className="text-warning">{fmt(pendingBalance)}</strong></span>
+          <span className="text-muted-foreground/40 font-bold uppercase tracking-wider">Sacado: <strong className="text-primary">{fmt(totalWithdrawn)}</strong></span>
         </div>
 
         {/* Withdraw button */}
         <Sheet>
           <SheetTrigger asChild>
-            <Button size="sm" className="mt-4 rounded-full text-[10px] h-9 gap-1.5 w-full" disabled={balance <= 0}>
+            <Button size="lg" className="mt-6 rounded-full text-xs h-12 gap-2 w-full bg-foreground text-background hover:scale-[1.02] transition-transform" disabled={balance <= 0}>
               <DollarSign className="h-3 w-3" />
               Sacar via PIX
             </Button>
@@ -251,8 +251,8 @@ export default function Wallet() {
           { label: "Em saque", value: fmt(pendingWithdrawals), color: "text-warning" },
         ].map(s => (
           <div key={s.label} className="p-3 rounded-2xl bg-muted/20 border border-border/15 text-center">
-            <p className={cn("text-sm font-bold", s.color)}>{s.value}</p>
-            <span className="text-[8px] text-muted-foreground/30 uppercase tracking-wider font-semibold">{s.label}</span>
+            <p className={cn("text-base font-black tracking-tight", s.color)}>{s.value}</p>
+            <span className="text-[9px] text-muted-foreground/40 uppercase tracking-[0.1em] font-black">{s.label}</span>
           </div>
         ))}
       </div>
