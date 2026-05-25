@@ -43,7 +43,7 @@ export default function Auth() {
         {/* Logo */}
         <div className="text-center mb-10">
           <img src={logoImg} alt={APP_NAME} className="h-16 w-16 mx-auto rounded-2xl object-cover mb-5" />
-          <h1 className="text-2xl font-bold text-white tracking-tight">{APP_NAME}</h1>
+          {/* Logo only, removing redundant text */}
           <p className="text-white/20 mt-1.5 text-sm">{APP_TAGLINE}</p>
         </div>
 

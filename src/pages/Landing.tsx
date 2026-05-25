@@ -12,10 +12,10 @@ import { memo, useEffect } from "react";
 import { motion } from "framer-motion";
 
 const stats = [
-  { value: "10K+", label: "Criadores ativos", icon: Users },
-  { value: "R$1M+", label: "Comissões pagas", icon: DollarSign },
-  { value: "4.9★", label: "Avaliação", icon: Star },
-  { value: "500+", label: "Marcas parceiras", icon: Target },
+  { value: "10K+", label: "Criadores Ativos", icon: Users },
+  { value: "R$1M+", label: "Pagamentos Realizados", icon: DollarSign },
+  { value: "4.9★", label: "Satisfação", icon: Star },
+  { value: "500+", label: "Marcas Verificadas", icon: Target },
 ];
 
 const testimonials = [
@@ -53,18 +53,18 @@ export default function Landing() {
             </div>
           </Link>
           
-          <div className="hidden md:flex items-center gap-8 text-[10px] uppercase font-bold tracking-[0.2em] text-white/40">
+          <div className="hidden md:flex items-center gap-8 text-[10px] uppercase font-bold tracking-[0.2em] text-white/60">
             <button onClick={() => document.getElementById("features")?.scrollIntoView({ behavior: "smooth" })} className="hover:text-white transition-colors">Tecnologia</button>
             <button onClick={() => document.getElementById("impact")?.scrollIntoView({ behavior: "smooth" })} className="hover:text-white transition-colors">Impacto</button>
             <Link to="/pitch" className="hover:text-white transition-colors">Pitch</Link>
           </div>
 
           <div className="flex items-center gap-4">
-            <Button asChild variant="ghost" size="sm" className="text-white/[0.05] hover:text-white text-[10px] font-black uppercase tracking-widest px-4">
-              <Link to="/auth">Login</Link>
+            <Button asChild variant="ghost" size="sm" className="text-white/40 hover:text-white text-[10px] font-black uppercase tracking-widest px-4">
+              <Link to="/auth">Entrar</Link>
             </Button>
             <Button asChild size="sm" className="bg-white text-black hover:bg-[#00f2ff] hover:text-black text-[10px] font-black uppercase tracking-widest h-10 px-6 rounded-full transition-all">
-              <Link to="/auth">Join Now</Link>
+              <Link to="/auth">Começar</Link>
             </Button>
           </div>
         </div>
@@ -85,12 +85,12 @@ export default function Landing() {
               </Badge>
 
               <h1 className="text-7xl md:text-[11.5rem] font-black leading-[0.7] tracking-tighter italic uppercase mb-16">
-                THE <br />
-                <span className="text-gradient-primary drop-shadow-[0_0_100px_rgba(255,46,104,0.4)]">ECOSYSTEM</span>
+                O <br />
+                <span className="text-gradient-primary drop-shadow-[0_0_100px_rgba(255,46,104,0.4)]">ECOSSISTEMA</span>
               </h1>
 
-              <p className="text-xl md:text-[1.75rem] text-white/20 mb-20 font-medium leading-relaxed tracking-tight max-w-2xl mx-auto italic">
-                An invisible infrastructure merging influence and global ecommerce through pure intelligence.
+              <p className="text-xl md:text-[1.75rem] text-white/60 mb-20 font-medium leading-relaxed tracking-tight max-w-2xl mx-auto italic">
+                Uma infraestrutura invisível que une influência e ecommerce global através de pura inteligência.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
@@ -111,8 +111,8 @@ export default function Landing() {
                     <img key={t.name} src={t.avatar} alt="" className="h-12 w-12 rounded-full border-4 border-[#050505] object-cover" />
                   ))}
                 </div>
-                <div className="text-[10px] font-black uppercase tracking-[0.4em] text-white/20">
-                  Join <span className="text-white/60">10,000+</span> Elite Creators
+                <div className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40">
+                  Junte-se a <span className="text-white/80">+10.000</span> Criadores de Elite
                 </div>
               </div>
             </motion.div>
@@ -126,7 +126,7 @@ export default function Landing() {
               {stats.map((stat) => (
                 <div key={stat.label} className="text-center group border-l border-white/[0.03] first:border-l-0">
                   <p className="text-5xl font-black italic tracking-tighter mb-3 group-hover:text-primary transition-all duration-500">{stat.value}</p>
-                  <p className="text-[9px] font-black uppercase tracking-[0.4em] text-white/[0.05]">{stat.label}</p>
+                  <p className="text-[9px] font-black uppercase tracking-[0.4em] text-white/30">{stat.label}</p>
                 </div>
               ))}
             </div>
@@ -143,22 +143,22 @@ export default function Landing() {
                 Engine Proprietária
               </Badge>
               <h2 className="text-6xl md:text-[10rem] font-black italic uppercase tracking-tighter leading-[0.65] mb-8">
-                PURE <br /> <span className="text-white/[0.02] text-glow">INTELLIGENCE</span>
+                INTELIGÊNCIA <br /> <span className="text-white/[0.05] text-glow uppercase">PURA</span>
               </h2>
-              <p className="text-xl text-white/[0.08] font-medium leading-relaxed max-w-lg italic">
-                Our proprietary engine computes billions of data points to orchestrate high-yield ecommerce connections.
+              <p className="text-xl text-white/60 font-medium leading-relaxed max-w-lg italic">
+                Nossa engine proprietária processa bilhões de dados para orquestrar conexões de ecommerce de alto rendimento.
               </p>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                 {[
-                  { title: "SMART MATCH", desc: "Deep-learning connection engine." },
-                  { title: "REAL-TIME ROI", desc: "Live yield monitoring." },
-                  { title: "GLOBAL SCALE", desc: "Zero-latency infrastructure." },
-                  { title: "IRON SECURITY", desc: "Encrypted transaction ledger." },
+                  { title: "SMART MATCH", desc: "Engine de conexão via deep-learning." },
+                  { title: "ROI EM TEMPO REAL", desc: "Monitoramento de lucro ao vivo." },
+                  { title: "ESCALA GLOBAL", desc: "Infraestrutura de latência zero." },
+                  { title: "SEGURANÇA TOTAL", desc: "Ledger de transações criptografado." },
                 ].map((f) => (
                   <div key={f.title} className="space-y-2 border-t border-white/[0.02] pt-6">
-                    <h4 className="font-black italic uppercase tracking-tighter text-lg text-white/40">{f.title}</h4>
-                    <p className="text-[10px] text-white/[0.05] font-black uppercase tracking-[0.3em]">{f.desc}</p>
+                    <h4 className="font-black italic uppercase tracking-tighter text-lg text-white/60">{f.title}</h4>
+                    <p className="text-[10px] text-white/30 font-black uppercase tracking-[0.3em]">{f.desc}</p>
                   </div>
                 ))}
               </div>
@@ -175,7 +175,7 @@ export default function Landing() {
                           <div className="h-24 w-24 rounded-full bg-gradient-primary blur-3xl opacity-20 absolute" />
                           <Rocket className="h-10 w-10 text-primary opacity-40 animate-float" />
                        </div>
-                       <p className="text-[9px] font-black uppercase tracking-[1em] text-white/[0.03]">CORE SYSTEM INTERFACE</p>
+                       <p className="text-[9px] font-black uppercase tracking-[1em] text-white/10">INTERFACE DO SISTEMA</p>
                        <div className="space-y-4">
                           <div className="h-0.5 w-48 bg-white/[0.02] mx-auto" />
                           <div className="h-0.5 w-32 bg-white/[0.02] mx-auto" />
@@ -197,15 +197,15 @@ export default function Landing() {
             </div>
             
             <h2 className="text-5xl md:text-[9rem] font-black italic uppercase tracking-tighter mb-16 relative z-10 leading-none">
-              READY FOR <br /> <span className="text-gradient-primary">THE EDGE?</span>
+              PRONTO PARA <br /> <span className="text-gradient-primary">O TOPO?</span>
             </h2>
             
             <Button asChild size="lg" className="h-24 px-16 rounded-full bg-white text-black hover:bg-[#00f2ff] hover:scale-105 font-black text-2xl uppercase tracking-tighter italic relative z-10 transition-all duration-500">
-              <Link to="/auth">INITIATE ACCESS</Link>
+              <Link to="/auth">INICIAR ACESSO</Link>
             </Button>
             
             <div className="mt-20 flex justify-center gap-16 text-white/[0.03] font-black uppercase tracking-[0.5em] text-[10px] relative z-10">
-               <span>ZERO FRICTION</span>
+               <span>FRICÇÃO ZERO</span>
                <span>•</span>
                <span>ALPHA DEPLOY</span>
                <span>•</span>
@@ -224,13 +224,13 @@ export default function Landing() {
            </div>
            
            <div className="flex gap-12 text-[9px] font-black uppercase tracking-[0.4em] text-white/[0.03]">
-              <Link to="/terms" className="hover:text-white transition-all">TERMS</Link>
-              <Link to="/privacy" className="hover:text-white transition-all">PRIVACY</Link>
-              <a href="#" className="hover:text-white transition-all">NETWORK</a>
+              <Link to="/terms" className="hover:text-white transition-all">TERMOS</Link>
+              <Link to="/privacy" className="hover:text-white transition-all">PRIVACIDADE</Link>
+              <a href="#" className="hover:text-white transition-all">REDE</a>
            </div>
            
            <p className="text-[10px] font-bold text-white/10 uppercase tracking-[0.2em]">
-              © 2026 ONLY SHOP CORE. ALL RIGHTS RESERVED.
+              © 2026 ONLY SHOP CORE. TODOS OS DIREITOS RESERVADOS.
            </p>
         </div>
       </footer>
