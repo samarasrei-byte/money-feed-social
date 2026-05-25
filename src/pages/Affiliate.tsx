@@ -298,10 +298,12 @@ export default function Affiliate() {
 
           {links.length === 0 ? (
             <div className="py-12 text-center space-y-3">
-              <Link2 className="h-10 w-10 mx-auto text-muted-foreground/10" />
+              <div className="h-20 w-20 rounded-[2.5rem] bg-white/[0.02] border border-white/[0.05] flex items-center justify-center mx-auto mb-4 shadow-premium">
+                <Link2 className="h-8 w-8 text-muted-foreground/20" />
+              </div>
               <div>
-                <p className="text-sm font-medium">Nenhum link criado</p>
-                <p className="text-[11px] text-muted-foreground/30 mt-1">Crie seu primeiro link ou explore o catálogo de produtos</p>
+                <p className="text-base font-black italic uppercase tracking-tighter">Nenhum link criado</p>
+                <p className="text-[11px] text-muted-foreground/40 mt-1 font-medium max-w-[240px] mx-auto">Crie seu primeiro link ou explore o catálogo de produtos para começar a lucrar.</p>
               </div>
               <Button asChild variant="outline" size="sm" className="rounded-full text-xs">
                 <Link to="/products"><Package className="h-3.5 w-3.5 mr-1.5" /> Ver Produtos</Link>

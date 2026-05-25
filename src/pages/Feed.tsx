@@ -176,11 +176,11 @@ export default function Feed() {
 
       {posts.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-24 gap-3 text-center px-6">
-          <div className="h-16 w-16 rounded-2xl bg-muted/30 flex items-center justify-center">
-            <Sparkles className="h-6 w-6 text-muted-foreground/20" />
+          <div className="h-20 w-20 rounded-[2.5rem] bg-white/[0.02] border border-white/[0.05] flex items-center justify-center mb-2 shadow-premium">
+            <Sparkles className="h-8 w-8 text-primary/40 animate-pulse" />
           </div>
-          <h2 className="text-sm font-bold">Nenhum post ainda</h2>
-          <p className="text-xs text-muted-foreground/40 max-w-xs">
+          <h2 className="text-base font-black italic uppercase tracking-tighter">O Feed está Vazio</h2>
+          <p className="text-xs text-muted-foreground/40 max-w-[200px] font-medium leading-relaxed">
             Seja o primeiro a publicar! Crie conteúdo e compartilhe com a comunidade.
           </p>
         </div>
