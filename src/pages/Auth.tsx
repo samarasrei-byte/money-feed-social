@@ -74,6 +74,35 @@ export default function Auth() {
                   {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Entrar"}
                 </Button>
               </form>
+
+              {/* Demo Accounts */}
+              <div className="mt-8 pt-6 border-t border-border/10">
+                <p className="text-[10px] text-center text-muted-foreground/30 mb-4 uppercase tracking-widest font-bold">Acesso Rápido (Demo)</p>
+                <div className="grid grid-cols-2 gap-3">
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="rounded-xl border-border/10 text-[10px] h-9 bg-transparent hover:bg-white/5"
+                    onClick={() => {
+                      setLoginEmail("afiliado@onlyshop.test");
+                      setLoginPassword("Test@123456");
+                    }}
+                  >
+                    Sou Afiliado
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="rounded-xl border-border/10 text-[10px] h-9 bg-transparent hover:bg-white/5"
+                    onClick={() => {
+                      setLoginEmail("marca@onlyshop.test");
+                      setLoginPassword("Test@123456");
+                    }}
+                  >
+                    Sou Marca
+                  </Button>
+                </div>
+              </div>
             </TabsContent>
 
             <TabsContent value="signup" className="mt-0">
