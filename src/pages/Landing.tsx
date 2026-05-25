@@ -2,9 +2,8 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
-  ArrowRight, Users, TrendingUp, DollarSign, Shield, Star,
-  Sparkles, Play, BarChart3, Globe, MessageCircle, Heart,
-  Clock, Rocket, Zap, Target, Eye, Crown, Flame
+  ArrowRight, Users, DollarSign, Star,
+  Play, Rocket, Zap, Target, TrendingUp
 } from "lucide-react";
 import { APP_NAME } from "@/lib/constants";
 import logoImg from "@/assets/color-palette-ref.png";
@@ -35,6 +34,46 @@ const MeshBackground = memo(() => (
 
 MeshBackground.displayName = "MeshBackground";
 
+const AppStaircase = memo(() => (
+  <div className="relative h-[600px] w-full max-w-5xl mx-auto overflow-hidden rounded-[4rem] bg-white/[0.01] border border-white/[0.03] p-12 mt-20 group">
+    <div className="absolute inset-0 bg-gradient-to-b from-primary/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+    <div className="flex justify-center items-center h-full -space-x-12 sm:-space-x-24">
+      {[
+        { color: "from-primary/20", rotate: -15, y: -40 },
+        { color: "from-accent/20", rotate: 0, y: 0, active: true },
+        { color: "from-purple-500/20", rotate: 15, y: 40 },
+      ].map((screen, i) => (
+        <motion.div
+          key={i}
+          initial={{ opacity: 0, y: 100 }}
+          whileInView={{ opacity: 1, y: screen.y }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, delay: i * 0.2 }}
+          className={cn(
+            "relative w-[280px] h-[560px] rounded-[3rem] border border-white/10 bg-[#050505] overflow-hidden shadow-2xl",
+            screen.active && "z-10 border-primary/30 ring-4 ring-primary/5 shadow-primary/20"
+          )}
+          style={{ transform: `rotate(${screen.rotate}deg)` }}
+        >
+          <div className={`h-full w-full bg-gradient-to-b ${screen.color} to-transparent p-6`}>
+             <div className="h-full w-full rounded-[2rem] border border-white/[0.05] bg-black/40 backdrop-blur-md flex flex-col items-center justify-center gap-4 text-center">
+                <Rocket className="h-12 w-12 text-white/10" />
+                <div className="space-y-2">
+                   <div className="h-1 w-20 bg-white/5 mx-auto rounded-full" />
+                   <div className="h-1 w-12 bg-white/5 mx-auto rounded-full" />
+                </div>
+             </div>
+          </div>
+        </motion.div>
+      ))}
+    </div>
+  </div>
+));
+
+AppStaircase.displayName = "AppStaircase";
+
+import { cn } from "@/lib/utils";
+
 export default function Landing() {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -63,7 +102,7 @@ export default function Landing() {
             <Button asChild variant="ghost" size="sm" className="text-white/40 hover:text-white text-[10px] font-black uppercase tracking-widest px-4">
               <Link to="/auth">Entrar</Link>
             </Button>
-            <Button asChild size="sm" className="bg-white text-black hover:bg-[#00f2ff] hover:text-black text-[10px] font-black uppercase tracking-widest h-10 px-6 rounded-full transition-all">
+            <Button asChild size="sm" className="bg-white text-black hover:bg-accent hover:text-black text-[10px] font-black uppercase tracking-widest h-10 px-6 rounded-full transition-all">
               <Link to="/auth">Começar</Link>
             </Button>
           </div>
@@ -72,51 +111,51 @@ export default function Landing() {
 
       {/* HERO */}
       <section className="relative z-10 pt-20 pb-32">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center max-w-4xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <Badge className="mb-10 bg-white/5 text-primary border-primary/20 px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.4em] inline-flex items-center gap-3 shadow-[0_0_20px_rgba(255,46,104,0.1)]">
-                <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
-                V.2026 ALPHA PROTOCOL
-              </Badge>
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <Badge className="mb-10 bg-white/5 text-primary border-primary/20 px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.4em] inline-flex items-center gap-3 shadow-[0_0_20px_rgba(255,46,104,0.1)]">
+              <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+              V.2026 ALPHA PROTOCOL
+            </Badge>
 
-              <h1 className="text-7xl md:text-[11.5rem] font-black leading-[0.7] tracking-tighter italic uppercase mb-16">
-                O <br />
-                <span className="text-gradient-primary drop-shadow-[0_0_100px_rgba(255,46,104,0.4)]">ECOSSISTEMA</span>
-              </h1>
+            <h1 className="text-7xl md:text-[11.5rem] font-black leading-[0.7] tracking-tighter italic uppercase mb-16">
+              O <br />
+              <span className="text-gradient-primary drop-shadow-[0_0_100px_rgba(255,46,104,0.4)]">ECOSSISTEMA</span>
+            </h1>
 
-              <p className="text-xl md:text-[1.75rem] text-white/60 mb-20 font-medium leading-relaxed tracking-tight max-w-2xl mx-auto italic">
-                Uma infraestrutura invisível que une influência e ecommerce global através de pura inteligência.
-              </p>
+            <p className="text-xl md:text-[1.75rem] text-white/60 mb-20 font-medium leading-relaxed tracking-tight max-w-2xl mx-auto italic">
+              Uma infraestrutura invisível que une influência e ecommerce global através de pura inteligência.
+            </p>
 
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
-                <Button asChild size="lg" className="h-16 px-10 rounded-full bg-white text-black hover:bg-[#00f2ff] font-black text-sm uppercase tracking-tighter italic w-full sm:w-auto shadow-2xl shadow-white/5">
-                  <Link to="/auth" className="flex items-center gap-2">
-                    Começar Agora <ArrowRight className="h-5 w-5" />
-                  </Link>
-                </Button>
-                <Button size="lg" variant="ghost" className="h-16 px-10 rounded-full text-white/[0.05] hover:text-white transition-all font-bold text-sm uppercase tracking-widest italic">
-                  <Play className="mr-2 h-4 w-4 fill-current" /> Ver Demo
-                </Button>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
+              <Button asChild size="lg" className="h-16 px-10 rounded-full bg-white text-black hover:bg-accent font-black text-sm uppercase tracking-tighter italic w-full sm:w-auto shadow-2xl shadow-white/5">
+                <Link to="/auth" className="flex items-center gap-2">
+                  Começar Agora <ArrowRight className="h-5 w-5" />
+                </Link>
+              </Button>
+              <Button size="lg" variant="ghost" className="h-16 px-10 rounded-full text-white/40 hover:text-white transition-all font-bold text-sm uppercase tracking-widest italic">
+                <Play className="mr-2 h-4 w-4 fill-current" /> Ver Demo
+              </Button>
+            </div>
+
+            <div className="flex flex-col items-center gap-6">
+              <div className="flex -space-x-4">
+                {testimonials.map((t) => (
+                  <img key={t.name} src={t.avatar} alt="" className="h-12 w-12 rounded-full border-4 border-[#050505] object-cover" />
+                ))}
               </div>
-
-              {/* Social Proof */}
-              <div className="flex flex-col items-center gap-6">
-                <div className="flex -space-x-4">
-                  {testimonials.map((t) => (
-                    <img key={t.name} src={t.avatar} alt="" className="h-12 w-12 rounded-full border-4 border-[#050505] object-cover" />
-                  ))}
-                </div>
-                <div className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40">
-                  Junte-se a <span className="text-white/80">+10.000</span> Criadores de Elite
-                </div>
+              <div className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40">
+                Junte-se a <span className="text-white/80">+10.000</span> Criadores de Elite
               </div>
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
+
+          {/* App Staircase Section */}
+          <AppStaircase />
         </div>
 
         {/* Stats Strip */}
@@ -197,14 +236,14 @@ export default function Landing() {
             </div>
             
             <h2 className="text-5xl md:text-[9rem] font-black italic uppercase tracking-tighter mb-16 relative z-10 leading-none">
-              PRONTO PARA <br /> <span className="text-gradient-primary">O TOPO?</span>
+              PRONTO PARA <br /> <span className="text-gradient-primary uppercase">O TOPO?</span>
             </h2>
             
-            <Button asChild size="lg" className="h-24 px-16 rounded-full bg-white text-black hover:bg-[#00f2ff] hover:scale-105 font-black text-2xl uppercase tracking-tighter italic relative z-10 transition-all duration-500">
+            <Button asChild size="lg" className="h-24 px-16 rounded-full bg-white text-black hover:bg-accent hover:scale-105 font-black text-2xl uppercase tracking-tighter italic relative z-10 transition-all duration-500">
               <Link to="/auth">INICIAR ACESSO</Link>
             </Button>
             
-            <div className="mt-20 flex justify-center gap-16 text-white/[0.03] font-black uppercase tracking-[0.5em] text-[10px] relative z-10">
+            <div className="mt-20 flex justify-center gap-16 text-white/10 font-black uppercase tracking-[0.5em] text-[10px] relative z-10">
                <span>FRICÇÃO ZERO</span>
                <span>•</span>
                <span>ALPHA DEPLOY</span>
@@ -223,7 +262,7 @@ export default function Landing() {
               <span className="text-[8px] font-black text-white/10 uppercase tracking-[0.4em]">Proprietary OS</span>
            </div>
            
-           <div className="flex gap-12 text-[9px] font-black uppercase tracking-[0.4em] text-white/[0.03]">
+           <div className="flex gap-12 text-[9px] font-black uppercase tracking-[0.4em] text-white/20">
               <Link to="/terms" className="hover:text-white transition-all">TERMOS</Link>
               <Link to="/privacy" className="hover:text-white transition-all">PRIVACIDADE</Link>
               <a href="#" className="hover:text-white transition-all">REDE</a>
