@@ -61,7 +61,7 @@ export default function Communities() {
   if (loading) return <CommunitySkeleton />;
 
   return (
-    <div ref={containerRef} className="max-w-4xl mx-auto pb-20 space-y-5 overflow-auto">
+    <div ref={containerRef} className="max-w-lg mx-auto pb-20 space-y-5 overflow-auto">
       <div className="flex justify-center items-center overflow-hidden transition-all duration-200" style={{ height: pullDistance > 0 ? pullDistance : 0 }}>
         <Loader2 className={`h-4 w-4 text-muted-foreground/30 transition-transform ${refreshing ? "animate-spin" : ""}`} style={{ transform: `rotate(${pullDistance * 3}deg)` }} />
       </div>
@@ -86,7 +86,7 @@ export default function Communities() {
       {filteredCommunities.length === 0 ? (
         <CommunityEmptyState hasSearch={!!searchQuery || !!selectedTheme} />
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 px-4">
+        <div className="space-y-2.5 px-4">
           {filteredCommunities.map((community) => (
             <CommunityCard key={community.id} community={community} onJoinLeave={handleJoinLeave} />
           ))}

@@ -71,16 +71,4 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          vendor: ["react", "react-dom", "react-router-dom", "framer-motion"],
-          ui: ["@radix-ui/react-dialog", "@radix-ui/react-dropdown-menu", "@radix-ui/react-avatar", "lucide-react"],
-          supabase: ["@supabase/supabase-js", "@tanstack/react-query"],
-        },
-      },
-    },
-    chunkSizeWarningLimit: 1000,
-  },
 }));

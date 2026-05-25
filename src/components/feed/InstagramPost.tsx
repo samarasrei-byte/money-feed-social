@@ -1,4 +1,4 @@
-import { useState, useRef, memo, useCallback } from "react";
+import { useState, useRef } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { VerifiedBadge } from "./VerifiedBadge";
@@ -6,7 +6,8 @@ import { AffiliateButton } from "./AffiliateButton";
 import { PostActions } from "./PostActions";
 import { PostLabel, type PostLabelType } from "./PostLabel";
 import { PublicMetrics } from "./PublicMetrics";
-import { Play, Volume2, VolumeX, MoreHorizontal } from "lucide-react";
+import { Play, Pause, Volume2, VolumeX, MoreHorizontal } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
@@ -47,7 +48,7 @@ interface InstagramPostProps {
   onProfileClick: () => void;
 }
 
-export const InstagramPost = memo(function InstagramPost({
+export function InstagramPost({
   post,
   onLike,
   onComment,
@@ -75,37 +76,37 @@ export const InstagramPost = memo(function InstagramPost({
     locale: ptBR,
   });
 
-  const togglePlay = useCallback(() => {
+  const togglePlay = () => {
     if (videoRef.current) {
       if (isPlaying) videoRef.current.pause();
-      else videoRef.current.play().catch(() => {});
+      else videoRef.current.play();
       setIsPlaying(!isPlaying);
     }
-  }, [isPlaying]);
+  };
 
-  const toggleMute = useCallback((e: React.MouseEvent) => {
+  const toggleMute = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (videoRef.current) {
       videoRef.current.muted = !isMuted;
       setIsMuted(!isMuted);
     }
-  }, [isMuted]);
+  };
 
-  const handleDoubleTapLike = useCallback(() => {
+  const handleDoubleTapLike = () => {
     if (!post.isLiked) onLike();
     setShowHeart(true);
     setTimeout(() => setShowHeart(false), 800);
-  }, [post.isLiked, onLike]);
+  };
 
   const shouldTruncate = post.content.length > 100;
 
   return (
-    <article className="bg-background border-b border-border/10 pb-6">
+    <article className="bg-background">
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3">
-        <div className="flex items-center gap-3 cursor-pointer flex-1 min-w-0" onClick={onProfileClick}>
+      <div className="flex items-center justify-between px-4 py-2.5">
+        <div className="flex items-center gap-2.5 cursor-pointer flex-1 min-w-0" onClick={onProfileClick}>
           <div className="relative shrink-0">
-            <div className="rounded-full p-[1.5px] bg-gradient-to-br from-accent via-primary to-purple-500 shadow-glow">
+            <div className="rounded-full p-[1.5px] bg-gradient-to-br from-accent via-primary to-purple-500">
               <Avatar className="h-9 w-9 border-2 border-background">
                 <AvatarImage src={post.profile?.avatarUrl} alt={post.profile?.displayName} />
                 <AvatarFallback className="bg-muted text-foreground text-[10px] font-bold">
@@ -115,17 +116,17 @@ export const InstagramPost = memo(function InstagramPost({
             </div>
           </div>
           <div className="flex flex-col min-w-0">
-            <div className="flex items-center gap-1.5">
-              <span className="font-bold text-[14px] tracking-tight truncate">
+            <div className="flex items-center gap-1">
+              <span className="font-semibold text-[13px] truncate">
                 {post.profile?.username || "user"}
               </span>
               {(post.profile?.isVerified || post.profile?.totalEarnings) && (
                 <VerifiedBadge earnings={post.profile.totalEarnings} size="sm" />
               )}
-              <span className="text-[10px] text-muted-foreground/30 font-medium">· {timeAgo}</span>
+              <span className="text-[10px] text-muted-foreground/50">· {timeAgo}</span>
             </div>
             {post.label && (
-              <span className="text-[9px] text-primary/60 leading-tight uppercase tracking-widest font-bold">
+              <span className="text-[9px] text-muted-foreground/60 leading-tight uppercase tracking-wider font-medium">
                 {post.label === "verified_result" && "Resultado Verificado"}
                 {post.label === "active_offer" && "Oferta Ativa"}
                 {post.label === "sponsored" && "Patrocinado"}
@@ -136,89 +137,84 @@ export const InstagramPost = memo(function InstagramPost({
         <Button
           variant="ghost"
           size="icon"
-          className="h-8 w-8 rounded-full text-muted-foreground/30 hover:text-foreground hover:bg-muted/50"
+          className="h-8 w-8 rounded-full text-muted-foreground/40 hover:text-foreground"
           onClick={onFollow}
         >
           <MoreHorizontal className="h-4 w-4" />
         </Button>
       </div>
 
-      {/* Post Label (Sticky or Contextual info) */}
+      {/* Post Label */}
       {post.label && (
-        <div className="px-4 pb-2">
-          <PostLabel label={post.label} metadata={post.labelMetadata || undefined} />
+        <PostLabel label={post.label} metadata={post.labelMetadata || undefined} />
+      )}
+
+      {/* Media */}
+      {post.postType === "image" && post.mediaUrl && !imageError && (
+        <div className="relative w-full bg-muted/20 cursor-pointer" onDoubleClick={handleDoubleTapLike}>
+          <img
+            src={post.mediaUrl}
+            alt="Post"
+            className="w-full object-cover max-h-[540px]"
+            onError={() => setImageError(true)}
+            loading="lazy"
+          />
+          {showHeart && (
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div className="animate-scale-in">
+                <svg viewBox="0 0 24 24" className="h-20 w-20 text-white drop-shadow-2xl fill-current opacity-90">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                </svg>
+              </div>
+            </div>
+          )}
         </div>
       )}
 
-      {/* Media Content */}
-      <div className="relative w-full aspect-square sm:aspect-auto overflow-hidden bg-muted/5">
-        {post.postType === "image" && post.mediaUrl && !imageError && (
-          <div className="relative w-full h-full cursor-pointer" onDoubleClick={handleDoubleTapLike}>
-            <img
-              src={post.mediaUrl}
-              alt="Post content"
-              className="w-full object-contain max-h-[600px] mx-auto transition-opacity duration-300"
-              onError={() => setImageError(true)}
-              loading="lazy"
-            />
-          </div>
-        )}
-
-        {post.postType === "video" && post.mediaUrl && (
-          <div className="relative w-full cursor-pointer aspect-video sm:aspect-auto flex items-center justify-center bg-black/5" onClick={togglePlay} onDoubleClick={handleDoubleTapLike}>
-            <video 
-              ref={videoRef} 
-              src={post.mediaUrl} 
-              loop 
-              muted={isMuted} 
-              playsInline 
-              className="w-full object-contain max-h-[600px]" 
-            />
-            {!isPlaying && (
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="h-16 w-16 rounded-full bg-black/20 backdrop-blur-md flex items-center justify-center">
-                  <Play className="h-7 w-7 text-white fill-current ml-1" />
-                </div>
+      {post.postType === "video" && post.mediaUrl && (
+        <div className="relative w-full bg-foreground/5 cursor-pointer" onClick={togglePlay} onDoubleClick={handleDoubleTapLike}>
+          <video ref={videoRef} src={post.mediaUrl} loop muted={isMuted} playsInline className="w-full object-cover max-h-[540px]" />
+          {!isPlaying && (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="h-14 w-14 rounded-full bg-foreground/15 backdrop-blur-xl flex items-center justify-center">
+                <Play className="h-6 w-6 text-white ml-0.5" />
               </div>
-            )}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="absolute bottom-4 right-4 h-9 w-9 rounded-full bg-black/40 backdrop-blur-xl text-white hover:bg-black/60 border border-white/10"
-              onClick={toggleMute}
-            >
-              {isMuted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
-            </Button>
-          </div>
-        )}
-
-        {/* Text-only Content */}
-        {post.postType === "text" && (
-          <div
-            className="w-full px-8 py-14 min-h-[220px] flex items-center justify-center bg-gradient-to-br from-primary/[0.05] via-transparent to-accent/[0.05] relative overflow-hidden"
-            onDoubleClick={handleDoubleTapLike}
-          >
-             <div className="absolute top-0 left-0 w-full h-full opacity-[0.03] pointer-events-none" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E\")" }} />
-            <p className="text-center text-[17px] font-semibold leading-relaxed max-w-[320px] text-foreground/90 tracking-tight z-10">
-              {post.content}
-            </p>
-          </div>
-        )}
-
-        {/* Heart animation for double tap */}
-        {showHeart && (
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
-            <div className="animate-scale-in">
-              <svg viewBox="0 0 24 24" className="h-24 w-24 text-primary drop-shadow-[0_0_30px_rgba(255,46,104,0.5)] fill-current">
-                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-              </svg>
             </div>
-          </div>
-        )}
-      </div>
+          )}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute bottom-3 right-3 h-8 w-8 rounded-full bg-foreground/20 backdrop-blur-xl text-white hover:bg-foreground/40"
+            onClick={toggleMute}
+          >
+            {isMuted ? <VolumeX className="h-3.5 w-3.5" /> : <Volume2 className="h-3.5 w-3.5" />}
+          </Button>
+          {showHeart && (
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div className="animate-scale-in">
+                <svg viewBox="0 0 24 24" className="h-20 w-20 text-white drop-shadow-2xl fill-current opacity-90">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                </svg>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
 
-      {/* Interactions and Info */}
-      <div className="px-4">
+      {/* Text-only post */}
+      {post.postType === "text" && (
+        <div
+          className="w-full px-6 py-10 min-h-[180px] flex items-center justify-center bg-gradient-to-br from-primary/[0.03] via-transparent to-accent/[0.03]"
+          onDoubleClick={handleDoubleTapLike}
+        >
+          <p className="text-center text-[15px] font-medium leading-relaxed max-w-[280px] text-foreground/90">
+            {post.content}
+          </p>
+        </div>
+      )}
+
+      {/* Actions */}
+      <div className="px-4 pt-2.5">
         <PostActions
           likesCount={post.likesCount}
           commentsCount={post.commentsCount}
@@ -229,64 +225,63 @@ export const InstagramPost = memo(function InstagramPost({
           onShare={onShare}
           onSave={onSave}
         />
-
-        {/* Likes Count */}
-        {post.likesCount > 0 && (
-          <p className="pt-3 text-[14px] font-bold tracking-tight">
-            {post.likesCount.toLocaleString("pt-BR")} curtida{post.likesCount !== 1 && "s"}
-          </p>
-        )}
-
-        {/* Caption */}
-        {post.postType !== "text" && post.content && (
-          <div className="pt-1.5">
-            <p className="text-[14px] leading-relaxed">
-              <span className="font-bold mr-1.5">{post.profile?.username}</span>
-              {shouldTruncate && !expanded ? (
-                <>
-                  <span className="text-foreground/90">{post.content.slice(0, 100)}</span>
-                  <button className="text-muted-foreground/50 ml-1 font-medium hover:text-foreground transition-colors" onClick={() => setExpanded(true)}>
-                    ...mais
-                  </button>
-                </>
-              ) : (
-                <span className="text-foreground/90">{post.content}</span>
-              )}
-            </p>
-          </div>
-        )}
-
-        {/* Metrics Badge */}
-        {post.label && post.labelMetadata && (
-          <div className="mt-3">
-            <PublicMetrics
-              earnings={post.labelMetadata.amount}
-              clicks={post.labelMetadata.clicks}
-              views={post.labelMetadata.views}
-            />
-          </div>
-        )}
-
-        {/* Affiliate Link */}
-        {post.affiliateLink && (
-          <div className="mt-4">
-            <AffiliateButton
-              affiliateUrl={post.affiliateLink.url}
-              productName={post.affiliateLink.productName}
-              commission={post.affiliateLink.commission}
-            />
-          </div>
-        )}
-
-        {/* Comments Link */}
-        {post.commentsCount > 0 && (
-          <button className="mt-2 text-[12.5px] text-muted-foreground/50 font-medium hover:text-muted-foreground transition-colors" onClick={onComment}>
-            Ver {post.commentsCount > 1 ? `todos os ${post.commentsCount} comentários` : `${post.commentsCount} comentário`}
-          </button>
-        )}
       </div>
+
+      {/* Likes */}
+      {post.likesCount > 0 && (
+        <p className="px-4 pt-1 text-[13px] font-semibold">
+          {post.likesCount.toLocaleString("pt-BR")} curtida{post.likesCount !== 1 && "s"}
+        </p>
+      )}
+
+      {/* Caption */}
+      {post.postType !== "text" && post.content && (
+        <div className="px-4 pt-0.5 pb-0.5">
+          <p className="text-[13px] leading-[18px]">
+            <span className="font-semibold mr-1">{post.profile?.username}</span>
+            {shouldTruncate && !expanded ? (
+              <>
+                {post.content.slice(0, 100)}
+                <button className="text-muted-foreground/40 ml-1 text-[13px]" onClick={() => setExpanded(true)}>
+                  ...mais
+                </button>
+              </>
+            ) : (
+              post.content
+            )}
+          </p>
+        </div>
+      )}
+
+      {/* Public Metrics */}
+      {post.label && post.labelMetadata && (
+        <PublicMetrics
+          earnings={post.labelMetadata.amount}
+          clicks={post.labelMetadata.clicks}
+          views={post.labelMetadata.views}
+        />
+      )}
+
+      {/* Affiliate CTA */}
+      {post.affiliateLink && (
+        <div className="px-4 py-1.5">
+          <AffiliateButton
+            affiliateUrl={post.affiliateLink.url}
+            productName={post.affiliateLink.productName}
+            commission={post.affiliateLink.commission}
+          />
+        </div>
+      )}
+
+      {/* Comments */}
+      {post.commentsCount > 0 && (
+        <button className="px-4 pb-1 text-[12px] text-muted-foreground/40" onClick={onComment}>
+          Ver {post.commentsCount > 1 ? `todos os ${post.commentsCount} comentários` : `${post.commentsCount} comentário`}
+        </button>
+      )}
+
+      {/* Divider */}
+      <div className="h-px bg-border/30 mx-4 mt-2" />
     </article>
   );
-});
-
-InstagramPost.displayName = "InstagramPost";
+}

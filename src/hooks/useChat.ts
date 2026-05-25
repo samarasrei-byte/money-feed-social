@@ -81,40 +81,31 @@ export function useChat() {
         allParticipants?.map((p) => [p.conversation_id, p.user_id]) || []
       );
 
-      // Get last messages for all conversations in one query
-      const { data: allLastMsgs } = await supabase
-        .from("messages")
-        .select("conversation_id, content, sender_id, created_at")
-        .in("conversation_id", convIds)
-        .order("created_at", { ascending: false });
-
-      const lastMessages = new Map();
-      if (allLastMsgs) {
-        // Since it's ordered by created_at desc, the first time we see a conversation_id, it's the latest
-        allLastMsgs.forEach(msg => {
-          if (!lastMessages.has(msg.conversation_id)) {
-            lastMessages.set(msg.conversation_id, msg);
-          }
-        });
+      // Get last message for each conversation
+      const lastMessages: Map<string, any> = new Map();
+      for (const conv of convs) {
+        const { data: msgs } = await supabase
+          .from("messages")
+          .select("content, sender_id, created_at")
+          .eq("conversation_id", conv.id)
+          .order("created_at", { ascending: false })
+          .limit(1);
+        if (msgs && msgs.length > 0) lastMessages.set(conv.id, msgs[0]);
       }
 
-      // We still need to count unread messages, but we can do it more efficiently
-      // Ideally, we'd have a counter or a better view. For now, let's keep it as is or optimize if possible.
-      // To avoid N queries, we can fetch all unread messages for these conversations in one go
-      const { data: unreadMsgs } = await supabase
-        .from("messages")
-        .select("conversation_id, created_at, sender_id")
-        .in("conversation_id", convIds)
-        .neq("sender_id", user.id);
-
-      const unreadCounts = new Map();
-      if (unreadMsgs) {
-        unreadMsgs.forEach(msg => {
-          const lastRead = lastReadMap.get(msg.conversation_id);
-          if (!lastRead || new Date(msg.created_at) > new Date(lastRead)) {
-            unreadCounts.set(msg.conversation_id, (unreadCounts.get(msg.conversation_id) || 0) + 1);
-          }
-        });
+      // Count unread
+      const unreadCounts: Map<string, number> = new Map();
+      for (const conv of convs) {
+        const lastRead = lastReadMap.get(conv.id);
+        if (lastRead) {
+          const { count } = await supabase
+            .from("messages")
+            .select("id", { count: "exact", head: true })
+            .eq("conversation_id", conv.id)
+            .neq("sender_id", user.id)
+            .gt("created_at", lastRead);
+          unreadCounts.set(conv.id, count || 0);
+        }
       }
 
       const mapped: Conversation[] = convs.map((conv) => {

@@ -9,24 +9,90 @@
 
 @layer base {
   :root {
-    --background: 0 0% 3.9%;
+    --background: 0 0% 100%;
+    --foreground: 240 10% 4%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 4%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 4%;
+
+    --primary: 330 81% 60%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 240 5% 96%;
+    --secondary-foreground: 240 6% 10%;
+
+    --muted: 240 5% 96%;
+    --muted-foreground: 240 5% 38%;
+
+    --accent: 25 95% 53%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 160 84% 39%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 45 93% 47%;
+    --warning-foreground: 0 0% 100%;
+
+    --border: 240 6% 90%;
+    --input: 240 6% 90%;
+    --ring: 330 81% 60%;
+
+    --radius: 0.75rem;
+
+    /* Sidebar */
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 6% 20%;
+    --sidebar-primary: 330 81% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 5% 96%;
+    --sidebar-accent-foreground: 240 6% 10%;
+    --sidebar-border: 240 6% 90%;
+    --sidebar-ring: 330 81% 60%;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(25 95% 53%), hsl(330 81% 60%), hsl(270 91% 65%));
+    --gradient-accent: linear-gradient(135deg, hsl(25 95% 53%), hsl(38 92% 50%));
+    --gradient-success: linear-gradient(135deg, hsl(160 84% 39%), hsl(140 70% 45%));
+    --gradient-dark: linear-gradient(135deg, hsl(240 15% 4%), hsl(270 30% 8%));
+    --gradient-warm: linear-gradient(135deg, hsl(330 81% 60%), hsl(270 91% 65%));
+    --gradient-glass: linear-gradient(135deg, hsl(0 0% 100% / 0.8), hsl(0 0% 100% / 0.4));
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 hsl(0 0% 0% / 0.03);
+    --shadow-md: 0 4px 12px -2px hsl(0 0% 0% / 0.06);
+    --shadow-lg: 0 12px 32px -8px hsl(0 0% 0% / 0.1);
+    --shadow-glow: 0 0 20px hsl(330 81% 60% / 0.15);
+    --shadow-glow-accent: 0 0 20px hsl(25 95% 53% / 0.12);
+  }
+
+  .dark {
+    /* TikTok-grade dark: near-black background with deep neutral surfaces */
+    --background: 0 0% 0%;
     --foreground: 0 0% 98%;
 
-    --card: 0 0% 4.5%;
+    --card: 0 0% 6%;
     --card-foreground: 0 0% 98%;
 
-    --popover: 0 0% 4.5%;
+    --popover: 0 0% 6%;
     --popover-foreground: 0 0% 98%;
 
+    /* TikTok signature magenta as primary */
     --primary: 346 100% 58%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 8%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 0 0% 92%;
 
-    --muted: 0 0% 8%;
-    --muted-foreground: 0 0% 60%;
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 70%;
 
+    /* TikTok cyan as accent */
     --accent: 174 100% 47%;
     --accent-foreground: 0 0% 6%;
 
@@ -39,69 +105,38 @@
     --warning: 45 93% 55%;
     --warning-foreground: 0 0% 6%;
 
-    --border: 0 0% 100% / 0.08;
-    --input: 0 0% 100% / 0.08;
+    --border: 0 0% 100% / 0.10;
+    --input: 0 0% 100% / 0.10;
     --ring: 346 100% 58%;
 
-    --radius: 1.5rem; /* Standardized radius */
-
-    /* Gradients 2.0 - Ultra Modern Vibrancy */
-    --gradient-primary: linear-gradient(135deg, #ff2e68 0%, #ff4d4d 50%, #9d4eff 100%);
-    --gradient-accent: linear-gradient(135deg, #00f2ff 0%, #0066ff 100%);
-    --gradient-warm: linear-gradient(135deg, #ff8c00 0%, #ff2e68 100%);
-    --gradient-surface: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0) 100%);
-
-    /* Shadows & Glows */
-    --shadow-glow: 0 0 30px -10px hsla(346, 100%, 58%, 0.3);
-    --shadow-glow-cyan: 0 0 30px -10px hsla(180, 100%, 50%, 0.3);
-    --shadow-premium: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
-  }
-
-  .dark {
-    /* Keeping consistent with root as we are mobile-first dark by default */
+    --sidebar-background: 0 0% 4%;
+    --sidebar-foreground: 0 0% 80%;
+    --sidebar-primary: 346 100% 58%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 10%;
+    --sidebar-accent-foreground: 0 0% 92%;
+    --sidebar-border: 0 0% 100% / 0.10;
+    --sidebar-ring: 346 100% 58%;
   }
 }
 
 @layer base {
   * {
-    @apply border-border/40;
+    @apply border-border;
   }
 
   body {
-    @apply bg-[#030303] text-foreground antialiased selection:bg-primary/20;
-    font-feature-settings: "rlig" 1, "calt" 1, "ss01" 1;
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
-    width: 100vw;
-    scroll-behavior: smooth;
-    text-rendering: optimizeLegibility;
-    touch-action: manipulation;
   }
 
   ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    @apply bg-white/5 rounded-full hover:bg-white/10 transition-colors;
+    width: 0;
+    height: 0;
   }
 }
-
-/* Hide scrollbars for specific containers */
-.hide-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-.hide-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
 
 @layer components {
   .bg-gradient-primary { background: var(--gradient-primary); }
@@ -135,30 +170,12 @@
     background-image: var(--gradient-warm);
   }
 
-  .text-glow {
-    text-shadow: 0 0 15px rgba(255, 255, 255, 0.3), 0 0 30px rgba(0, 242, 255, 0.2);
-  }
-
-  .text-glow-primary {
-    text-shadow: 0 0 20px hsla(346, 100%, 58%, 0.5);
-  }
-
-  .bento-grid {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 1rem;
-  }
-  
-  .bento-card {
-    @apply relative overflow-hidden rounded-[2.5rem] border border-white/[0.04] bg-white/[0.01] backdrop-blur-3xl transition-all duration-700 hover:border-primary/20 hover:bg-white/[0.03] hover:-translate-y-2;
-  }
-
   /* Global microinteractions */
   .interactive {
-    @apply transition-all duration-300 ease-out will-change-transform hover:scale-[1.02] active:scale-[0.98] active:transition-transform active:duration-75;
+    @apply transition-all duration-200 ease-out will-change-transform hover:scale-[1.02] active:scale-[0.98] active:transition-transform active:duration-75;
   }
   .card-interactive {
-    @apply transition-all duration-300 ease-out border border-white/5 will-change-transform hover:-translate-y-1 hover:shadow-2xl hover:border-white/20 hover:bg-white/[0.02] active:translate-y-0 active:scale-[0.99];
+    @apply transition-all duration-200 ease-out will-change-transform hover:-translate-y-0.5 hover:shadow-lg hover:border-foreground/20 active:translate-y-0 active:scale-[0.99];
   }
   .tap {
     @apply transition-transform duration-150 active:scale-[0.94];

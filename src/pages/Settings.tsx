@@ -64,7 +64,7 @@ export default function Settings() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
+    <div className="max-w-lg mx-auto px-4 py-6 space-y-6">
       {/* Header */}
       <div className="flex items-center gap-3">
         <Button variant="ghost" size="icon" asChild className="h-8 w-8 rounded-full">
@@ -73,7 +73,7 @@ export default function Settings() {
         <h1 className="text-lg font-bold tracking-tight">Configurações</h1>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      {/* Appearance */}
       <Card className="border-border/30">
         <CardHeader className="pb-3">
           <CardTitle className="text-sm flex items-center gap-2">
@@ -159,8 +159,7 @@ export default function Settings() {
             Sair da conta
           </Button>
         </CardContent>
-        </Card>
-      </div>
+      </Card>
 
       {/* Legal */}
       <div className="flex justify-center gap-4 pt-2">

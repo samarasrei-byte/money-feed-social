@@ -81,7 +81,7 @@ function LiveProductCard({ product, onBuy }: { product: LiveProduct; onBuy: (p: 
     : 0;
 
   return (
-    <div className="flex items-center gap-2 bg-white/[0.02] backdrop-blur-3xl rounded-3xl p-2 border border-white/[0.05] min-w-[240px] hover:bg-white/[0.04] transition-colors duration-500">
+    <div className="flex items-center gap-2 bg-black/60 backdrop-blur-xl rounded-2xl p-2 border border-white/10 min-w-[240px]">
       <div className="h-14 w-14 rounded-xl bg-gradient-to-br from-primary/30 to-accent/30 flex items-center justify-center shrink-0">
         <ShoppingBag className="h-5 w-5 text-white/70" />
       </div>

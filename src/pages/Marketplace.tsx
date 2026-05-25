@@ -201,7 +201,7 @@ export default function Marketplace() {
   const topCreators = [...MOCK_AFFILIATES].sort((a, b) => b.conversionRate - a.conversionRate).slice(0, 3);
 
   return (
-    <div className="max-w-4xl mx-auto pb-20">
+    <div className="max-w-2xl mx-auto pb-20">
       {/* Hero */}
       <div className="relative overflow-hidden rounded-b-3xl mb-4">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/15 via-background to-accent/10" />
@@ -306,7 +306,7 @@ export default function Marketplace() {
         <div className="flex items-center justify-between mb-2">
           <span className="text-xs font-bold">{filtered.length} afiliados encontrados</span>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        <div className="grid grid-cols-2 gap-3">
           {filtered.map((a) => (
             <AffiliateCard
               key={a.id}

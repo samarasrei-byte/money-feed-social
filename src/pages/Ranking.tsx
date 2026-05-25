@@ -122,7 +122,7 @@ export default function Ranking() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
+    <div className="max-w-lg mx-auto px-4 py-6 space-y-6">
       {/* Header */}
       <div className="text-center space-y-1">
         <div className="flex items-center justify-center gap-2">
@@ -199,7 +199,7 @@ export default function Ranking() {
       </div>
 
       {/* XP Actions Legend */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+      <div className="grid grid-cols-3 gap-1.5">
         {[
           { action: "Post", pts: 10, icon: "📝" },
           { action: "Comentar", pts: 5, icon: "💬" },
@@ -246,7 +246,7 @@ export default function Ranking() {
           )}
 
           {/* List */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-0.5">
+          <div className="space-y-0.5">
             {rankings.slice(3).map((r) => {
               const lvlMeta = getLevelMeta(r.level);
               const score = getScore(r);

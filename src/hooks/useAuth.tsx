@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext, useContext, ReactNode, useMemo, useCallback } from "react";
+import { useState, useEffect, createContext, useContext, ReactNode } from "react";
 import { User, Session, AuthChangeEvent } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -38,28 +38,49 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
-  const fetchUserData = useCallback(async (userId: string) => {
+  // Fetch user profile and role
+  const fetchUserData = async (userId: string) => {
     try {
-      const [{ data: profileData }, { data: roleData }] = await Promise.all([
-        supabase.from("profiles").select("id, user_id, username, display_name, avatar_url, bio").eq("user_id", userId).single(),
-        supabase.from("user_roles").select("role").eq("user_id", userId).single(),
-      ]);
+      // Fetch profile
+      const { data: profileData, error: profileError } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("user_id", userId)
+        .single();
 
-      if (profileData) setProfile(profileData as Profile);
-      if (roleData) setUserRole(roleData as UserRole);
+      if (profileError && profileError.code !== "PGRST116") {
+        console.error("Error fetching profile:", profileError);
+      } else if (profileData) {
+        setProfile(profileData as Profile);
+      }
+
+      // Fetch user role
+      const { data: roleData, error: roleError } = await supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", userId)
+        .single();
+
+      if (roleError && roleError.code !== "PGRST116") {
+        console.error("Error fetching role:", roleError);
+      } else if (roleData) {
+        setUserRole(roleData as UserRole);
+      }
     } catch (error) {
       console.error("Error in fetchUserData:", error);
     }
-  }, []);
+  };
 
   useEffect(() => {
+    // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event: AuthChangeEvent, session: Session | null) => {
         setSession(session);
         setUser(session?.user ?? null);
 
         if (session?.user) {
-          fetchUserData(session.user.id);
+          // Use setTimeout to avoid blocking
+          setTimeout(() => fetchUserData(session.user.id), 0);
         } else {
           setProfile(null);
           setUserRole(null);
@@ -74,22 +95,44 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     );
 
-    return () => subscription.unsubscribe();
-  }, [fetchUserData]);
+    // THEN check for existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setUser(session?.user ?? null);
 
-  const signUp = useCallback(async (email: string, password: string, username?: string) => {
+      if (session?.user) {
+        fetchUserData(session.user.id);
+      }
+
+      setLoading(false);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const signUp = async (email: string, password: string, username?: string) => {
     setLoading(true);
     try {
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
-        options: { emailRedirectTo: window.location.origin },
+        options: {
+          emailRedirectTo: window.location.origin,
+        },
       });
 
       if (error) throw error;
 
+      // Update username if provided
       if (data.user && username) {
-        await supabase.from("profiles").update({ username }).eq("user_id", data.user.id);
+        const { error: updateError } = await supabase
+          .from("profiles")
+          .update({ username })
+          .eq("user_id", data.user.id);
+
+        if (updateError) {
+          console.error("Error updating username:", updateError);
+        }
       }
 
       toast({
@@ -106,14 +149,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } finally {
       setLoading(false);
     }
-  }, [toast]);
+  };
 
-  const signIn = useCallback(async (email: string, password: string) => {
+  const signIn = async (email: string, password: string) => {
     setLoading(true);
     try {
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
       if (error) throw error;
-      toast({ title: "Bem-vindo!", description: "Login realizado com sucesso." });
+
+      toast({
+        title: "Bem-vindo!",
+        description: "Login realizado com sucesso.",
+      });
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -124,13 +175,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } finally {
       setLoading(false);
     }
-  }, [toast]);
+  };
 
-  const signOut = useCallback(async () => {
+  const signOut = async () => {
     try {
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
-      toast({ title: "Até logo!", description: "Você saiu da sua conta." });
+
+      toast({
+        title: "Até logo!",
+        description: "Você saiu da sua conta.",
+      });
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -138,15 +193,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         description: error.message,
       });
     }
-  }, [toast]);
+  };
 
-  const updateProfile = useCallback(async (updates: Partial<Profile>) => {
+  const updateProfile = async (updates: Partial<Profile>) => {
     if (!user) return;
+
     try {
-      const { error } = await supabase.from("profiles").update(updates).eq("user_id", user.id);
+      const { error } = await supabase
+        .from("profiles")
+        .update(updates)
+        .eq("user_id", user.id);
+
       if (error) throw error;
+
       setProfile((prev) => (prev ? { ...prev, ...updates } : null));
-      toast({ title: "Perfil atualizado!", description: "Suas informações foram salvas." });
+
+      toast({
+        title: "Perfil atualizado!",
+        description: "Suas informações foram salvas.",
+      });
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -155,22 +220,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       });
       throw error;
     }
-  }, [user, toast]);
-
-  const value = useMemo(() => ({
-    user,
-    session,
-    profile,
-    userRole,
-    loading,
-    signUp,
-    signIn,
-    signOut,
-    updateProfile,
-  }), [user, session, profile, userRole, loading, signUp, signIn, signOut, updateProfile]);
+  };
 
   return (
-    <AuthContext.Provider value={value}>
+    <AuthContext.Provider
+      value={{
+        user,
+        session,
+        profile,
+        userRole,
+        loading,
+        signUp,
+        signIn,
+        signOut,
+        updateProfile,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

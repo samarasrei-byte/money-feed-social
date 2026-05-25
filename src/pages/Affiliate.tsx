@@ -173,18 +173,18 @@ export default function Affiliate() {
   );
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-6 space-y-5">
+    <div className="max-w-lg mx-auto px-4 py-6 space-y-5">
       <div>
         <h1 className="text-lg font-bold tracking-tight">Afiliados</h1>
         <p className="text-[11px] text-muted-foreground/40">Links, performance e comissões</p>
       </div>
 
       {/* Wallet Card */}
-      <div className="p-6 rounded-[2rem] bg-gradient-to-br from-primary/10 via-accent/5 to-background border border-primary/20 shadow-premium group">
+      <div className="p-5 rounded-2xl bg-gradient-to-br from-primary/10 via-accent/5 to-background border border-primary/20">
         <div className="flex items-center justify-between mb-3">
           <div>
-            <p className="text-[10px] text-muted-foreground/40 uppercase tracking-[0.2em] font-black">Saldo disponível</p>
-            <p className="text-3xl font-black italic mt-1 tracking-tighter">{fmt(stats.totalEarnings)}</p>
+            <p className="text-[9px] text-muted-foreground/40 uppercase tracking-widest font-semibold">Saldo disponível</p>
+            <p className="text-2xl font-black mt-0.5">{fmt(stats.totalEarnings)}</p>
           </div>
           <Button asChild size="sm" className="rounded-full text-[10px] h-8 gap-1.5">
             <Link to="/wallet">
@@ -194,30 +194,30 @@ export default function Affiliate() {
           </Button>
         </div>
         <div className="flex gap-4 text-[10px]">
-          <span className="text-muted-foreground/40 font-bold uppercase">Pendente: <strong className="text-warning">{fmt(stats.pendingEarnings)}</strong></span>
-          <span className="text-muted-foreground/40 font-bold uppercase">Conversão: <strong className="text-primary">{stats.conversionRate.toFixed(1)}%</strong></span>
+          <span className="text-muted-foreground/50">Pendente: <strong className="text-warning">{fmt(stats.pendingEarnings)}</strong></span>
+          <span className="text-muted-foreground/50">Conversão: <strong className="text-primary">{stats.conversionRate.toFixed(1)}%</strong></span>
         </div>
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+      <div className="grid grid-cols-4 gap-2">
         {[
           { icon: MousePointer, label: "Cliques", value: stats.totalClicks.toString(), color: "text-primary" },
           { icon: ShoppingCart, label: "Conversões", value: stats.totalConversions.toString(), color: "text-accent" },
           { icon: DollarSign, label: "Recebido", value: fmt(stats.totalEarnings), color: "text-primary" },
           { icon: Clock, label: "Pendente", value: fmt(stats.pendingEarnings), color: "text-warning" },
         ].map((s) => (
-          <div key={s.label} className="p-4 rounded-[1.5rem] bg-white/[0.02] border border-white/[0.05] text-center transition-all hover:bg-white/[0.05]">
-            <s.icon className={cn("h-4 w-4 mx-auto mb-2", s.color)} />
-            <p className="text-sm font-black italic tracking-tight">{s.value}</p>
-            <span className="text-[9px] text-muted-foreground/40 uppercase tracking-[0.1em] font-black">{s.label}</span>
+          <div key={s.label} className="p-3 rounded-2xl bg-muted/20 border border-border/15 text-center">
+            <s.icon className={cn("h-3.5 w-3.5 mx-auto mb-1", s.color)} />
+            <p className="text-sm font-bold">{s.value}</p>
+            <span className="text-[8px] text-muted-foreground/30 uppercase tracking-wider font-semibold">{s.label}</span>
           </div>
         ))}
       </div>
 
       {/* Performance Chart */}
       <div className="p-4 rounded-2xl bg-muted/20 border border-border/15">
-        <p className="text-[10px] font-black uppercase tracking-[0.2em] mb-4 text-muted-foreground/40">Performance — 14 dias</p>
+        <p className="text-xs font-semibold mb-3">Performance — 14 dias</p>
         <div className="h-32">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={chartData}>
@@ -298,32 +298,30 @@ export default function Affiliate() {
 
           {links.length === 0 ? (
             <div className="py-12 text-center space-y-3">
-              <div className="h-20 w-20 rounded-[2.5rem] bg-white/[0.02] border border-white/[0.05] flex items-center justify-center mx-auto mb-4 shadow-premium">
-                <Link2 className="h-8 w-8 text-muted-foreground/20" />
-              </div>
+              <Link2 className="h-10 w-10 mx-auto text-muted-foreground/10" />
               <div>
-                <p className="text-base font-black italic uppercase tracking-tighter">Nenhum link criado</p>
-                <p className="text-[11px] text-muted-foreground/40 mt-1 font-medium max-w-[240px] mx-auto">Crie seu primeiro link ou explore o catálogo de produtos para começar a lucrar.</p>
+                <p className="text-sm font-medium">Nenhum link criado</p>
+                <p className="text-[11px] text-muted-foreground/30 mt-1">Crie seu primeiro link ou explore o catálogo de produtos</p>
               </div>
               <Button asChild variant="outline" size="sm" className="rounded-full text-xs">
                 <Link to="/products"><Package className="h-3.5 w-3.5 mr-1.5" /> Ver Produtos</Link>
               </Button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 space-y-0">
+            <div className="space-y-2">
               {sortedLinks.map((link) => (
-                <div key={link.id} className="p-5 rounded-[2rem] border border-white/5 bg-white/[0.01] hover:bg-white/[0.03] transition-all group/link">
+                <div key={link.id} className="p-4 rounded-2xl border border-border/15 bg-background">
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex-1 min-w-0">
-                      <p className="font-black italic uppercase tracking-tighter text-base truncate group-hover/link:text-primary transition-colors">{link.name}</p>
+                      <p className="font-semibold text-sm truncate">{link.name}</p>
                       <p className="text-[10px] text-muted-foreground/30 truncate mt-0.5 flex items-center gap-1">
                         <ExternalLink className="h-2.5 w-2.5 shrink-0" />
                         {link.destination_url}
                       </p>
                       <div className="flex items-center gap-3 mt-2 text-[11px]">
-                        <span className="flex items-center gap-1.5 text-muted-foreground/40 font-bold uppercase"><MousePointer className="h-3 w-3" />{link.clicks_count}</span>
-                        <span className="flex items-center gap-1.5 text-accent font-bold uppercase"><ShoppingCart className="h-3 w-3" />{link.conversions_count}</span>
-                        <span className="text-muted-foreground/20 text-[9px] font-medium">{formatDistanceToNow(new Date(link.created_at), { addSuffix: true, locale: ptBR })}</span>
+                        <span className="flex items-center gap-1 text-muted-foreground/40"><MousePointer className="h-3 w-3" />{link.clicks_count}</span>
+                        <span className="flex items-center gap-1 text-success"><ShoppingCart className="h-3 w-3" />{link.conversions_count}</span>
+                        <span className="text-muted-foreground/20 text-[9px]">{formatDistanceToNow(new Date(link.created_at), { addSuffix: true, locale: ptBR })}</span>
                       </div>
                     </div>
                     <div className="flex gap-0.5">

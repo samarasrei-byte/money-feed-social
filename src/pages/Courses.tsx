@@ -50,7 +50,7 @@ export default function Courses() {
   );
 
   return (
-    <div className="min-h-screen pb-24 max-w-5xl mx-auto">
+    <div className="min-h-screen pb-24">
       {/* Header */}
       <div className="p-4 space-y-4">
         <div className="flex items-center gap-3">
@@ -75,7 +75,7 @@ export default function Courses() {
       </div>
 
       {/* Course Grid */}
-      <div className="px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 space-y-0">
+      <div className="px-4 space-y-3">
         {loading ? (
           Array.from({ length: 3 }).map((_, i) => (
             <div key={i} className="h-32 rounded-2xl bg-muted/30 animate-pulse" />
