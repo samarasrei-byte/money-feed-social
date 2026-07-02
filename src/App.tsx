@@ -47,6 +47,7 @@ import PublicProfile from "./pages/PublicProfile";
 import Invites from "./pages/Invites";
 import PostDetail from "./pages/PostDetail";
 import VSL from "./pages/VSL";
+import Whitelist from "./pages/Whitelist";
 
 const queryClient = new QueryClient();
 
