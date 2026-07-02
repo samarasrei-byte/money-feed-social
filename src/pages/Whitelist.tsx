@@ -76,10 +76,7 @@ export default function Whitelist() {
 
   return (
     <>
-      <Helmet>
-        <title>Whitelist Only Shop — Conecte-se antes do lançamento</title>
-        <meta name="description" content="Entre na whitelist da Only Shop e conecte criadores e marcas com IA, geolocalização e match inteligente. Lançamento 18 de julho." />
-      </Helmet>
+
 
       <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
         {/* neon glow bg */}
