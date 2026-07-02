@@ -30,6 +30,7 @@ import { ptBR } from "date-fns/locale";
 import {
   LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, AreaChart, Area
 } from "recharts";
+import { WaitlistPanel } from "@/components/admin/WaitlistPanel";
 
 interface UserWithRole {
   id: string; user_id: string; username: string | null; display_name: string | null;
