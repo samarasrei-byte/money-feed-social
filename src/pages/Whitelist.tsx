@@ -90,11 +90,8 @@ export default function Waitlist() {
       {/* HEADER */}
       <header className="sticky top-0 z-40 backdrop-blur-xl bg-background/60 border-b border-border/40">
         <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 group">
-            <img src={logo} alt="Only Shop" className="h-8 w-8 object-contain" width={32} height={32} />
-            <span className="font-black text-lg tracking-tight">
-              Only <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Shop</span>
-            </span>
+          <Link to="/" className="flex items-center group" aria-label="Only Shop">
+            <img src={logo} alt="Only Shop" className="h-10 md:h-11 w-auto object-contain transition-transform group-hover:scale-105" />
           </Link>
           <a href="#signup" className="hidden sm:inline-flex">
             <Button size="sm" className="font-semibold">
