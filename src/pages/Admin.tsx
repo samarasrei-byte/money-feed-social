@@ -22,7 +22,7 @@ import {
   Users, CreditCard, Flag, BarChart3, Loader2, Search, Shield,
   Crown, TrendingUp, DollarSign, MessageSquare, Heart,
   ChevronLeft, ChevronRight, Download, Package, Video,
-  PlayCircle, Save, Clock, Type, MousePointer2
+  PlayCircle, Save, Clock, Type, MousePointer2, Mail
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { formatDistanceToNow } from "date-fns";
@@ -361,7 +361,7 @@ export default function Admin() {
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-6">
           <TabsTrigger value="overview" className="gap-2">
             <BarChart3 className="h-4 w-4" /><span className="hidden sm:inline">Visão Geral</span>
           </TabsTrigger>
@@ -376,6 +376,9 @@ export default function Admin() {
           </TabsTrigger>
           <TabsTrigger value="vsl" className="gap-2">
             <Video className="h-4 w-4" /><span className="hidden sm:inline">VSL</span>
+          </TabsTrigger>
+          <TabsTrigger value="waitlist" className="gap-2">
+            <Mail className="h-4 w-4" /><span className="hidden sm:inline">Waitlist</span>
           </TabsTrigger>
         </TabsList>
 
