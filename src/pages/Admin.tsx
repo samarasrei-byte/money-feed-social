@@ -751,6 +751,11 @@ export default function Admin() {
             </div>
           </div>
         </TabsContent>
+
+        {/* Waitlist */}
+        <TabsContent value="waitlist" className="space-y-4">
+          <WaitlistPanel />
+        </TabsContent>
       </Tabs>
 
       {/* Role change confirmation */}
