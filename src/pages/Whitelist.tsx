@@ -9,7 +9,8 @@ import {
   Sparkles, Users, MapPin, Brain, Loader2, CheckCircle2, Rocket,
   Zap, TrendingUp, ShieldCheck, ArrowRight,
 } from "lucide-react";
-import logo from "@/assets/onlyshop-logo.png";
+import logoAsset from "@/assets/onlyshop-logo-official.png.asset.json";
+const logo = logoAsset.url;
 
 const LAUNCH = new Date("2026-07-18T00:00:00-03:00");
 const ADMIN_WHATSAPP = "5511999999999";
